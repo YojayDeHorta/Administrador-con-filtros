@@ -11,13 +11,13 @@
     </v-row>
     <v-row class="d-flex justify-center" cols="12">
         <v-col  cols="4">
-            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario'"><v-icon>mdi-account-plus</v-icon> </v-btn>
+            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon>mdi-account-plus</v-icon> </v-btn>
             <v-btn v-if="adminVerification" color="teal darken-1"  @click="descargar()"><v-icon color="white">mdi-file-download</v-icon></v-btn>
         </v-col>
         <!-- <a href="/source.csv" download>descargar</a> -->
     </v-row>
     <v-row class="d-flex justify-center p-0" cols="12" md="12">
-        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-19 theme--light">
+        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-3 theme--light">
             <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
                 <v-icon small class="mr-2" @click="prepareEdit(item)"> mdi-pencil </v-icon>
                 <v-icon small @click="deleteUser(item.Id)"> mdi-delete </v-icon>
@@ -38,8 +38,15 @@
                     <v-col cols="12" sm="6" md="4">
                         <v-text-field  v-model="user.Apellido" label="Apellido" ></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field  v-model="user.Fecha" label="Fecha" ></v-text-field>
+                    
+                </v-row>
+                <v-row>
+                    <v-col cols="6" >
+                        <div>Tipo de cliente</div>
+                        <v-select :items="Tipos" v-model="user.TipoCliente" label="Tipo de cliente" solo  ></v-select>
+                    </v-col>
+                    <v-col cols="6" >
+                        <v-text-field  v-model="user.Direccion" label="Direccion" ></v-text-field>
                     </v-col>
                 </v-row>
             </v-container>
@@ -60,7 +67,7 @@
 <script>
 var url="http://localhost:3000/api/usuarios"
 import axios from 'axios'
-import { response } from 'express'
+const path = require('path')
 export default {
     name:'Crud',
     data() {
@@ -71,14 +78,17 @@ export default {
                 {text:'ID' ,value:'Id', class:'primary white--text'},
                 {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
                 {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                {text:'FECHA' ,value:'Fecha', class:'primary white--text'},
+                {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
+                {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
                 { text: 'ACCIONES', value: 'actions', class:'primary white--text', sortable: false  },
             ] ,
+            Tipos: ['Accesorios', 'Ropa', 'Zapatos', 'Colmenas'],
             user: {
                 Id:'',
                 Nombre: '',
                 Apellido: '',
-                Fecha: '',
+                TipoCliente: '',
+                Direccion:''
             },
             search: '',
             //login del admin
@@ -112,7 +122,8 @@ export default {
                     {text:'ID' ,value:'Id', class:'primary white--text'},
                     {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
                     {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                    {text:'FECHA' ,value:'Fecha', class:'primary white--text'},
+                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
+                    {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
                 ] 
                 return columnasMod
             }
@@ -130,10 +141,11 @@ export default {
             this.user.Id=item.Id
             this.user.Nombre=item.Nombre
             this.user.Apellido=item.Apellido
-            this.user.Fecha=item.Fecha
+            this.user.TipoCliente=item.TipoCliente
+            this.user.Direccion=item.Direccion
             this.dialog=true;
         },
-        addAndEditUser(){
+        async addAndEditUser(){
             this.loading=true;
             this.dialog=false;
             if (!this.isEditing) {
@@ -143,12 +155,15 @@ export default {
                 let index=this.users.map(function(x) {return x.Id; }).indexOf(this.user.Id)
                 this.users[index].Nombre=this.user.Nombre
                 this.users[index].Apellido=this.user.Apellido
-                this.users[index].Fecha=this.user.Fecha
+                this.users[index].TipoCliente=this.user.TipoCliente
+                this.users[index].Direccion=this.user.Direccion
                 
                 
                 console.log(this.users);
                 this.isEditing=false
             }
+            let datos=await axios.post(url,this.users)
+            console.log(datos.data);/**/
             this.resetUser()
             this.loading=false;
         },
@@ -159,12 +174,15 @@ export default {
                 return obj.Id !== Id;
             });
             this.loading=false;
+            let datos=await axios.post(url,this.users)
+            console.log(datos.data);
         },
         resetUser(){
             this.user.Id=''
             this.user.Nombre=''
             this.user.Apellido=''
-            this.user.Fecha=''
+            this.user.TipoCliente=''
+            // this.user.Direccion=''
         },
         async clickFile(){
            if (this.file!== null) {
@@ -193,7 +211,7 @@ export default {
             
             
         }
-    },
+    }
 }
 </script>
 <style>

@@ -63,7 +63,7 @@
                 </v-row>
                 <v-row>
                     <v-col cols="12" >
-                        <v-text-field  v-model="admin.pass" label="Password" ></v-text-field>
+                        <v-text-field type="password"  v-model="admin.pass" label="Password" ></v-text-field>
                     </v-col>
                 </v-row>
             </v-container>

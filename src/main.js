@@ -7,6 +7,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 
+//lenguaje
+
 Vue.config.productionTip = false
 
 new Vue({
