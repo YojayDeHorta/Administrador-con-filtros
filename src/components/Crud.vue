@@ -3,7 +3,7 @@
     
     <v-row class="d-flex justify-center" cols="12">
         <v-col cols="3" class="pb-0">
-            <v-file-input @change="clickFile" v-model="file" accept=".csv" type="file"  label="Subir archivo csv"></v-file-input>
+            <v-file-input @change="clickFile" v-model="file" accept=".xlsx" type="file"  label="Subir archivo csv"></v-file-input>
         </v-col >
         <v-col cols="3">
             <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar en la tabla" single-line hide-details></v-text-field>
@@ -199,7 +199,7 @@ export default {
         },
         async descargar(){
             
-            let datos=await axios.post(url,this.users)
+            let datos=await axios.post('http://localhost:3000/download',this.users)
             console.log(datos.data);
             if (datos.data) {
                 const link = document.createElement('a')

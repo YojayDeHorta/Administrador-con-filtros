@@ -1,9 +1,8 @@
 <template>
   <v-app>
     <Navbar :adminVerification="adminVerification" @escuchar="cambioAdmin"></Navbar>
-  <!-- <Calendario/> -->
   <v-main>
-    <Crud :adminVerification="adminVerification" ></Crud>
+    <!-- <Crud :adminVerification="adminVerification" ></Crud> -->
     
       <router-view/>
   </v-main>

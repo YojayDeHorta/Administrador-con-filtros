@@ -2,13 +2,18 @@
   <v-container>
     <!-- navbar para la app -->
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="drawer= !drawer"></v-app-bar-nav-icon>
+      <!-- <v-app-bar-nav-icon @click="drawer= !drawer"></v-app-bar-nav-icon> -->
+      <v-btn @click="$router.go(-1)" v-if="isNotLogin" exact text class="gray">
+        <v-icon>mdi-arrow-left-circle</v-icon>
+        <!-- <span>Volver</span> -->
+      </v-btn>
+
       <v-toolbar-title class="text-uppercase grey--text">
-          Usuarios
+          Prototipo
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
-      <v-btn :to="{name: 'Home'}" exact text class="gray">
+      <v-btn :to="{name: 'Options'}" exact text class="gray">
         <span>Home</span>
         <v-icon>mdi-home-outline</v-icon>
       </v-btn>
@@ -38,11 +43,18 @@
 
       <v-list nav dense>
         <v-list-item-group  active-class="deep-purple--text text--accent-4">
-          <v-list-item :to="{name: 'Crud'}">
+
+          <v-list-item :to="{name: 'Cruds'}">
             <v-list-item-icon>
               <v-icon>mdi-file-table</v-icon>
             </v-list-item-icon >
             <v-list-item-title >Crud</v-list-item-title>
+        </v-list-item>
+        <v-list-item :to="{name: 'About'}">
+            <v-list-item-icon>
+              <v-icon>mdi-file-table</v-icon>
+            </v-list-item-icon >
+            <v-list-item-title >About</v-list-item-title>
         </v-list-item>
 
         </v-list-item-group>
@@ -50,7 +62,7 @@
     </v-navigation-drawer>
 
     <!-- dialog administrador -->
-    <v-dialog v-model="dialogAdmin" max-width="500px">
+    <v-dialog v-model="dialogAdmin"  max-width="500px">
         <v-card>
         <v-form  @submit.prevent="submitAdmin">
             <v-card-title><span class="text-h5">Iniciar sesion</span></v-card-title>
@@ -131,7 +143,28 @@ export default {
           sessionStorage.removeItem('Admin')
           this.snackbar=true
           this.mensaje='cerrado de sesion realizado correctamente'
-      }
+      },
+      //para el volver
+
     },
+    computed:{
+      hasHistory() {
+        this.historial=window.history.length
+        console.log(this.historial);
+
+        if (this.historial > 2) {
+          return this.historial
+        }
+        return this.historial
+      },
+      isNotLogin() {
+        return this.$route.name !== 'Login'
+      }
+    }
 }
 </script>
+<style >
+  .caminos{
+      background: red;
+  }
+</style>

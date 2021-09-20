@@ -2,37 +2,28 @@
 const express = require('express');
 const app = express();
 app.use(express.json())
-
+//cors
 var cors=require('cors')
 app.use(cors())
 
 const http = require('http');
 const server = http.createServer(app);
-
-let direccion = null;
-let archivo=null
-const CSVToJSON = require("csvtojson");
-const JSONToCSV = require("json2csv").parse;
+//dependencias
 const FileSystem = require("fs");
 const path = require('path');
 const { send } = require('process');
-
+//local storage y lectura de xlsx
+const XLSX=require('xlsx')
 var LocalStorage = require('node-localstorage').LocalStorage,
 localStorage = new LocalStorage(`${__static}/scratch`);
-
+//lectura de hojas
+let hojas=["Clientes","Personal"]
+let archivo=null
 app.get('/api/usuarios', async(req, res) => {
     try {
-        console.log(localStorage.getItem('direccion'))
-        direccion=localStorage.getItem('direccion')
-        archivo=localStorage.getItem('file')
-        if (direccion!=null) {
-            if (FileSystem.existsSync(direccion)) {
-                CSVToJSON().fromFile(direccion).then(source => {  
-                    res.send(source) 
-                });
-            }else{
-                res.send([])
-            }
+        if (localStorage.getItem('servidor')!=null) {
+            let usuarios=JSON.parse(localStorage.getItem('servidor'))[0]
+            res.send(usuarios) 
         }else{
             res.send([])
         }
@@ -43,16 +34,42 @@ app.get('/api/usuarios', async(req, res) => {
 
 app.post('/api/usuarios', (req,res)=>{
     try {
-        console.log(direccion,archivo);
-        var csv = JSONToCSV(req.body, { fields: ["Id", "Nombre", "Apellido", "TipoCliente","Direccion" ]});
-        FileSystem.writeFileSync(direccion, csv);
-        res.send(archivo)
+        let servidor=JSON.parse(localStorage.getItem('servidor'))
+        servidor[0]=req.body
+        console.log(JSON.stringify(servidor));
+        localStorage.setItem('servidor', JSON.stringify(servidor))
+        res.send(servidor[0])
     } catch (error) {
         console.log(error);
         res.send(false)
     }
 })
+//descarga del excel
+app.post('/download', (req,res)=>{
+    try {
+        let servidor=JSON.parse(localStorage.getItem('servidor'))
+        console.log(servidor.length);
+        const workBook=XLSX.utils.book_new()
+        for (let i = 0; i < servidor.length; i++) {
+            const workSheet=XLSX.utils.json_to_sheet(servidor[i])
+            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
 
+        }   
+        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
+        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
+        if (localStorage.getItem('fileName')!=null) {
+            XLSX.writeFile(workBook,`${__static}/${localStorage.getItem('file')}`)
+            res.send(localStorage.getItem('fileName'))
+        }else{
+            XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
+            res.send(`datos.xlsx`)
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
 //confirmacion del admin
 app.post('/api/admin', (req,res)=>{
     try {
@@ -72,30 +89,24 @@ app.post('/api/admin', (req,res)=>{
 app.post('/file', async(req, res) => {
     try {
         console.log(req.body);
-        FileSystem.copyFile(req.body.file,`${__static}/${req.body.name}`, (err) => {
-            if (err) throw err;
-            direccion=`${__static}/${req.body.name}`
-            archivo=req.body.name
-            res.send(true)
-            if (localStorage.getItem('direccion')!=null) {
-                if (FileSystem.existsSync(localStorage.getItem('direccion'))) {
-                    FileSystem.unlink(path.join(__static, localStorage.getItem('file')), err => {
-                        if (err) throw err;
-                    }); 
-                }
-            }
-            localStorage.setItem('direccion', direccion)
-            localStorage.setItem('file', archivo)
-            // localStorage.setItem('myFirstKey', 'myFirstValue')
-            
-        });
+        const excel=XLSX.readFile(req.body.file)
+        var nombreHoja=excel.SheetNames;
+        let arrayOfArrays=[]
+        for (let i = 0; i < nombreHoja.length; i++) {
+            let datos= XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[i]])
+            arrayOfArrays.push(datos)            
+        }
+        localStorage.setItem('servidor', JSON.stringify(arrayOfArrays))
+        localStorage.setItem('fileName', req.body.name)
+        
+        // console.log(JSON.parse(JSON.stringify(arrayOfArrays))[0]);
     } catch (error) {
         console.log(error);
         res.send(error)
         
     }
 });
-//borrado del archivo
+//experimentos
 
 server.listen(3000, () => {
   console.log('listening on *:3000');
