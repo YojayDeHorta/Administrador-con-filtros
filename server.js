@@ -19,10 +19,10 @@ localStorage = new LocalStorage(`${__static}/scratch`);
 //lectura de hojas
 let hojas=["Clientes","Personal"]
 let archivo=null
-app.get('/api/usuarios', async(req, res) => {
+app.get('/api/hojas/:idHoja', async(req, res) => {
     try {
         if (localStorage.getItem('servidor')!=null) {
-            let usuarios=JSON.parse(localStorage.getItem('servidor'))[0]
+            let usuarios=JSON.parse(localStorage.getItem('servidor'))[req.params.idHoja]
             res.send(usuarios) 
         }else{
             res.send([])
@@ -32,44 +32,18 @@ app.get('/api/usuarios', async(req, res) => {
     }
 });
 
-app.post('/api/usuarios', (req,res)=>{
+app.post('/api/hojas/:idHoja', (req,res)=>{
     try {
         let servidor=JSON.parse(localStorage.getItem('servidor'))
-        servidor[0]=req.body
-        console.log(JSON.stringify(servidor));
+        servidor[req.params.idHoja]=req.body
         localStorage.setItem('servidor', JSON.stringify(servidor))
-        res.send(servidor[0])
+        res.send(true)
     } catch (error) {
         console.log(error);
         res.send(false)
     }
 })
-//descarga del excel
-app.post('/download', (req,res)=>{
-    try {
-        let servidor=JSON.parse(localStorage.getItem('servidor'))
-        console.log(servidor.length);
-        const workBook=XLSX.utils.book_new()
-        for (let i = 0; i < servidor.length; i++) {
-            const workSheet=XLSX.utils.json_to_sheet(servidor[i])
-            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
 
-        }   
-        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
-        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
-        if (localStorage.getItem('fileName')!=null) {
-            XLSX.writeFile(workBook,`${__static}/${localStorage.getItem('file')}`)
-            res.send(localStorage.getItem('fileName'))
-        }else{
-            XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
-            res.send(`datos.xlsx`)
-        }
-        
-    } catch (error) {
-        console.log(error);
-        res.send(false)
-    }
-})
 //confirmacion del admin
 app.post('/api/admin', (req,res)=>{
     try {
@@ -85,10 +59,9 @@ app.post('/api/admin', (req,res)=>{
     }
 })
 
-//subida del archivo
+//subida del excel
 app.post('/file', async(req, res) => {
     try {
-        console.log(req.body);
         const excel=XLSX.readFile(req.body.file)
         var nombreHoja=excel.SheetNames;
         let arrayOfArrays=[]
@@ -98,16 +71,37 @@ app.post('/file', async(req, res) => {
         }
         localStorage.setItem('servidor', JSON.stringify(arrayOfArrays))
         localStorage.setItem('fileName', req.body.name)
-        
-        // console.log(JSON.parse(JSON.stringify(arrayOfArrays))[0]);
+        res.send(true)
     } catch (error) {
         console.log(error);
-        res.send(error)
-        
+        res.send(false)
     }
 });
-//experimentos
+//descarga del excel
+app.get('/download', (req,res)=>{
+    try {
+        let servidor=JSON.parse(localStorage.getItem('servidor'))
+        const workBook=XLSX.utils.book_new()
+        for (let i = 0; i < servidor.length; i++) {
+            const workSheet=XLSX.utils.json_to_sheet(servidor[i])
+            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
 
+        }   
+        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
+        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
+        if (localStorage.getItem('fileName')!=null) {
+            XLSX.writeFile(workBook,`${__static}/${localStorage.getItem('fileName')}`)
+            res.send(localStorage.getItem('fileName'))
+        }else{
+            XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
+            res.send(`datos.xlsx`)
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });

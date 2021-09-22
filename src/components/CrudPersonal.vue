@@ -2,17 +2,11 @@
     <v-container>
     
     <v-row class="d-flex justify-center" cols="12">
-        <v-col cols="3" class="pb-0">
-            <v-file-input @change="clickFile" v-model="file" accept=".xlsx" type="file"  label="Subir archivo csv"></v-file-input>
-        </v-col >
-        <v-col cols="3">
-            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar en la tabla" single-line hide-details></v-text-field>
-        </v-col>
-    </v-row>
-    <v-row class="d-flex justify-center" cols="12">
         <v-col  cols="4">
             <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon>mdi-account-plus</v-icon> </v-btn>
-            <v-btn v-if="adminVerification" color="teal darken-1"  @click="descargar()"><v-icon color="white">mdi-file-download</v-icon></v-btn>
+        </v-col>
+        <v-col cols="4">
+            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
         <!-- <a href="/source.csv" download>descargar</a> -->
     </v-row>
@@ -42,8 +36,7 @@
                 </v-row>
                 <v-row>
                     <v-col cols="6" >
-                        <div>Tipo de cliente</div>
-                        <v-select :items="Tipos" v-model="user.TipoCliente" label="Tipo de cliente" solo  ></v-select>
+                        <v-text-field  v-model="user.Sueldo" label="Sueldo" type="number" ></v-text-field>
                     </v-col>
                     <v-col cols="6" >
                         <v-text-field  v-model="user.Direccion" label="Direccion" ></v-text-field>
@@ -65,20 +58,19 @@
     </v-container>
 </template>
 <script>
-var url="http://localhost:3000/api/usuarios"
+var url="http://localhost:3000/api/hojas/"
 import axios from 'axios'
-const path = require('path')
 export default {
-    name:'Crud',
+    name:'CrudPersonal',
     data() {
         return {
-            loading:true,
+            loading:false,
             users:[],
             columnas:[
                 {text:'ID' ,value:'Id', class:'primary white--text'},
                 {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
                 {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
+                {text:'SUELDO DEL EMPLEADO' ,value:'Sueldo', class:'primary white--text'},
                 {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
                 { text: 'ACCIONES', value: 'actions', class:'primary white--text', sortable: false  },
             ] ,
@@ -87,32 +79,24 @@ export default {
                 Id:'',
                 Nombre: '',
                 Apellido: '',
-                TipoCliente: '',
+                Sueldo: '',
                 Direccion:''
             },
             search: '',
-            //login del admin
-            admin:{
-                user:'',
-                pass:''
-            },
             //dialog y modal
             dialog:false,
             formTitle:'',
-            dialogAdmin:false,
             //edicion
             isEditing:false,
-            //files
-            file:null,
-            urlFile:'',
             
         }
     },
     props:{
-        adminVerification:null
+        adminVerification:null,
+        idHoja:null,
     },
     mounted() {
-        this.getUsers()
+        this.getUsers(this.idHoja)
     },computed: {
         computedHeaders () {
             if(this.adminVerification){
@@ -122,7 +106,7 @@ export default {
                     {text:'ID' ,value:'Id', class:'primary white--text'},
                     {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
                     {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
+                    {text:'SUELDO DEL EMPLEADO' ,value:'Sueldo', class:'primary white--text'},
                     {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
                 ] 
                 return columnasMod
@@ -130,18 +114,19 @@ export default {
         }
     },
     methods: {
-        async getUsers(){
-            let datos=await axios.get(url)
+        async getUsers(id){
+            this.loading=true
+            let datos=await axios.get(url+id)
             this.users=datos.data
             this.loading=false
         },
         prepareEdit(item){
             this.isEditing=true
-            this.formTitle='Edicion del usuario '+item.Nombre
+            this.formTitle='Edicion del Personal '+item.Nombre
             this.user.Id=item.Id
             this.user.Nombre=item.Nombre
             this.user.Apellido=item.Apellido
-            this.user.TipoCliente=item.TipoCliente
+            this.user.Sueldo=item.Sueldo
             this.user.Direccion=item.Direccion
             this.dialog=true;
         },
@@ -155,62 +140,35 @@ export default {
                 let index=this.users.map(function(x) {return x.Id; }).indexOf(this.user.Id)
                 this.users[index].Nombre=this.user.Nombre
                 this.users[index].Apellido=this.user.Apellido
-                this.users[index].TipoCliente=this.user.TipoCliente
+                this.users[index].Sueldo=this.user.Sueldo
                 this.users[index].Direccion=this.user.Direccion
-                
-                
-                console.log(this.users);
                 this.isEditing=false
             }
-            let datos=await axios.post(url,this.users)
-            console.log(datos.data);/**/
+            let datos=await axios.post(url+this.idHoja,this.users)
+            if (datos==true) console.log('actualizacion ejecutada exitosamente');
+            else  console.log('error del sistema');
             this.resetUser()
             this.loading=false;
         },
         async deleteUser(Id){
             this.loading=true;
-            // let index=users.map(function(x) {return x.Id; }).indexOf(item.Id)
             this.users = this.users.filter(function( obj ) {
                 return obj.Id !== Id;
             });
+            
+            let datos=await axios.post(url+this.idHoja,this.users)
+            if (datos==true) console.log('borrado ejecutado exitosamente');
+            else  console.log('error del sistema');
             this.loading=false;
-            let datos=await axios.post(url,this.users)
-            console.log(datos.data);
         },
         resetUser(){
             this.user.Id=''
             this.user.Nombre=''
             this.user.Apellido=''
-            this.user.TipoCliente=''
-            // this.user.Direccion=''
+            this.user.Sueldo=''
+            this.user.Direccion=''
         },
-        async clickFile(){
-           if (this.file!== null) {
-              this.urlFile=URL.createObjectURL(this.file)
-              console.log(this.file);
-              let datos= await axios.post('http://localhost:3000/file',{'name':this.file.name,'file':this.file.path})
-              if (datos.data==true) {
-                this.getUsers()
-              }else{
-                  console.log(datos.data);
-              }
-              console.log(this.urlFile);
-           } 
-        },
-        async descargar(){
-            
-            let datos=await axios.post('http://localhost:3000/download',this.users)
-            console.log(datos.data);
-            if (datos.data) {
-                const link = document.createElement('a')
-                link.href = '/'+datos.data
-                link.setAttribute('download', datos.data) //or any other extension
-                document.body.appendChild(link)
-                link.click()
-            }
-            
-            
-        }
+
     }
 }
 </script>

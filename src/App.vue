@@ -11,12 +11,11 @@
 
 <script>
 import Navbar from './components/Navbar';
-import Crud from './components/Crud';
 export default {
   name: 'App',
   components: {
     Navbar,
-    Crud
+    
   },mounted() {
     this.adminLocal()
   },
