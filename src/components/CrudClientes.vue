@@ -1,23 +1,25 @@
 <template>
     <v-container>
     
-    <v-row class="d-flex justify-center" cols="12">
-        <v-col  cols="2">
-            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon>mdi-account-plus</v-icon> </v-btn>
+    <v-row  cols="12">
+        <v-col  cols="1">
+            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
         </v-col>
-        <v-col cols="4">
-            <v-text-field v-model="search" append-icon="mdi-magnify" label="Buscar en la tabla" single-line hide-details></v-text-field>
+        <v-col cols="2" class="mt-0 pt-0">
+            <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
-        <v-col cols="4">
+        <v-col cols="9" class="text-right">
             <v-btn color="teal darken-1"  @click="descargar()"><v-icon color="white">mdi-file-download</v-icon></v-btn>
+            <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</v-btn>
         </v-col>
         <!-- <a href="/source.csv" download>descargar</a> -->
     </v-row>
     <v-row class="d-flex justify-center p-0" cols="12" md="12">
-        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-3 theme--light">
+        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
             <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
-                <v-icon small class="mr-2" @click="prepareEdit(item)"> mdi-pencil </v-icon>
-                <v-icon small @click="deleteUser(item.Id)"> mdi-delete </v-icon>
+                <v-btn color="green  white--text"  @click="prepareEdit(item)"><v-icon small class="mr-2" > mdi-pencil </v-icon> editar</v-btn>
+                <v-btn color="red white--text" class="ml-1"  @click="deleteUser(item.Id)"><v-icon small > mdi-delete </v-icon> eliminar</v-btn>
+                
             </template>
         </v-data-table>
     </v-row>
@@ -71,12 +73,12 @@ export default {
             loading:false,
             users:[],
             columnas:[
-                {text:'ID' ,value:'Id', class:'primary white--text'},
-                {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
-                {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
-                {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
-                { text: 'ACCIONES', value: 'actions', class:'primary white--text', sortable: false  },
+                {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text'},
+                {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text'},
+                {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text'},
+                {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text'},
+                {text:'DIRECCION' ,value:'Direccion', class:'blue-grey darken-3 white--text'},
+                { text: 'ACCIONES', value: 'actions', class:'blue-grey darken-3 white--text', sortable: false ,width: '300px' },
             ] ,
             Tipos: ['Accesorios', 'Ropa', 'Zapatos', 'Colmenas'],
             user: {
@@ -107,11 +109,11 @@ export default {
                 return this.columnas
             }else{
                 let columnasMod=[
-                    {text:'ID' ,value:'Id', class:'primary white--text'},
-                    {text:'NOMBRE' ,value:'Nombre', class:'primary white--text'},
-                    {text:'APELLIDO' ,value:'Apellido', class:'primary white--text'},
-                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'primary white--text'},
-                    {text:'DIRECCION' ,value:'Direccion', class:'primary white--text'},
+                    {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text'},
+                    {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text'},
+                    {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text'},
+                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text'},
+                    {text:'DIRECCION' ,value:'Direccion', class:'blue-grey darken-3 white--text'},
                 ] 
                 return columnasMod
             }

@@ -1,7 +1,7 @@
 <template>
     <v-container>
-        <v-row class="d-flex justify-center">
-            <v-col cols="2"> 
+        <v-row >
+            <v-col cols="2" class="ml-4"> 
                 <!-- select de las tablas -->
                 <h5>Tablas:</h5>
                 <v-select v-model="select" :hint="`se esta trabajando en:${select.crud} con id:${select.idHoja}`" :items="hojas"
@@ -14,7 +14,7 @@
                 ></v-select>
             </v-col>
             <v-col cols="3" class="pb-0">
-                <!-- subida de archivo -->
+                <!-- subida de archivo temporal-->
                 <v-file-input @change="clickFile" v-model="file" accept=".xlsx" type="file"  label="Subir archivo xlsx"></v-file-input> 
             </v-col>
             

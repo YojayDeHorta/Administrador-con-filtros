@@ -24,7 +24,7 @@
                     <!--
                          <v-btn x-large color="primary" type="submit"> Ingresar </v-btn>
                     -->
-                    	<router-link to="/Opciones">Ingresar</router-link>
+                    	<router-link to="/options">Ingresar</router-link>
                     
                      
             
