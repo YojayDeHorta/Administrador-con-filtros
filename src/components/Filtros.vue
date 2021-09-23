@@ -80,12 +80,6 @@
 }
 </style>
 <script>
-/*
-$(function(){
-	alert("ola mundo")
-})*/
-
-
 export default {
 
     data: () => ({
@@ -102,23 +96,7 @@ export default {
 
         },
 
-        Borrar(estado, i, counter) {
-           /* if (counter !== 1) {
-                estado[i] = false;
-                console.log("Borrar : " + i + "estado[i] : " + estado[i])
-                counter -= 1;
-            }
-            if(counter==1){
-            	for(i in estado){
-            		estado[i]=true;
-            	}
-            }*/
 
-            /*if (counter > 1) {
-                estado[i]=false;
-                counter -=1;
-                console.log("Borrar : " + i + "estado[i] : " + estado[i])*/
-        }
 
 
     }
