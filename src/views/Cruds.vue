@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container class="Marco">
         <v-row >
             <v-col cols="2" class="ml-4"> 
                 <!-- select de las tablas -->
@@ -93,3 +93,8 @@ export default {
     },
 }
 </script>
+<style scoped>
+    .Marco{
+        border:5px solid black;
+    }
+</style>

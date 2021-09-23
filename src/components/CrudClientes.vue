@@ -1,6 +1,5 @@
 <template>
-    <v-container>
-    
+    <v-container class="CRUD-P">
     <v-row  cols="12">
         <v-col  cols="1">
             <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
@@ -192,5 +191,9 @@ export default {
 <style>
 tbody tr:nth-of-type(odd) {
   background-color: rgba(13, 9, 243, 0.10);
+}
+.CRUD-P{
+  /* border:5px solid yellow;
+   width:80%;*/
 }
 </style>
