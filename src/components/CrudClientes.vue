@@ -1,13 +1,13 @@
 <template>
     <v-container class="CRUD-P" fluid fill-height>
-    <v-row  cols="12">
-        <v-col  cols="2">
+    <v-row class="OP text-center mt-5" cols="12">
+        <v-col  class="OP-TABLAS" cols="2">
             <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
         </v-col>
-        <v-col cols="2" class="mt-0 pt-0">
+        <v-col  cols="5" class="OP-TABLAS mt-0 pt-0">
             <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
-        <v-col cols="8"  class="text-right">
+        <v-col  cols="2"  class="OP-TABLAS text-right">
             <v-btn color="teal darken-1"  @click="descargar()"><v-icon color="white">mdi-file-download</v-icon></v-btn>
             <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
             
@@ -220,6 +220,18 @@ export default {
 <style>
 tbody tr:nth-of-type(odd) {
   background-color: rgba(13, 9, 243, 0.10);
+}
+
+.OP{
+
+    /*border:5px solid yellow;*/
+}
+
+.OP-TABLAS{
+   /* border:5px solid red;*/
+    height:60px;
+      margin:auto;
+   
 }
 
 </style>

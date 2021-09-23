@@ -1,5 +1,5 @@
 <template>
-    <v-container class="Tabla-Persona">
+    <v-container>
         <v-row class="d-flex justify-center" cols="12">
             <v-col cols="4">
                 <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()">
@@ -11,8 +11,8 @@
             </v-col>
             <!-- <a href="/source.csv" download>descargar</a> -->
         </v-row>
-        <v-row class="d-flex justify-center p-0" cols="12" md="12">
-            <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-3 theme--light">
+        <v-row class="Tabla-Persona d-flex justify-center p-0" cols="12" md="16">
+            <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Persona elevation-3 theme--light">
                 <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
                     <v-icon small class="mr-2" @click="prepareEdit(item)"> mdi-pencil </v-icon>
                     <v-icon small @click="deleteUser(item.Id)"> mdi-delete </v-icon>
@@ -176,6 +176,10 @@ tbody tr:nth-of-type(odd) {
     background-color: rgba(13, 9, 243, 0.10);
 }
 .Tabla-Persona{
-    /*border:5px solid red*/
+    border:5px solid red
+}
+.Persona{
+    border:5px solid yellow;
+    width:100%;
 }
 </style>

@@ -3,7 +3,7 @@
         <v-card height="400px" style="width:400px">
             <v-form class="text-center" @submit.prevent="submitAdmin">
                 <v-card-title class="title d-flex justify-center" align="center">
-                    <h2 class="Titulo text-center mt-5">Iniciar Sesión</h2>
+                    <h2 style="width:200px" class="Titulo text-center mt-5">Iniciar Sesión</h2>
                 </v-card-title>
                 <v-card-text>
                     <v-container>
