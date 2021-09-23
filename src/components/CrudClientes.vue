@@ -18,19 +18,25 @@
         </v-col>
     </v-row>
     <v-row class="d-flex justify-center p-0" >
-        <v-card width="100%">
-        <!-- esto es la tabla -->
-        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" 
-        :footer-props="{'items-per-page-text':'usuarios por pagina','items-per-page-options':[10, 50, 100, 200, -1]}"  :options="options"
-        loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
-            <!-- botones editar y borrar -->
-            <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
-                <v-btn color="green  white--text"  @click="prepareEdit(item)"><v-icon small class="mr-2" > mdi-pencil </v-icon> editar</v-btn>
-                <v-btn color="red white--text" class="ml-1"  @click="deleteUser(item.Id) "><v-icon small > mdi-delete </v-icon> eliminar</v-btn> 
-            </template>
+        <v-col v-if="!adminVerification">
+            <filtros/>
+        </v-col>
+        <v-col>
+            <v-card width="100%">
+            <!-- esto es la tabla -->
+            <v-data-table :headers="computedHeaders" :loading="loading" :search="search" 
+            :footer-props="{'items-per-page-text':'usuarios por pagina','items-per-page-options':[10, 50, 100, 200, -1]}"  :options="options"
+            loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
+                <!-- botones editar y borrar -->
+                <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
+                    <v-btn color="green  white--text"  @click="prepareEdit(item)"><v-icon small class="mr-2" > mdi-pencil </v-icon> editar</v-btn>
+                    <v-btn color="red white--text" class="ml-1"  @click="deleteUser(item.Id) "><v-icon small > mdi-delete </v-icon> eliminar</v-btn> 
+                </template>
 
-        </v-data-table>
-        </v-card>
+            </v-data-table>
+            </v-card>
+        </v-col>
+        
     </v-row>
     <!-- ventana modal para crear/editar -->
     <v-dialog v-model="dialog" max-width="800px">
@@ -77,6 +83,9 @@ var url="http://localhost:3000/api/hojas/"
 import axios from 'axios'
 export default {
     name:'CrudClientes',
+    components:{
+        filtros
+    },
     data() {
         return {
             loading:false,
