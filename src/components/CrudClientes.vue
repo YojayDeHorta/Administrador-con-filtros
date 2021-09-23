@@ -1,5 +1,5 @@
 <template>
-    <v-container class="CRUD-P">
+    <v-container class="CRUD-P" fluid fill-height>
     <v-row  cols="12">
         <v-col  cols="2">
             <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
@@ -17,7 +17,8 @@
             <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
         </v-col>
     </v-row>
-    <v-row class="d-flex justify-center p-0" cols="12" md="12">
+    <v-row class="d-flex justify-center p-0" >
+        <v-card width="100%">
         <!-- esto es la tabla -->
         <v-data-table :headers="computedHeaders" :loading="loading" :search="search" 
         :footer-props="{'items-per-page-text':'usuarios por pagina','items-per-page-options':[10, 50, 100, 200, -1]}"  :options="options"
@@ -29,6 +30,7 @@
             </template>
 
         </v-data-table>
+        </v-card>
     </v-row>
     <!-- ventana modal para crear/editar -->
     <v-dialog v-model="dialog" max-width="800px">
