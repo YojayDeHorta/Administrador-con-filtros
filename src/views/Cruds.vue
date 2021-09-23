@@ -13,10 +13,7 @@
                 single-line
                 ></v-select>
             </v-col>
-            <v-col cols="3" class="pb-0">
-                <!-- subida de archivo temporal-->
-                <v-file-input @change="clickFile" v-model="file" accept=".xlsx" type="file"  label="Subir archivo xlsx"></v-file-input> 
-            </v-col>
+
             
         </v-row>
         <!-- Crud -->
@@ -58,38 +55,13 @@ export default {
                     { text: 'ACCIONES', value: 'actions', class:'primary white--text', sortable: false  },
                 ],
             ],
-            //files
-            file:null,
-            urlFile:'',
         }
     },
     mounted(){
         console.log(this.columnas);
     },
     methods: {
-        async clickFile(){
-           if (this.file!== null) {
-              this.urlFile=URL.createObjectURL(this.file)
-              let respuesta= await axios.post('http://localhost:3000/file',{'name':this.file.name,'file':this.file.path})
-              if (respuesta.data==true) {
-                this.$router.go()
-              }else{
-                console.log('error al subir el archivo');
-              }
-           } 
-        },
-        async descargar(){
-            let respuesta=await axios.get('http://localhost:3000/download')
-            if (respuesta.data==false) {
-                console.log('error al descargar el archivo');
-            }else{
-                const link = document.createElement('a')
-                link.href = '/'+respuesta.data
-                link.setAttribute('download', respuesta.data) //or any other extension
-                document.body.appendChild(link)
-                link.click()
-            }
-        }
+
     },
 }
 </script>

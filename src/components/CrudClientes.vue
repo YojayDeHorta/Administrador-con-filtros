@@ -1,25 +1,33 @@
 <template>
     <v-container class="CRUD-P">
     <v-row  cols="12">
-        <v-col  cols="1">
+        <v-col  cols="2">
             <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
         </v-col>
         <v-col cols="2" class="mt-0 pt-0">
             <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
-        <v-col cols="9" class="text-right">
+        <v-col cols="8"  class="text-right">
             <v-btn color="teal darken-1"  @click="descargar()"><v-icon color="white">mdi-file-download</v-icon></v-btn>
-            <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</v-btn>
+            <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
+            
+            <span v-if="file==null"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</span>
+            <span v-else><v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}</span>
+            </v-btn>
+            <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
         </v-col>
-        <!-- <a href="/source.csv" download>descargar</a> -->
     </v-row>
     <v-row class="d-flex justify-center p-0" cols="12" md="12">
-        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" :footer-props="{'items-per-page-text':'usuarios por pagina'}" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
+        <!-- esto es la tabla -->
+        <v-data-table :headers="computedHeaders" :loading="loading" :search="search" 
+        :footer-props="{'items-per-page-text':'usuarios por pagina','items-per-page-options':[10, 50, 100, 200, -1]}"  :options="options"
+        loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
+            <!-- botones editar y borrar -->
             <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
                 <v-btn color="green  white--text"  @click="prepareEdit(item)"><v-icon small class="mr-2" > mdi-pencil </v-icon> editar</v-btn>
-                <v-btn color="red white--text" class="ml-1"  @click="deleteUser(item.Id)"><v-icon small > mdi-delete </v-icon> eliminar</v-btn>
-                
+                <v-btn color="red white--text" class="ml-1"  @click="deleteUser(item.Id) "><v-icon small > mdi-delete </v-icon> eliminar</v-btn> 
             </template>
+
         </v-data-table>
     </v-row>
     <!-- ventana modal para crear/editar -->
@@ -93,7 +101,12 @@ export default {
             formTitle:'',
             //edicion
             isEditing:false,
-            
+            //files
+            file:null,
+            //opciones de la data table
+            options: {
+                itemsPerPage: 100
+            },
         }
     },
     props:{
@@ -184,7 +197,21 @@ export default {
                 document.body.appendChild(link)
                 link.click()
             }
-        }
+        },        
+        chooseFiles() {
+            document.getElementById("fileUpload").click()
+        },
+        async submitFile(){
+            this.file = this.$refs.file.files[0];
+            if (this.file!== null) {
+              let respuesta= await axios.post('http://localhost:3000/file',{'name':this.file.name,'file':this.file.path})
+              if (respuesta.data==true) {
+                this.$router.go()
+              }else{
+                console.log('error al subir el archivo');
+                }
+            }
+        },
     }
 }
 </script>
@@ -192,8 +219,5 @@ export default {
 tbody tr:nth-of-type(odd) {
   background-color: rgba(13, 9, 243, 0.10);
 }
-.CRUD-P{
-  /* border:5px solid yellow;
-   width:80%;*/
-}
+
 </style>
