@@ -18,15 +18,15 @@
         </v-col>
     </v-row>
     <v-row class="d-flex justify-center p-0" >
-        <v-col v-if="!adminVerification">
-            <filtros/>
+        <v-col v-if="!adminVerification" class="ml-5">
+            <filtro :header="computedHeaders" :body="users" @filtro="funcionFiltro"/>
         </v-col>
         <v-col>
             <v-card width="100%">
             <!-- esto es la tabla -->
             <v-data-table :headers="computedHeaders" :loading="loading" :search="search" 
             :footer-props="{'items-per-page-text':'usuarios por pagina','items-per-page-options':[10, 50, 100, 200, -1]}"  :options="options"
-            loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="elevation-1 theme--light">
+            loading-text="Cargando...Porfavor espere" :items="computedBody" sort-by="descripcion" class="elevation-1 theme--light">
                 <!-- botones editar y borrar -->
                 <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification" >
                     <v-btn color="green  white--text"  @click="prepareEdit(item)"><v-icon small class="mr-2" > mdi-pencil </v-icon> editar</v-btn>
@@ -81,17 +81,19 @@
 <script>
 var url="http://localhost:3000/api/hojas/"
 import axios from 'axios'
+import filtro from "./Filtro.vue"
+
 export default {
     name:'CrudClientes',
     components:{
-        filtros
+        filtro
     },
     data() {
         return {
             loading:false,
             users:[],
             columnas:[
-                {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text'},
+                {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text', },
                 {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text'},
                 {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text'},
                 {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text'},
@@ -118,6 +120,8 @@ export default {
             options: {
                 itemsPerPage: 100
             },
+            //variable para el filtro
+            bodyFilter:null
         }
     },
     props:{
@@ -132,13 +136,21 @@ export default {
                 return this.columnas
             }else{
                 let columnasMod=[
-                    {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text'},
-                    {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text'},
-                    {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text'},
-                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text'},
-                    {text:'DIRECCION' ,value:'Direccion', class:'blue-grey darken-3 white--text'},
+                    {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text', tipo:'number'},
+                    {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text',tipo:'string'},
+                    {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text',tipo:'string'},
+                    {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text',tipo:'string'},
+                    {text:'DIRECCION' ,value:'Direccion', class:'blue-grey darken-3 white--text',tipo:'string'},
                 ] 
                 return columnasMod
+            }
+        },
+        computedBody(){
+            console.log(this.bodyFilter);
+            if (this.bodyFilter==null) {
+                return this.users
+            }else{
+                return this.bodyFilter
             }
         }
     },
@@ -223,6 +235,10 @@ export default {
                 }
             }
         },
+        // filtros
+        funcionFiltro(value){
+            this.bodyFilter=value
+        }
     }
 }
 </script>

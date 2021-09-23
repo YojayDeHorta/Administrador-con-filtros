@@ -17,7 +17,8 @@ export default {
     components: {
         CrudClientes,
         
-    }
+    },
+    
 }
 </script>
 <style scoped>
