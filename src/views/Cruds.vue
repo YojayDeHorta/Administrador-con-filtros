@@ -1,6 +1,6 @@
 <template>
     <v-container class="Marco">
-        <v-row >
+        <v-row class="Tablas">
             <v-col cols="2" class="ml-4"> 
                 <!-- select de las tablas -->
                 <h5>Tablas:</h5>
@@ -68,5 +68,9 @@ export default {
 <style scoped>
     .Marco{
         border:5px solid black;
+        width:100%;
+    }
+    .Tablas{
+      /*  border:5px solid yellow;*/
     }
 </style>
