@@ -19,7 +19,9 @@
     </v-row>
     <v-row class="d-flex justify-center p-0" >
         <v-col v-if="!adminVerification" class="ml-5">
-            <filtro :header="computedHeaders" :body="users" @filtro="funcionFiltro"/>
+            <!-- <filtro :header="computedHeaders" :body="users" @filtro="funcionFiltro"/> -->
+            <v-text-field label="nombre" v-model="nameValue" append-icon="mdi-text-box-search"></v-text-field>
+            <v-text-field label="apellido" v-model="apellidoValue" append-icon="mdi-text-box-search"></v-text-field>
         </v-col>
         <v-col>
             <v-card width="100%">
@@ -121,7 +123,10 @@ export default {
                 itemsPerPage: 100
             },
             //variable para el filtro
-            bodyFilter:null
+            bodyFilter:null,
+            //otros filtro
+            nameValue:'',
+            apellidoValue:''
         }
     },
     props:{
@@ -137,8 +142,8 @@ export default {
             }else{
                 let columnasMod=[
                     {text:'ID' ,value:'Id', class:'blue-grey darken-3 white--text', tipo:'number'},
-                    {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text',tipo:'string'},
-                    {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text',tipo:'string'},
+                    {text:'NOMBRE' ,value:'Nombre', class:'blue-grey darken-3 white--text',tipo:'string',filter: this.nameFilter},
+                    {text:'APELLIDO' ,value:'Apellido', class:'blue-grey darken-3 white--text',tipo:'string',filter: this.apellidoFilter},
                     {text:'TIPO DE CLIENTE' ,value:'TipoCliente', class:'blue-grey darken-3 white--text',tipo:'string'},
                     {text:'DIRECCION' ,value:'Direccion', class:'blue-grey darken-3 white--text',tipo:'string'},
                 ] 
@@ -238,7 +243,19 @@ export default {
         // filtros
         funcionFiltro(value){
             this.bodyFilter=value
-        }
+        },
+        nameFilter(value) {
+            if (!this.nameValue) {
+            return true;
+            }
+            return value.toLowerCase().includes(this.nameValue.toLowerCase());
+        },
+        apellidoFilter(value) {
+            if (!this.apellidoValue) {
+            return true;
+            }
+            return value.toLowerCase().includes(this.apellidoValue.toLowerCase());
+        },
     }
 }
 </script>
@@ -247,15 +264,12 @@ tbody tr:nth-of-type(odd) {
   background-color: rgba(13, 9, 243, 0.10);
 }
 
-.OP{
 
-    /*border:5px solid yellow;*/
-}
 
 .OP-TABLAS{
    /* border:5px solid red;*/
     height:60px;
-      margin:auto;
+    margin:auto;
    
 }
 

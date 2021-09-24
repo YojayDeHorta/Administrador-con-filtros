@@ -70,7 +70,5 @@ export default {
         border:5px solid black;
         width:100%;
     }
-    .Tablas{
-      /*  border:5px solid yellow;*/
-    }
+    
 </style>
