@@ -37,6 +37,7 @@ app.post('/api/hojas/:idHoja', (req,res)=>{
         let servidor=JSON.parse(localStorage.getItem('servidor'))
         servidor[req.params.idHoja]=req.body
         localStorage.setItem('servidor', JSON.stringify(servidor))
+        console.log(JSON.parse(localStorage.getItem('servidor')));
         res.send(true)
     } catch (error) {
         console.log(error);
@@ -102,6 +103,22 @@ app.get('/download', (req,res)=>{
         res.send(false)
     }
 })
+//descarga filtrada
+app.post('/filter', async(req, res) => {
+    try {
+        const workBook=XLSX.utils.book_new()
+        const workSheet=XLSX.utils.json_to_sheet(req.body)
+        XLSX.utils.book_append_sheet(workBook,workSheet,hojas[0])
+        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
+        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
+        XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
+        res.send(`datos.xlsx`)
+    } catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+});
+
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });

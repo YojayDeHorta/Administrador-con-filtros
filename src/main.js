@@ -11,11 +11,21 @@ Vue.use(VueAxios, axios)
 //lenguaje
 
 Vue.config.productionTip = false
-
+/*
 new Vue({
   router,
   store,
   vuetify,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app')*/
 
+new Vue({
+  router,
+  store,
+  vuetify,
+  render: h => h(App),
+  /*created() {
+    // Prevent blank screen in Electron builds
+    this.$router.push('/')
+  }*/
+}).$mount('#app')
