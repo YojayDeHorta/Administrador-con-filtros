@@ -1,9 +1,5 @@
 <template>
     <div class="Marco">
-        <h1 class="Titulo text-center font-weight-bold text-h2 basil--text mt-5">
-            BIENVENIDO<br>
-            <v-icon class="Filtrar" style="font-size:100px">mdi-account-circle</v-icon>
-        </h1>
         <div class="Marco_Login d-flex justify-center">
             <v-card class="mt-10 mb-10" height="400px" style="width: 400px">
                 <v-form class="text-center" @submit.prevent="submitAdmin">
