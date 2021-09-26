@@ -442,13 +442,13 @@ background-color: rgba(112, 128, 144, 0.10);
 }
 
 tbody tr{
-
+    text-align: center;
     vertical-align:middle;
 }
 
 tbody td{
     border:0.2px solid black;
-      padding:15px;
+      
     width: 50%;
    
 }

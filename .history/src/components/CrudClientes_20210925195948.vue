@@ -448,7 +448,7 @@ tbody tr{
 
 tbody td{
     border:0.2px solid black;
-      padding:15px;
+      pa
     width: 50%;
    
 }

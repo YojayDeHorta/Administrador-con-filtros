@@ -270,7 +270,7 @@ export default {
                 let columnasMod=[
                     {text:'ID' ,value:'ID', class:'Header_Tabla',width:"50px"},
                     {text:'NUMERO DE SOCIO' ,value:'NUM_SOCIO', class:'Header_Tabla',width:"150px"},
-                    {text:'SOCIO' ,value:'SOCIO', class:'Header_Tabla p-0',filter: this.socioFilter,width:"70px"},
+                    {text:'SOCIO' ,value:'SOCIO', class:'Header_Tabla p-0',filter: this.socioFilter,width:"50px"},
                     {text:'NOMBRE' ,value:'NOMBRE', class:'Header_Tabla p-0',filter: this.nameFilter,width:"150px"},
                     {text:'APELLIDO 1' ,value:'APELLIDO_1', class:'Header_Tabla p-0',filter: this.apellidoFilter,width:"150px"},
                     {text:'APELLIDO 2' ,value:'APELLIDO_2', class:'Header_Tabla p-0',width:"150px"},
@@ -283,13 +283,13 @@ export default {
                     {text:'PROVINCIA' ,value:'PROVINCIA', class:'Header_Tabla',width:"150px"},
                     {text:'PAIS' ,value:'PAIS', class:'Header_Tabla',width:"150px"},
                     {text:'MOVIL' ,value:'MOVIL', class:'Header_Tabla',width:"150px"},
-                    {text:'FIJO' ,value:'FIJO', class:'Header_Tabla',width:"150px"},
-                    {text:'EMAIL' ,value:'EMAIL', class:'Header_Tabla',width:"150px"},
-                    {text:'EDAD' ,value:'EDAD', class:'Header_Tabla',width:"150px"},
-                    {text:'SOLA' ,value:'SOLA', class:'Header_Tabla',width:"150px"},
-                    {text:'MAYOR' ,value:'MAYOR', class:'Header_Tabla',width:"150px"},
-                    {text:'TEFILÁ' ,value:'TEFILA', class:'Header_Tabla',width:"150px"},
-                    {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'Header_Tabla',width:"150px"},
+                    {text:'FIJO' ,value:'FIJO', class:'Header_Tabla'},
+                    {text:'EMAIL' ,value:'EMAIL', class:'Header_Tabla'},
+                    {text:'EDAD' ,value:'EDAD', class:'Header_Tabla'},
+                    {text:'SOLA' ,value:'SOLA', class:'Header_Tabla'},
+                    {text:'MAYOR' ,value:'MAYOR', class:'Header_Tabla'},
+                    {text:'TEFILÁ' ,value:'TEFILA', class:'Header_Tabla'},
+                    {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'Header_Tabla'},
                 ] 
                 return columnasMod
             }
@@ -428,12 +428,11 @@ export default {
 <style>
 
 .Header_Tabla{
-    text-align: center;
     position:relative;
- 
+    text-align: center;
     border:1px solid black;
-    background-color: #616161;
-    color:white !important;
+    background-color: #757575;
+    color:black !important;
 }
 
 
@@ -441,16 +440,12 @@ tbody tr:nth-of-type(odd){
 background-color: rgba(112, 128, 144, 0.10);
 }
 
-tbody tr{
 
-    vertical-align:middle;
-}
 
 tbody td{
     border:0.2px solid black;
-      padding:15px;
     width: 50%;
-   
+    text-align: center;
 }
 
 

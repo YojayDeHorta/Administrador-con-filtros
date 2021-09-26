@@ -7,7 +7,7 @@
         <v-col  cols="5" class="OP-TABLAS mt-0 pt-0">
             <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
-        <v-col  cols="2" style="border:5px solid yellow"  class="text-center">
+        <v-col  cols="2"  class="text-center">
             <v-btn color="teal darken-1"  @click="descargar()" v-if="adminVerification"><v-icon color="white">mdi-file-download</v-icon></v-btn> <!--descarga normal-->
             <v-btn color="teal darken-1 white--text"  v-if="!adminVerification" @click="descargarFiltro()"><v-icon color="white">mdi-file-download</v-icon>descargar tabla</v-btn> <!--descarga filtrada-->
             <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
@@ -268,28 +268,28 @@ export default {
                 //blue-grey darken-3 white--text
             }else{
                 let columnasMod=[
-                    {text:'ID' ,value:'ID', class:'Header_Tabla',width:"50px"},
-                    {text:'NUMERO DE SOCIO' ,value:'NUM_SOCIO', class:'Header_Tabla',width:"150px"},
-                    {text:'SOCIO' ,value:'SOCIO', class:'Header_Tabla p-0',filter: this.socioFilter,width:"70px"},
-                    {text:'NOMBRE' ,value:'NOMBRE', class:'Header_Tabla p-0',filter: this.nameFilter,width:"150px"},
-                    {text:'APELLIDO 1' ,value:'APELLIDO_1', class:'Header_Tabla p-0',filter: this.apellidoFilter,width:"150px"},
-                    {text:'APELLIDO 2' ,value:'APELLIDO_2', class:'Header_Tabla p-0',width:"150px"},
-                    {text:'PARENTESCO' ,value:'PARENTESCO', class:'Header_Tabla p-0',width:"150px"},
-                    {text:'DNI' ,value:'DNI', class:'Header_Tabla p-0',width:"150px"},
-                    {text:'PD' ,value:'PD', class:'Header_Tabla p-0',width:"150px"},
-                    {text:'DIRECCION' ,value:'DIRECCION', class:'Header_Tabla p-0',width:"150px"},
-                    {text:'CODIGO POSTAL' ,value:'COD_POSTAL', class:'Header_Tabla',width:"150px"},
-                    {text:'LOCALIDAD' ,value:'LOCALIDAD', class:'Header_Tabla',width:"150px"},
-                    {text:'PROVINCIA' ,value:'PROVINCIA', class:'Header_Tabla',width:"150px"},
-                    {text:'PAIS' ,value:'PAIS', class:'Header_Tabla',width:"150px"},
-                    {text:'MOVIL' ,value:'MOVIL', class:'Header_Tabla',width:"150px"},
-                    {text:'FIJO' ,value:'FIJO', class:'Header_Tabla',width:"150px"},
-                    {text:'EMAIL' ,value:'EMAIL', class:'Header_Tabla',width:"150px"},
-                    {text:'EDAD' ,value:'EDAD', class:'Header_Tabla',width:"150px"},
-                    {text:'SOLA' ,value:'SOLA', class:'Header_Tabla',width:"150px"},
-                    {text:'MAYOR' ,value:'MAYOR', class:'Header_Tabla',width:"150px"},
-                    {text:'TEFILÁ' ,value:'TEFILA', class:'Header_Tabla',width:"150px"},
-                    {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'Header_Tabla',width:"150px"},
+                    {text:'ID' ,value:'ID', class:'Header_Tabla'},
+                    {text:'NUMERO DE SOCIO' ,value:'NUM_SOCIO', class:'Header_Tabla'},
+                    {text:'SOCIO' ,value:'SOCIO', class:'Header_Tabla p-0',filter: this.socioFilter},
+                    {text:'NOMBRE' ,value:'NOMBRE', class:'Header_Tabla p-0',filter: this.nameFilter},
+                    {text:'APELLIDO 1' ,value:'APELLIDO_1', class:'Header_Tabla p-0',filter: this.apellidoFilter},
+                    {text:'APELLIDO 2' ,value:'APELLIDO_2', class:'Header_Tabla p-0'},
+                    {text:'PARENTESCO' ,value:'PARENTESCO', class:'Header_Tabla p-0'},
+                    {text:'DNI' ,value:'DNI', class:'Header_Tabla p-0'},
+                    {text:'PD' ,value:'PD', class:'Header_Tabla p-0'},
+                    {text:'DIRECCION' ,value:'DIRECCION', class:'Header_Tabla p-0'},
+                    {text:'CODIGO POSTAL' ,value:'COD_POSTAL', class:'Header_Tabla'},
+                    {text:'LOCALIDAD' ,value:'LOCALIDAD', class:'Header_Tabla'},
+                    {text:'PROVINCIA' ,value:'PROVINCIA', class:'Header_Tabla'},
+                    {text:'PAIS' ,value:'PAIS', class:'Header_Tabla'},
+                    {text:'MOVIL' ,value:'MOVIL', class:'Header_Tabla'},
+                    {text:'FIJO' ,value:'FIJO', class:'Header_Tabla'},
+                    {text:'EMAIL' ,value:'EMAIL', class:'Header_Tabla'},
+                    {text:'EDAD' ,value:'EDAD', class:'Header_Tabla'},
+                    {text:'SOLA' ,value:'SOLA', class:'Header_Tabla'},
+                    {text:'MAYOR' ,value:'MAYOR', class:'Header_Tabla'},
+                    {text:'TEFILÁ' ,value:'TEFILA', class:'Header_Tabla'},
+                    {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'Header_Tabla'},
                 ] 
                 return columnasMod
             }
@@ -426,40 +426,35 @@ export default {
 }
 </script>
 <style>
-
-.Header_Tabla{
-    text-align: center;
-    position:relative;
- 
-    border:1px solid black;
-    background-color: #616161;
-    color:white !important;
+table.colapsado {
+  border-collapse : collapse;
 }
 
 
-tbody tr:nth-of-type(odd){
-background-color: rgba(112, 128, 144, 0.10);
-}
-
-tbody tr{
-
-    vertical-align:middle;
-}
-
-tbody td{
-    border:0.2px solid black;
-      padding:15px;
-    width: 50%;
-   
+tbody tr:nth-of-type(odd) {
+    /*border:5px solid red;*/
+ /* background-color: rgba(13, 9, 243, 0.10);*/
 }
 
 
 .Header_Tabla{
+/*border:5px solid red;*/
     text-align: center;
+    /*width: 30%;*/
     padding:0;
     margin:0;
 }
 
+.Tabla{
+    border:5px solid black;
+    border-bottom-color: #558FA6;
+}
+/*
+.OP-TABLAS{
 
-
+    height:60px;
+    margin:auto;
+   
+}
+*/
 </style>

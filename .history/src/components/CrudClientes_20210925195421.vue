@@ -428,11 +428,11 @@ export default {
 <style>
 
 .Header_Tabla{
-    text-align: center;
     position:relative;
- 
+    text-align: center;
     border:1px solid black;
-    background-color: #616161;
+    background-color: #616161
+;
     color:white !important;
 }
 
@@ -441,16 +441,12 @@ tbody tr:nth-of-type(odd){
 background-color: rgba(112, 128, 144, 0.10);
 }
 
-tbody tr{
 
-    vertical-align:middle;
-}
 
 tbody td{
     border:0.2px solid black;
-      padding:15px;
     width: 50%;
-   
+    text-align: center;
 }
 
 
