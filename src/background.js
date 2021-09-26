@@ -20,10 +20,8 @@ protocol.registerSchemesAsPrivileged([
 async function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 1000,
-    height: 800,
     webPreferences: {
-      
+      show: false,
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: true,
@@ -32,7 +30,8 @@ async function createWindow() {
       nativeWindowOpen: true
     }
   })
-
+  win.maximize();
+  win.show();
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -46,12 +45,12 @@ async function createWindow() {
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  /*console.log(archivos);
+  console.log(archivos);
   for (const file of archivos) {
     fs.unlink(path.join(__static, file), err => {
       if (err) throw err;
     });
-  }*/
+  }/**/
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {

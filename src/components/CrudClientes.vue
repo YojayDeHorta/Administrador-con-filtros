@@ -7,13 +7,13 @@
         <v-col  cols="5" class="OP-TABLAS mt-0 pt-0">
             <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
         </v-col>
-        <v-col  cols="2"  class="OP-TABLAS text-right">
-            <v-btn color="teal darken-1"  @click="descargar()" v-if="adminVerification"><v-icon color="white">mdi-file-download</v-icon></v-btn> <!--descarga normal-->
+        <v-col  cols="4"  class="OP-TABLAS text-right">
+            <v-btn color="orange darken-1"  @click="descargar()" v-if="adminVerification"><v-icon color="white">mdi-archive-arrow-down</v-icon></v-btn> <!--descarga normal-->
+            <v-btn color="teal darken-1"  @click="descargarExcel()" v-if="adminVerification"><v-icon color="white">mdi-file-download</v-icon></v-btn> <!--descarga de excel-->
             <v-btn color="teal darken-1 white--text"  v-if="!adminVerification" @click="descargarFiltro()"><v-icon color="white">mdi-file-download</v-icon>descargar tabla</v-btn> <!--descarga filtrada-->
             <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
-            
-            <span v-if="file==null"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</span>
-            <span v-else><v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}</span>
+                <span v-if="file==null"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</span>
+                <span v-else><v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}</span>
             </v-btn>
             <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
         </v-col>
@@ -192,7 +192,7 @@ export default {
                 {text:'SOLA' ,value:'SOLA', class:'blue-grey darken-3 white--text'},
                 {text:'MAYOR' ,value:'MAYOR', class:'blue-grey darken-3 white--text'},
                 {text:'TEFILÁ' ,value:'TEFILA', class:'blue-grey darken-3 white--text'},
-                {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'blue-grey darken-3 white--text'},
+                {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'blue-grey darken-3 white--text text-center',width: '200px'},
                 { text: 'ACCIONES', value: 'actions', class:'blue-grey darken-3 white--text text-center', sortable: false ,width: '300px' },
             ] ,
             //aqui van los valores pa los select
@@ -364,6 +364,18 @@ export default {
         },
         async descargar(){
             let respuesta=await axios.get('http://localhost:3000/download')
+            if (respuesta.data==false) {
+                console.log('error al descargar el archivo');
+            }else{
+                const link = document.createElement('a')
+                link.href = '/'+respuesta.data
+                link.setAttribute('download', respuesta.data) //or any other extension
+                document.body.appendChild(link)
+                link.click()
+            }
+        },
+        async descargarExcel(){
+            let respuesta=await axios.get('http://localhost:3000/download/excel')
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
