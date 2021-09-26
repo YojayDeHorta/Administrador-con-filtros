@@ -5,7 +5,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions:{
-        // asar: false,
+        asar: false,
         
       },
   

@@ -1,6 +1,5 @@
 'use strict';
 const express = require('express');
-const electron = require('electron');
 const app = express();
 app.use(express.json())
 //cors
@@ -15,8 +14,10 @@ const fsPromises = FileSystem.promises;
 
 const path = require('path');
 const { send } = require('process');
-
-
+//local storage y lectura de xlsx
+const XLSX=require('xlsx')
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage(`${__static}/scratch`);
 //lectura de hojas
 let hojas=["Hoja1","Personal"]
 let archivos=[]
@@ -24,17 +25,12 @@ let archivos=[]
 const crypto= require('crypto')
 const algoritm='aes-256-ctr';
 let key=crypto.createHash('sha256').update(String('MySecretKey')).digest('base64').substring(0,32)
-const configDir =  (electron.app || electron.remote.app).getPath('userData');
-//local storage y lectura de xlsx
-const XLSX=require('xlsx')
-var LocalStorage = require('node-localstorage').LocalStorage,
-localStorage = new LocalStorage(`${configDir}/scratch`);
 
 const encrypt= (buffer)=>{
     const iv=crypto.randomBytes(16)
     const cipher=crypto.createCipheriv(algoritm,key,iv)
     const result=Buffer.concat([iv,cipher.update(buffer),cipher.final()])
-    FileSystem.writeFile(`${configDir}/${localStorage.getItem('fileName')}`,result,(err,file)=>{
+    FileSystem.writeFile(`${__static}/${localStorage.getItem('fileName')}`,result,(err,file)=>{
         if (err) return console.error(err.message)
         if (file) {
             console.log('archivo encriptado');
@@ -44,7 +40,7 @@ const encrypt= (buffer)=>{
 }
 
 const decrypt= () =>{
-    var file =FileSystem.readFileSync(`${configDir}/${localStorage.getItem('fileName')}`)
+    var file =FileSystem.readFileSync(`${__static}/${localStorage.getItem('fileName')}`)
     // console.log('result read: ' + file);
     const iv= file.slice(0,16)
     file= file.slice(16)
@@ -98,7 +94,7 @@ app.post('/api/admin', (req,res)=>{
 //subida del servidor
 app.post('/file', async(req, res) => {
     try {
-        FileSystem.copyFile(req.body.file, `${configDir}/${req.body.name}`, (err) => {
+        FileSystem.copyFile(req.body.file, `${__static}/${req.body.name}`, (err) => {
             if (err) throw err;
             localStorage.setItem('fileName', req.body.name)
         });
@@ -108,28 +104,12 @@ app.post('/file', async(req, res) => {
         res.send(false)
     }
 });
-//subida del excel
-app.post('/files', async(req, res) => {
-    try {
-        const excel=XLSX.readFile(req.body.file)
-        var nombreHoja=excel.SheetNames;
-        let arrayOfArrays=[]
-        for (let i = 0; i < nombreHoja.length; i++) {
-            let datos= XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[i]])
-            arrayOfArrays.push(datos)            
-        }
-        encrypt(JSON.stringify(arrayOfArrays))
-        res.send(true)
-    } catch (error) {
-        console.log(error);
-        res.send(false)
-    }
-});
 //descarga del servidor
 app.get('/download', (req,res)=>{
     try {
-        if (localStorage.getItem('fileName')!=null && FileSystem.existsSync(`${configDir}/${localStorage.getItem('fileName')}`)) {
-            res.download(`${configDir}/${localStorage.getItem('fileName')}`);
+        console.log(localStorage.getItem('fileName')!=null, FileSystem.existsSync(`${__static}/${localStorage.getItem('fileName')}`))
+        if (localStorage.getItem('fileName')!=null && FileSystem.existsSync(`${__static}/${localStorage.getItem('fileName')}`)) {
+            res.send(localStorage.getItem('fileName'))
         }else{
             res.send(false)
         }
@@ -149,14 +129,13 @@ app.get('/download/excel', (req,res)=>{
         }   
         XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
         XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
-        XLSX.writeFile(workBook,`${configDir}/datos.xlsx`)
+        XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
         console.log(archivos.indexOf(`datos.xlsx`));
         if(archivos.indexOf(`datos.xlsx`) === -1){
             archivos.push(`datos.xlsx`)
         }
-        console.log(`${configDir}/datos.xlsx`);
-        res.download(`${configDir}/datos.xlsx`);
-        // res.send(`datos.xlsx`)
+        console.log(archivos);
+        res.send(`datos.xlsx`)
         
     } catch (error) {
         console.log(error);
@@ -171,9 +150,8 @@ app.post('/filter', async(req, res) => {
         XLSX.utils.book_append_sheet(workBook,workSheet,hojas[0])
         XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
         XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
-        XLSX.writeFile(workBook,`${configDir}/filtrado.xlsx`)
-        res.download(`${configDir}/filtrado.xlsx`);
-        // res.send(`datos.xlsx`)
+        XLSX.writeFile(workBook,`${__static}/datos.xlsx`)
+        res.send(`datos.xlsx`)
     } catch (error) {
         console.log(error);
         res.send(false)

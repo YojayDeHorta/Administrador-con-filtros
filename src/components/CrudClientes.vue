@@ -607,25 +607,25 @@ export default {
             this.user.OBSERVACIONES=''
         },
         async descargar(){
-            let respuesta=await axios.get('http://localhost:3000/download', { responseType: 'blob' })
+            let respuesta=await axios.get('http://localhost:3000/download')
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href=window.URL.createObjectURL(new Blob([respuesta.data]));
-                link.setAttribute('download', 'servidor.encrypted')
+                link.href = '/'+respuesta.data
+                link.setAttribute('download', respuesta.data) //or any other extension
                 document.body.appendChild(link)
                 link.click()
             }
         },
         async descargarExcel(){
-            let respuesta=await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
+            let respuesta=await axios.get('http://localhost:3000/download/excel')
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
-                link.setAttribute('download', 'datos.xlsx') 
+                link.href = '/'+respuesta.data
+                link.setAttribute('download', respuesta.data) //or any other extension
                 document.body.appendChild(link)
                 link.click()
             }
@@ -639,6 +639,7 @@ export default {
               let respuesta= await axios.post('http://localhost:3000/file',{'name':this.file.name,'file':this.file.path})
               if (respuesta.data==true) {
                     this.getUsers(this.idHoja)//pa que cargue en la app
+
               }else{
                 console.log('error al subir el archivo');
                 }
@@ -649,13 +650,13 @@ export default {
             this.tablaFiltrada=e
         },
         async descargarFiltro(){
-            let respuesta= await axios.post('http://localhost:3000/filter',this.tablaFiltrada, { responseType: 'blob' })
+            let respuesta= await axios.post('http://localhost:3000/filter',this.tablaFiltrada)
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href=window.URL.createObjectURL(new Blob([respuesta.data]));
-                link.setAttribute('download', 'filtrado.xlsx')
+                link.href = '/'+respuesta.data
+                link.setAttribute('download', respuesta.data) //or any other extension
                 document.body.appendChild(link)
                 link.click()
             }
