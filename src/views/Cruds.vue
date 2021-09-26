@@ -70,5 +70,9 @@ export default {
         border:5px solid black;
         width:140%;
     }
+
+    .primary{
+        text-align:center;
+    }
     
 </style>
