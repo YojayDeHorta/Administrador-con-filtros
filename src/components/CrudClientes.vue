@@ -78,7 +78,7 @@
               'items-per-page-text': 'usuarios por pagina',
               'items-per-page-options': [10, 50, 100, 200, -1],
             }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion"
-                            class="Tabla text-center">
+                            class="Tabla text--center">
                             <!-- botones editar y borrar -->
                             <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
                                 <v-btn color="green  white--text" @click="prepareEdit(item)">
@@ -362,13 +362,15 @@ export default {
                         text: "ID",
                         value: "ID",
                         class: "Header_Tabla",
-                        width: "50px"
+                        width: "50px",
+                        style:'text-center'
                     },
                     {
                         text: "NUMERO DE SOCIO",
                         value: "NUM_SOCIO",
-                        class: "Header_Tabla",
+                        class: "text--center Header_Tabla",
                         width: "150px",
+                        style:'text-center'
                     },
                     {
                         text: "SOCIO",
@@ -376,11 +378,12 @@ export default {
                         class: "Header_Tabla",
                         filter: this.socioFilter,
                         width: "70px",
+                        style:'text-center'
                     },
                     {
                         text: "NOMBRE",
                         value: "NOMBRE",
-                        class: "Header_Tabla p-0",
+                        class: "text-justify Header_Tabla",
                         filter: this.nameFilter,
                         width: "150px",
                     },
@@ -961,7 +964,7 @@ export default {
     };
 </script>
 <style>
-    
+
     .Marco_Editar{
         border:5px solid red;
     }
@@ -969,6 +972,8 @@ export default {
     .Tabla_Principal {
         border: 5px solid red;
         min-width: 70%;
+          text-align: center;
+         vertical-align: middle;
     }
 
     .Op-Iconos {
@@ -987,10 +992,12 @@ export default {
     }
 
     .Header_Tabla {
-        vertical-align: middle;
         border: 1px solid black;
         background-color: #616161;
         color: white !important;
+        text-align: none;
+         
+
     }
 
     tbody tr:nth-of-type(odd) {
@@ -1002,13 +1009,8 @@ export default {
         border: 0.2px solid black;
         padding: 15px;
         width: 50%;
-        vertical-align: middle;
     }
 
-    @media (max-width: 600px) {
 
-        .Op-Editar {
-            border: 5px solid yellow;
-        }
-    }
+
 </style>
