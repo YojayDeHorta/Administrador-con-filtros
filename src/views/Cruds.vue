@@ -1,21 +1,6 @@
 <template>
-    <v-container class="Marco">
-        <v-row class="Tablas">
-            <v-col cols="2" class="ml-4"> 
-                <!-- select de las tablas -->
-                <h5>Tablas:</h5>
-                <v-select v-model="select" :hint="`se esta trabajando en:${select.crud} con id:${select.idHoja}`" :items="hojas"
-                item-text="hoja"
-                item-value="idHoja"
-                label="Select"
-                persistent-hint
-                return-object
-                single-line
-                ></v-select>
-            </v-col>
-
-            
-        </v-row>
+    <v-container class="Marco" fluid>
+        
         <!-- Crud -->
         <!-- <Crud :adminVerification="true" :column="columnas[select.idHoja]" :idHoja="select.idHoja" ></Crud> -->
         <component :is="select.crud" :adminVerification="true" :idHoja="select.idHoja"></component>
@@ -25,11 +10,9 @@
 <script>
 import axios from 'axios'
 import CrudClientes from "../components/CrudClientes.vue"
-import CrudPersonal from "../components/CrudPersonal.vue"
 export default {
     components:{
         'CrudClientes':CrudClientes,
-        'CrudPersonal':CrudPersonal,
     },
     data() {
         return {

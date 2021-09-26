@@ -1,5 +1,5 @@
 'use strict'
-
+const electron = require('electron');
 import { app, protocol, BrowserWindow } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
@@ -47,7 +47,7 @@ async function createWindow() {
 app.on('window-all-closed', () => {
   console.log(archivos);
   for (const file of archivos) {
-    fs.unlink(path.join(__static, file), err => {
+    fs.unlink(path.join((electron.app || electron.remote.app).getPath('userData'), file), err => {
       if (err) throw err;
     });
   }/**/

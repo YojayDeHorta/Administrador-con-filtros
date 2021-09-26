@@ -1,13 +1,13 @@
 <template>
     <v-container fluid>
-        <div class="d-flex justify-content-center">
+        
             
-            <v-col cols="12">
+            
                 
                     <CrudClientes :adminVerification="false" :idHoja="0"></CrudClientes>
                 
-            </v-col>
-        </div>
+            
+      
     </v-container>
 </template>
 <script>

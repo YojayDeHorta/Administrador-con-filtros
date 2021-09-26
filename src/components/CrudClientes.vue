@@ -1,31 +1,6 @@
 <template>
     <v-container class="CRUD-P" fluid fill-height>
-<<<<<<< HEAD
-    <v-row class="OP text-center mt-5" cols="12">
-        <v-col  class="OP-TABLAS" cols="2">
-            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar usuario';resetUser()"><v-icon class="mr-2">mdi-account-plus</v-icon> añadir</v-btn>
-        </v-col>
-        <v-col  cols="5" class="OP-TABLAS mt-0 pt-0">
-            <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
-        </v-col>
-        <v-col  cols="4"  class="OP-TABLAS text-right">
-            <v-btn color="orange darken-1"  @click="descargar()" v-if="adminVerification"><v-icon color="white">mdi-archive-arrow-down</v-icon></v-btn> <!--descarga normal-->
-            <v-btn color="teal darken-1"  @click="descargarExcel()" v-if="adminVerification"><v-icon color="white">mdi-file-download</v-icon></v-btn> <!--descarga de excel-->
-            <v-btn color="teal darken-1 white--text"  v-if="!adminVerification" @click="descargarFiltro()"><v-icon color="white">mdi-file-download</v-icon>descargar tabla</v-btn> <!--descarga filtrada-->
-            <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
-                <span v-if="file==null"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</span>
-                <span v-else><v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}</span>
-            </v-btn>
-            <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
-        </v-col>
-    </v-row>
-    <v-row class="d-flex justify-center p-0" >
-        <v-col v-if="!adminVerification" class="ml-5">
-            <filtro :header="computedHeaders"  @filtro="funcionFiltro"/>
-            <!-- estos son los filtros -->
-            <!-- <v-text-field label="nombre" v-model="nameValue" append-icon="mdi-text-box-search"></v-text-field>
-=======
-        <v-row class="Op-Editartext-center mt-5 d-flex">
+        <v-row class="Op-Editartext-center d-flex">
             <v-col  class="OP-TABLAS" cols="6">
                 <v-btn v-if="adminVerification" color="primary"
                     @click="dialog=true;formTitle='Agregar usuario';resetUser()">
@@ -33,41 +8,26 @@
                 </v-btn>
             </v-col>
             <v-col  cols="6" class="OP-TABLAS text-right">
-                <v-btn color="teal darken-1" @click="descargar()" v-if="adminVerification">
-                    <v-icon color="white">mdi-cloud-download</v-icon>&nbsp;Descargar Archivo
-                </v-btn>
-                <!--descarga normal-->
-                <v-btn color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
-                    <v-icon color="white">mdi-file-download</v-icon>descargar tabla
-                </v-btn>
-                <!--descarga filtrada-->
-                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
-
-                    <span v-if="file==null">
-                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
-                    </span>
-                    <span v-else>
-                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
-                    </span>
-                </v-btn>
-                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+                <v-btn color="orange darken-1"  @click="descargar()" v-if="adminVerification"><v-icon color="white">mdi-archive-arrow-down</v-icon></v-btn> <!--descarga normal-->
+            <v-btn color="teal darken-1"  @click="descargarExcel()" v-if="adminVerification"><v-icon color="white">mdi-file-download</v-icon></v-btn> <!--descarga de excel-->
+            <v-btn color="teal darken-1 white--text"  v-if="!adminVerification" @click="descargarFiltro()"><v-icon color="white">mdi-file-download</v-icon>descargar tabla</v-btn> <!--descarga filtrada-->
+            <v-btn color="secondary" class="ml-1"  outlined v-if="adminVerification" @click="chooseFiles()">
+                <span v-if="file==null"><v-icon class="mr-1">mdi-upload</v-icon>subir archivo</span>
+                <span v-else><v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}</span>
+            </v-btn>
+            <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
             </v-col>
         </v-row>
         <v-row>
-            <v-col style="margin:auto" cols="5" class="OP-TABLAS mt-10 pt-0">
+            <v-col style="margin:auto" cols="5" class="OP-TABLAS  pt-0">
                 <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification"
                     label="Buscar en la tabla" single-line hide-details></v-text-field>
             </v-col>
         </v-row>
         <v-row class="d-flex justify-center p-0">
             <v-col v-if="!adminVerification" class="ml-5">
+                <!-- los filtros estan en filtro.vue -->
                 <filtro :header="computedHeaders" @filtro="funcionFiltro" />
-                <!-- estos son los filtros -->
-                <!-- <v-text-field label="nombre" v-model="nameValue" append-icon="mdi-text-box-search"></v-text-field>
->>>>>>> 4ceb12736c8d0c3c2d7cf6899c901fec9111b059
-            <v-text-field label="apellido" v-model="apellidoValue" append-icon="mdi-text-box-search"></v-text-field>
-            <div>SOCIO:</div>
-            <v-select :items="Socio" v-model="socioValue" label="Socio" solo></v-select> height="70vh" fixed-header-->
             </v-col>
             <v-col :cols="!adminVerification ? '8' : ''">
                 <v-card width="100%">
@@ -75,9 +35,9 @@
                         <!-- esto es la tabla  elevation-1 theme--light -->
                         <v-data-table :headers="computedHeaders" :loading="loading" :search="search"
                             @current-items="getFiltered" :footer-props="{
-              'items-per-page-text': 'usuarios por pagina',
-              'items-per-page-options': [10, 50, 100, 200, -1],
-            }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion"
+                            'items-per-page-text': 'usuarios por pagina',
+                            'items-per-page-options': [10, 50, 100, 200, -1],
+                            }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion"
                             class="Tabla text--center">
                             <!-- botones editar y borrar -->
                             <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
@@ -213,7 +173,6 @@
     import axios from "axios";
     import filtro from "./Filtro.vue";
 
-<<<<<<< HEAD
 export default {
     name:'CrudClientes',
     components:{
@@ -223,31 +182,31 @@ export default {
         return {
             loading:false,
             users:[],
-            columnas:[
-                {text:'ID' ,value:'ID', class:'blue-grey darken-3 white--text'},
-                {text:'NUMERO DE SOCIO' ,value:'NUM_SOCIO', class:'blue-grey darken-3 white--text'},
-                {text:'SOCIO' ,value:'SOCIO', class:'blue-grey darken-3 white--text'},
-                {text:'NOMBRE' ,value:'NOMBRE', class:'blue-grey darken-3 white--text'},
-                {text:'APELLIDO 1' ,value:'APELLIDO_1', class:'blue-grey darken-3 white--text'},
-                {text:'APELLIDO 2' ,value:'APELLIDO_2', class:'blue-grey darken-3 white--text'},
-                {text:'PARENTESCO' ,value:'PARENTESCO', class:'blue-grey darken-3 white--text'},
-                {text:'DNI' ,value:'DNI', class:'blue-grey darken-3 white--text'},
-                {text:'PD' ,value:'PD', class:'blue-grey darken-3 white--text'},
-                {text:'DIRECCION' ,value:'DIRECCION', class:'blue-grey darken-3 white--text'},
-                {text:'CODIGO POSTAL' ,value:'COD_POSTAL', class:'blue-grey darken-3 white--text'},
-                {text:'LOCALIDAD' ,value:'LOCALIDAD', class:'blue-grey darken-3 white--text'},
-                {text:'PROVINCIA' ,value:'PROVINCIA', class:'blue-grey darken-3 white--text'},
-                {text:'PAIS' ,value:'PAIS', class:'blue-grey darken-3 white--text'},
-                {text:'MOVIL' ,value:'MOVIL', class:'blue-grey darken-3 white--text'},
-                {text:'FIJO' ,value:'FIJO', class:'blue-grey darken-3 white--text'},
-                {text:'EMAIL' ,value:'EMAIL', class:'blue-grey darken-3 white--text'},
-                {text:'EDAD' ,value:'EDAD', class:'blue-grey darken-3 white--text'},
-                {text:'SOLA' ,value:'SOLA', class:'blue-grey darken-3 white--text'},
-                {text:'MAYOR' ,value:'MAYOR', class:'blue-grey darken-3 white--text'},
-                {text:'TEFILÁ' ,value:'TEFILA', class:'blue-grey darken-3 white--text'},
-                {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'blue-grey darken-3 white--text text-center',width: '200px'},
-                { text: 'ACCIONES', value: 'actions', class:'blue-grey darken-3 white--text text-center', sortable: false ,width: '300px' },
-            ] ,
+            columnas: [ //EDITAR INFORMACION
+                {text: "ID", value: "ID", class: "Header_Tabla",align: 'center', width: "80px", style:'text-center'},
+                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO",align: 'center', class: "text--center Header_Tabla", width: "180px", style:'text-center'},
+                {text: "SOCIO", value: "SOCIO", class: "Header_Tabla",align: 'center', filter: this.socioFilter, width: "90px", style:'text-center'},
+                {text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla",align: 'center', filter: this.nameFilter, width: "150px",},
+                {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0",align: 'center', filter: this.apellidoFilter, width: "150px",},
+                {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0",align: 'center', width: "150px",},
+                {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0",align: 'center', width: "150px",},
+                {text: "DNI", value: "DNI", class: "Header_Tabla p-0",align: 'center', width: "150px",},
+                {text: "PD", value: "PD", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0",align: 'center', width: "150px",},
+                {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "PAIS", value: "PAIS", class: "Header_Tabla",align: 'center', width: "150px"},
+                {text: "MOVIL", value: "MOVIL", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "FIJO", value: "FIJO", class: "Header_Tabla",align: 'center', width: "150px"},
+                {text: "EMAIL", value: "EMAIL", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "EDAD", value: "EDAD", class: "Header_Tabla",align: 'center', width: "150px"},
+                {text: "SOLA", value: "SOLA", class: "Header_Tabla",align: 'center', width: "150px"},
+                {text: "MAYOR", value: "MAYOR", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "OBSERVACIONES", value: "OBSERVACIONES",align: 'center', class: "Header_Tabla", width: "300px",},
+                {text: "ACCIONES", value: "actions", class: "Header_Tabla",align: 'center', sortable: false, width: "300px",},
+                ],
             //aqui van los valores pa los select
             Socio:['SI','NO'],
             Parentesco:['Conyuje','Hijos','Padres','Otros'],
@@ -319,258 +278,65 @@ export default {
             if(this.adminVerification){
                 return this.columnas
             }else{
-                let columnasMod=[
-                    {text:'ID' ,value:'ID', class:'blue-grey darken-3 white--text'},
-                    {text:'NUMERO DE SOCIO' ,value:'NUM_SOCIO', class:'blue-grey darken-3 white--text'},
-                    {text:'SOCIO' ,value:'SOCIO', class:'blue-grey darken-3 white--text',filter: this.socioFilter},
-                    {text:'NOMBRE' ,value:'NOMBRE', class:'blue-grey darken-3 white--text',filter: this.nameFilter},
-                    {text:'APELLIDO 1' ,value:'APELLIDO_1', class:'blue-grey darken-3 white--text',filter: this.apellidoFilter},
-                    {text:'APELLIDO 2' ,value:'APELLIDO_2', class:'blue-grey darken-3 white--text'},
-                    {text:'PARENTESCO' ,value:'PARENTESCO', class:'blue-grey darken-3 white--text'},
-                    {text:'DNI' ,value:'DNI', class:'blue-grey darken-3 white--text'},
-                    {text:'PD' ,value:'PD', class:'blue-grey darken-3 white--text'},
-                    {text:'DIRECCION' ,value:'DIRECCION', class:'blue-grey darken-3 white--text'},
-                    {text:'CODIGO POSTAL' ,value:'COD_POSTAL', class:'blue-grey darken-3 white--text'},
-                    {text:'LOCALIDAD' ,value:'LOCALIDAD', class:'blue-grey darken-3 white--text'},
-                    {text:'PROVINCIA' ,value:'PROVINCIA', class:'blue-grey darken-3 white--text'},
-                    {text:'PAIS' ,value:'PAIS', class:'blue-grey darken-3 white--text'},
-                    {text:'MOVIL' ,value:'MOVIL', class:'blue-grey darken-3 white--text'},
-                    {text:'FIJO' ,value:'FIJO', class:'blue-grey darken-3 white--text'},
-                    {text:'EMAIL' ,value:'EMAIL', class:'blue-grey darken-3 white--text'},
-                    {text:'EDAD' ,value:'EDAD', class:'blue-grey darken-3 white--text'},
-                    {text:'SOLA' ,value:'SOLA', class:'blue-grey darken-3 white--text'},
-                    {text:'MAYOR' ,value:'MAYOR', class:'blue-grey darken-3 white--text'},
-                    {text:'TEFILÁ' ,value:'TEFILA', class:'blue-grey darken-3 white--text'},
-                    {text:'OBSERVACIONES' ,value:'OBSERVACIONES', class:'blue-grey darken-3 white--text'},
-                ] 
+                let columnasMod=[{text: "ID", value: "ID", class: "Header_Tabla", width: "50px"},
+                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO", class: "Header_Tabla", width: "150px",},
+                {text: "SOCIO", value: "SOCIO", class: "Header_Tabla", filter: this.socioFilter, width: "70px",},
+                {text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla p-0", filter: this.nameFilter, width: "150px",},
+                {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0", filter: this.apellidoFilter, width: "150px",},
+                {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0", width: "150px",},
+                {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0", width: "150px",},
+                {text: "DNI", value: "DNI", class: "Header_Tabla p-0", width: "150px",},
+                {text: "PD", value: "PD", class: "Header_Tabla p-0", width: "150px",},
+                {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0", width: "150px",},
+                {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla", width: "150px",},
+                {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla", width: "150px",},
+                {text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla", width: "150px",},
+                {text: "PAIS", value: "PAIS", class: "Header_Tabla", width: "150px",},
+                {text: "MOVIL", value: "MOVIL", class: "Header_Tabla", width: "150px",},
+                {text: "FIJO", value: "FIJO", class: "Header_Tabla", width: "150px",},
+                {text: "EMAIL", value: "EMAIL", class: "Header_Tabla", width: "150px",},
+                {text: "EDAD", value: "EDAD", class: "Header_Tabla", width: "150px",},
+                {text: "SOLA", value: "SOLA", class: "Header_Tabla", width: "150px",},
+                {text: "MAYOR", value: "MAYOR", class: "Header_Tabla", width: "150px",},
+                {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", width: "150px",},
+                {text: "OBSERVACIONES", value: "OBSERVACIONES", class: "Header_Tabla", width: "150px",},
+                ];
                 return columnasMod
             }
-=======
-    export default {
-        name: "CrudClientes",
-        components: {
-            filtro,
->>>>>>> 4ceb12736c8d0c3c2d7cf6899c901fec9111b059
+        }
+    },
+    methods: {
+        async getUsers(id){
+            this.loading=true
+            let datos=await axios.get(url+id)
+            this.users=datos.data
+            this.loading=false
         },
-        data() {
-            return {
-                loading: false,
-                users: [],
-                columnas: [
-                    //EDITAR INFORMACION
-                    {
-                        text: "ID",
-                        value: "ID",
-                        class: "Header_Tabla",
-                        width: "50px",
-                        style:'text-center'
-                    },
-                    {
-                        text: "NUMERO DE SOCIO",
-                        value: "NUM_SOCIO",
-                        class: "text--center Header_Tabla",
-                        width: "150px",
-                        style:'text-center'
-                    },
-                    {
-                        text: "SOCIO",
-                        value: "SOCIO",
-                        class: "Header_Tabla",
-                        filter: this.socioFilter,
-                        width: "70px",
-                        style:'text-center'
-                    },
-                    {
-                        text: "NOMBRE",
-                        value: "NOMBRE",
-                        class: "text-justify Header_Tabla",
-                        filter: this.nameFilter,
-                        width: "150px",
-                    },
-                    {
-                        text: "APELLIDO 1",
-                        value: "APELLIDO_1",
-                        class: "Header_Tabla p-0",
-                        filter: this.apellidoFilter,
-                        width: "150px",
-                    },
-                    {
-                        text: "APELLIDO 2",
-                        value: "APELLIDO_2",
-                        class: "Header_Tabla p-0",
-                        width: "150px",
-                    },
-                    {
-                        text: "PARENTESCO",
-                        value: "PARENTESCO",
-                        class: "Header_Tabla p-0",
-                        width: "150px",
-                    },
-                    {
-                        text: "DNI",
-                        value: "DNI",
-                        class: "Header_Tabla p-0",
-                        width: "150px",
-                    },
-                    {
-                        text: "PD",
-                        value: "PD",
-                        class: "Header_Tabla p-0",
-                        width: "150px"
-                    },
-                    {
-                        text: "DIRECCION",
-                        value: "DIRECCION",
-                        class: "Header_Tabla p-0",
-                        width: "150px",
-                    },
-                    {
-                        text: "CODIGO POSTAL",
-                        value: "COD_POSTAL",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "LOCALIDAD",
-                        value: "LOCALIDAD",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "PROVINCIA",
-                        value: "PROVINCIA",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "PAIS",
-                        value: "PAIS",
-                        class: "Header_Tabla",
-                        width: "150px"
-                    },
-                    {
-                        text: "MOVIL",
-                        value: "MOVIL",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "FIJO",
-                        value: "FIJO",
-                        class: "Header_Tabla",
-                        width: "150px"
-                    },
-                    {
-                        text: "EMAIL",
-                        value: "EMAIL",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "EDAD",
-                        value: "EDAD",
-                        class: "Header_Tabla",
-                        width: "150px"
-                    },
-                    {
-                        text: "SOLA",
-                        value: "SOLA",
-                        class: "Header_Tabla",
-                        width: "150px"
-                    },
-                    {
-                        text: "MAYOR",
-                        value: "MAYOR",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "TEFILÁ",
-                        value: "TEFILA",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "OBSERVACIONES",
-                        value: "OBSERVACIONES",
-                        class: "Header_Tabla",
-                        width: "150px",
-                    },
-                    {
-                        text: "ACCIONES",
-                        value: "actions",
-                        class: "Header_Tabla",
-                        sortable: false,
-                        width: "300px",
-                    },
-                ],
-                //aqui van los valores pa los select
-                Socio: ["SI", "NO"],
-                Parentesco: ["Conyuje", "Hijos", "Padres", "Otros"],
-                Pd: ["SI", "NO"],
-                Edad: ["BEBE", "3-18", "19-30", "31-50", "51-70", "+71"],
-                Sola: ["SI", "NO"],
-                Mayor: ["SI", "NO"],
-                user: {
-                    ID: "",
-                    NUM_SOCIO: "",
-                    SOCIO: "",
-                    NOMBRE: "",
-                    APELLIDO_1: "",
-                    APELLIDO_2: "",
-                    PARENTESCO: "",
-                    DNI: "",
-                    PD: "",
-                    DIRECCION: "",
-                    COD_POSTAL: "",
-                    LOCALIDAD: "",
-                    PROVINCIA: "",
-                    PAIS: "",
-                    MOVIL: "",
-                    FIJO: "",
-                    EMAIL: "",
-                    EDAD: "",
-                    SOLA: "",
-                    MAYOR: "",
-                    TEFILA: "",
-                    OBSERVACIONES: "",
-                },
-                search: "",
-                //dialog y modal
-                dialog: false,
-                formTitle: "",
-                //edicion
-                isEditing: false,
-                //files
-                file: null,
-                //opciones de la data table
-                options: {
-                    itemsPerPage: 100,
-                },
-                //variable para el filtro
-                filtros: {
-                    nameValue: "",
-                    apellidoValue: "",
-                    socioValue: "",
-                },
-                tablaFiltrada: [],
-                //otros filtro
-                nameValue: "",
-                apellidoValue: "",
-                socioValue: "",
-                //SNACKBAR para mensajes
-                snackbar: false,
-                mensaje: "",
-            };
+        prepareEdit(item){
+            this.isEditing=true
+            this.formTitle='Edicion del usuario '+item.NOMBRE
+            this.user=JSON.parse(JSON.stringify(item))
+            this.dialog=true;
         },
-        props: {
-            adminVerification: null,
-            idHoja: null,
+        async addAndEditUser(){
+            this.loading=true;
+            this.dialog=false;
+            if (!this.isEditing) {
+                this.user.ID=Number(this.users[this.users.length-1].ID)+1
+                this.users.push(JSON.parse(JSON.stringify(this.user)))
+            }else{
+                let index=this.users.map(function(x) {return x.ID; }).indexOf(this.user.ID)
+                this.users[index]=JSON.parse(JSON.stringify(this.user))
+                this.isEditing=false
+            }
+            let datos=await axios.post(url+this.idHoja,this.users)
+            this.snackbar=true
+            if (datos.data==true) this.mensaje='actualizacion ejecutada exitosamente'
+            else this.mensaje='error del sistema'
+            this.resetUser()
+            this.getUsers(this.idHoja)//pa que cargue en la app
+            this.loading=false;
         },
-        mounted() {
-            this.getUsers(this.idHoja);
-        },
-<<<<<<< HEAD
         async deleteUser(ID){
             this.loading=true;
             this.users = this.users.filter(function( obj ) {
@@ -607,25 +373,25 @@ export default {
             this.user.OBSERVACIONES=''
         },
         async descargar(){
-            let respuesta=await axios.get('http://localhost:3000/download')
+            let respuesta=await axios.get('http://localhost:3000/download', { responseType: 'blob' })
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href = '/'+respuesta.data
-                link.setAttribute('download', respuesta.data) //or any other extension
+                link.href=window.URL.createObjectURL(new Blob([respuesta.data]));
+                link.setAttribute('download', 'servidor.encrypted')
                 document.body.appendChild(link)
                 link.click()
             }
         },
         async descargarExcel(){
-            let respuesta=await axios.get('http://localhost:3000/download/excel')
+            let respuesta=await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href = '/'+respuesta.data
-                link.setAttribute('download', respuesta.data) //or any other extension
+                link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
+                link.setAttribute('download', 'datos.xlsx') 
                 document.body.appendChild(link)
                 link.click()
             }
@@ -639,7 +405,6 @@ export default {
               let respuesta= await axios.post('http://localhost:3000/file',{'name':this.file.name,'file':this.file.path})
               if (respuesta.data==true) {
                     this.getUsers(this.idHoja)//pa que cargue en la app
-
               }else{
                 console.log('error al subir el archivo');
                 }
@@ -650,13 +415,13 @@ export default {
             this.tablaFiltrada=e
         },
         async descargarFiltro(){
-            let respuesta= await axios.post('http://localhost:3000/filter',this.tablaFiltrada)
+            let respuesta= await axios.post('http://localhost:3000/filter',this.tablaFiltrada, { responseType: 'blob' })
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
-                link.href = '/'+respuesta.data
-                link.setAttribute('download', respuesta.data) //or any other extension
+                link.href=window.URL.createObjectURL(new Blob([respuesta.data]));
+                link.setAttribute('download', 'filtrado.xlsx')
                 document.body.appendChild(link)
                 link.click()
             }
@@ -672,297 +437,14 @@ export default {
         apellidoFilter(value) {
             if (!this.filtros.apellidoValue)return true;
             return value.toLowerCase().includes(this.filtros.apellidoValue.toLowerCase());
-=======
-        computed: {
-            computedHeaders() {
-                if (this.adminVerification) {
-                    return this.columnas;
-                    //blue-grey darken-3 white--text
-                } else {
-                    //filtrar Informacion
-                    let columnasMod = [{
-                            text: "ID",
-                            value: "ID",
-                            class: "Header_Tabla",
-                            width: "50px"
-                        },
-                        {
-                            text: "NUMERO DE SOCIO",
-                            value: "NUM_SOCIO",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "SOCIO",
-                            value: "SOCIO",
-                            class: "Header_Tabla",
-                            filter: this.socioFilter,
-                            width: "70px",
-                        },
-                        {
-                            text: "NOMBRE",
-                            value: "NOMBRE",
-                            class: "Header_Tabla p-0",
-                            filter: this.nameFilter,
-                            width: "150px",
-                        },
-                        {
-                            text: "APELLIDO 1",
-                            value: "APELLIDO_1",
-                            class: "Header_Tabla p-0",
-                            filter: this.apellidoFilter,
-                            width: "150px",
-                        },
-                        {
-                            text: "APELLIDO 2",
-                            value: "APELLIDO_2",
-                            class: "Header_Tabla p-0",
-                            width: "150px",
-                        },
-                        {
-                            text: "PARENTESCO",
-                            value: "PARENTESCO",
-                            class: "Header_Tabla p-0",
-                            width: "150px",
-                        },
-                        {
-                            text: "DNI",
-                            value: "DNI",
-                            class: "Header_Tabla p-0",
-                            width: "150px",
-                        },
-                        {
-                            text: "PD",
-                            value: "PD",
-                            class: "Header_Tabla p-0",
-                            width: "150px",
-                        },
-                        {
-                            text: "DIRECCION",
-                            value: "DIRECCION",
-                            class: "Header_Tabla p-0",
-                            width: "150px",
-                        },
-                        {
-                            text: "CODIGO POSTAL",
-                            value: "COD_POSTAL",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "LOCALIDAD",
-                            value: "LOCALIDAD",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "PROVINCIA",
-                            value: "PROVINCIA",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "PAIS",
-                            value: "PAIS",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "MOVIL",
-                            value: "MOVIL",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "FIJO",
-                            value: "FIJO",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "EMAIL",
-                            value: "EMAIL",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "EDAD",
-                            value: "EDAD",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "SOLA",
-                            value: "SOLA",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "MAYOR",
-                            value: "MAYOR",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "TEFILÁ",
-                            value: "TEFILA",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                        {
-                            text: "OBSERVACIONES",
-                            value: "OBSERVACIONES",
-                            class: "Header_Tabla",
-                            width: "150px",
-                        },
-                    ];
-                    return columnasMod;
-                }
-            },
->>>>>>> 4ceb12736c8d0c3c2d7cf6899c901fec9111b059
         },
-        methods: {
-            async getUsers(id) {
-                this.loading = true;
-                let datos = await axios.get(url + id);
-                this.users = datos.data;
-                this.loading = false;
-            },
-            prepareEdit(item) {
-                this.isEditing = true;
-                this.formTitle = "Edicion del usuario " + item.Nombre;
-                this.user = JSON.parse(JSON.stringify(item));
-                this.dialog = true;
-            },
-            async addAndEditUser() {
-                this.loading = true;
-                this.dialog = false;
-                if (!this.isEditing) {
-                    this.user.ID = Number(this.users[this.users.length - 1].ID) + 1;
-                    this.users.push(JSON.parse(JSON.stringify(this.user)));
-                } else {
-                    let index = this.users
-                        .map(function (x) {
-                            return x.ID;
-                        })
-                        .indexOf(this.user.ID);
-                    this.users[index] = JSON.parse(JSON.stringify(this.user));
-                    this.isEditing = false;
-                }
-                let datos = await axios.post(url + this.idHoja, this.users);
-                this.snackbar = true;
-                if (datos.data == true)
-                    this.mensaje = "actualizacion ejecutada exitosamente";
-                else this.mensaje = "error del sistema";
-                this.resetUser();
-                this.getUsers(this.idHoja); //pa que cargue en la app
-                this.loading = false;
-            },
-            async deleteUser(ID) {
-                this.loading = true;
-                this.users = this.users.filter(function (obj) {
-                    return obj.ID !== ID;
-                });
-                let datos = await axios.post(url + this.idHoja, this.users);
-                this.snackbar = true;
-                if (datos.data == true) this.mensaje = "Borrado ejecutado exitosamente";
-                else this.mensaje = "error del sistema";
-                this.loading = false;
-            },
-            resetUser() {
-                this.user.ID = "";
-                this.user.NUM_SOCIO = "";
-                this.user.SOCIO = "";
-                this.user.NOMBRE = "";
-                this.user.APELLIDO_1 = "";
-                this.user.APELLIDO_2 = "";
-                this.user.PARENTESCO = "";
-                this.user.DNI = "";
-                this.user.PD = "";
-                this.user.DIRECCION = "";
-                this.user.COD_POSTAL = "";
-                this.user.LOCALIDAD = "";
-                this.user.PROVINCIA = "";
-                this.user.PAIS = "";
-                this.user.MOVIL = "";
-                this.user.FIJO = "";
-                this.user.EMAIL = "";
-                this.user.EDAD = "";
-                this.user.SOLA = "";
-                this.user.MAYOR = "";
-                this.user.TEFILA = "";
-                this.user.OBSERVACIONES = "";
-            },
-            async descargar() {
-                let respuesta = await axios.get("http://localhost:3000/download");
-                if (respuesta.data == false) {
-                    console.log("error al descargar el archivo");
-                } else {
-                    const link = document.createElement("a");
-                    link.href = "/" + respuesta.data;
-                    link.setAttribute("download", respuesta.data); //or any other extension
-                    document.body.appendChild(link);
-                    link.click();
-                }
-            },
-            chooseFiles() {
-                document.getElementById("fileUpload").click();
-            },
-            async submitFile() {
-                this.file = this.$refs.file.files[0];
-                if (this.file !== null) {
-                    let respuesta = await axios.post("http://localhost:3000/file", {
-                        name: this.file.name,
-                        file: this.file.path,
-                    });
-                    if (respuesta.data == true) {
-                        this.getUsers(this.idHoja); //pa que cargue en la app
-                    } else {
-                        console.log("error al subir el archivo");
-                    }
-                }
-            },
-            //descarga de filtros
-            getFiltered(e) {
-                this.tablaFiltrada = e;
-            },
-            async descargarFiltro() {
-                let respuesta = await axios.post(
-                    "http://localhost:3000/filter",
-                    this.tablaFiltrada
-                );
-                if (respuesta.data == false) {
-                    console.log("error al descargar el archivo");
-                } else {
-                    const link = document.createElement("a");
-                    link.href = "/" + respuesta.data;
-                    link.setAttribute("download", respuesta.data); //or any other extension
-                    document.body.appendChild(link);
-                    link.click();
-                }
-            },
-            // filtros
-            funcionFiltro(value) {
-                this.filtros = value;
-            },
-            nameFilter(value) {
-                if (!this.filtros.nameValue) return true;
-                return value.toLowerCase().includes(this.filtros.nameValue.toLowerCase());
-            },
-            apellidoFilter(value) {
-                if (!this.filtros.apellidoValue) return true;
-                return value
-                    .toLowerCase()
-                    .includes(this.filtros.apellidoValue.toLowerCase());
-            },
-            socioFilter(value) {
-                if (!this.filtros.socioValue) return true;
-                return value
-                    .toLowerCase()
-                    .includes(this.filtros.socioValue.toLowerCase());
-            },
+        socioFilter(value) {
+            if (!this.filtros.socioValue) return true;
+            return value.toLowerCase().includes(this.filtros.socioValue.toLowerCase());
         },
-    };
+    }
+        
+};
 </script>
 <style>
 
@@ -997,12 +479,11 @@ export default {
         background-color: #616161;
         color: white !important;
         text-align: none;
-         
 
     }
 
     tbody tr:nth-of-type(odd) {
-        background-color: rgba(112, 128, 144, 0.1);
+        background-color: rgba(112, 128, 144, 0.3);
     }
 
     tbody td {

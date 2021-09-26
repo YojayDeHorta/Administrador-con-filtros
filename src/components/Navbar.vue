@@ -3,16 +3,16 @@
         <!-- navbar para la app -->
         <v-app-bar app>
             <!-- <v-app-bar-nav-icon @click="drawer= !drawer"></v-app-bar-nav-icon> -->
-            <v-btn @click="$router.go(-1)" v-if="isNotLogin" exact text class="gray">
+            <!--<v-btn @click="$router.go(-1)" v-if="isNotLogin" exact text class="gray">
                 <v-icon>mdi-arrow-left-circle</v-icon>
-                <!-- <span>Volver</span> -->
-            </v-btn>
+                 <span>Volver</span>
+            </v-btn> -->
             <v-toolbar-title class="text-uppercase grey--text">
                 Prototipo
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
-            <v-btn :to="{name: 'Login'}" exact text class="gray">
+            <v-btn  exact text class="gray">
                 <span>Usuario</span>
                 <v-icon>mdi-account-circle</v-icon>
             </v-btn>
@@ -20,7 +20,7 @@
                 <span>Menu</span>
                 <v-icon>mdi-equal-box</v-icon>
             </v-btn>
-            <v-btn text @click="dialogAdmin=true" v-if="!adminVerification" class="gray">
+            <v-btn text :to="{name: 'Login'}" v-if="!adminVerification" class="gray" exact>
                 <span>Log in</span>
                 <v-icon>mdi-login-variant </v-icon>
             </v-btn>
@@ -28,10 +28,7 @@
                 <span>Log out</span>
                 <v-icon>mdi-home-export-outline </v-icon>
             </v-btn>
-            <v-btn text @click="logout()" v-else class="gray">
-                <span>Log out</span>
-                <v-icon>mdi-home-export-outline </v-icon>
-            </v-btn>
+            
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" temporary>
             <v-list-item>
@@ -56,33 +53,7 @@
                 </v-list-item-group>
             </v-list>
         </v-navigation-drawer>
-        <!-- dialog administrador -->
-        <v-dialog v-model="dialogAdmin" max-width="500px">
-            <v-card>
-                <v-form @submit.prevent="submitAdmin">
-                    <v-card-title><span class="text-h5">Iniciar sesion</span></v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="12">
-                                    <v-text-field v-model="admin.user" label="Usuario"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12">
-                                    <v-text-field type="password" v-model="admin.pass" label="Password"></v-text-field>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red darken-1" text @click="dialogAdmin=false"> Cancelar </v-btn>
-                        <v-btn color="blue darken-1" type="submit" text> Guardar </v-btn>
-                    </v-card-actions>
-                </v-form>
-            </v-card>
-        </v-dialog>
+        
         <!-- SNACKBAR PARA LOS MENSAJES -->
         <v-snackbar v-model="snackbar">
             {{ mensaje }}
