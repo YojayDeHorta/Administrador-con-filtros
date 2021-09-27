@@ -1,9 +1,9 @@
 <template>
-    <v-container class="Marco" fluid>
+    <v-container class="Marco " fluid >
         
         <!-- Crud -->
         <!-- <Crud :adminVerification="true" :column="columnas[select.idHoja]" :idHoja="select.idHoja" ></Crud> -->
-        <component :is="select.crud" :adminVerification="true" :idHoja="select.idHoja"></component>
+        <component  :is="select.crud" :adminVerification="true" :idHoja="select.idHoja"></component>
     </v-container>
 </template>
 

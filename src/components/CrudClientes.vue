@@ -1,9 +1,9 @@
 <template>
-    <v-container class="CRUD-P" fluid fill-height>
-        <v-row class="Op-Editartext-center d-flex">
+    <v-container class="CRUD-P pb-0" fluid fill-height >
+        <v-row class=" d-flex">
             <v-col  class="OP-TABLAS" cols="6">
                 <v-btn v-if="adminVerification" color="primary"
-                    @click="dialog=true;formTitle='Agregar usuario';resetUser()">
+                    @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
                     <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
                 </v-btn>
             </v-col>
@@ -19,148 +19,45 @@
             </v-col>
         </v-row>
         <v-row>
+            <v-col cols="2">
+                <v-btn @click="dialogFiltro=true">añadir filtro</v-btn>
+            </v-col>
+            <v-col cols="2">
+                <v-btn color="red white--text" @click="resetUser(userFiltro)">borrar filtro</v-btn>
+            </v-col>
             <v-col style="margin:auto" cols="5" class="OP-TABLAS  pt-0">
                 <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification"
                     label="Buscar en la tabla" single-line hide-details></v-text-field>
             </v-col>
-        </v-row>
-        <v-row class="d-flex justify-center p-0">
-            <v-col v-if="!adminVerification" class="ml-5">
-                <!-- los filtros estan en filtro.vue -->
-                <filtro :header="computedHeaders" @filtro="funcionFiltro" />
-            </v-col>
-            <v-col :cols="!adminVerification ? '8' : ''">
-                <v-card width="100%">
-                    <div class="Tabla_Principal">
-                        <!-- esto es la tabla  elevation-1 theme--light -->
-                        <v-data-table :headers="computedHeaders" :loading="loading" :search="search"
-                            @current-items="getFiltered" :footer-props="{
-                            'items-per-page-text': 'usuarios por pagina',
-                            'items-per-page-options': [10, 50, 100, 200, -1],
-                            }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion"
-                            class="Tabla text--center">
-                            <!-- botones editar y borrar -->
-                            <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
-                                <v-btn color="green  white--text" @click="prepareEdit(item)">
-                                    <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
-                                </v-btn>
-                                <v-btn color="red white--text" class="ml-1" @click="deleteUser(item.ID)">
-                                    <v-icon small> mdi-delete </v-icon> eliminar
-                                </v-btn>
-                            </template>
-                        </v-data-table>
-                    </div>
-                </v-card>
+        </v-row>    
+        <v-row class="d-flex justify-center p-0 ">
+            
+            <v-col >
+                <div class="Tabla_Principal ">
+                    <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
+                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header
+                        @current-items="getFiltered" :footer-props="{
+                        'items-per-page-text': 'usuarios por pagina',
+                        'items-per-page-options': [10, 50, 100, 200, -1],
+                        }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion"
+                        class="Tabla text--center " >
+                        <!-- botones editar y borrar -->
+                        <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
+                            <v-btn color="green  white--text" @click="prepareEdit(item)">
+                                <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
+                            </v-btn>
+                            <v-btn color="red white--text" class="ml-1" @click="deleteUser(item.ID)">
+                                <v-icon small> mdi-delete </v-icon> eliminar
+                            </v-btn>
+                        </template>
+                    </v-data-table>
+                </div>
             </v-col>
         </v-row>
         <!-- ventana modal para crear/editar -->
-        <v-dialog v-model="dialog" max-width="1200px">
-            <v-card class="Marco_Editar">
-                <v-form @submit.prevent="addAndEditUser">
-                    <v-card-title style="border:5px solid transparent"><span style="margin:auto;text-transform: uppercase;" class="text-h4 mb-10">{{ formTitle }}</span></v-card-title>
-                    <v-card-text>
-                        <v-container>
-                            <v-row>
-                                <v-col cols="6">
-                                    <v-text-field v-model="user.NUM_SOCIO" label="Numero de socio"></v-text-field>
-                                </v-col>
-                                <v-col cols="6" class="pt-0 mt-0">
-                                    <div>SOCIO:</div>
-                                    <v-select :items="Socio" v-model="user.SOCIO" label="Socio" solo></v-select>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.NOMBRE" label="Nombre"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.APELLIDO_1" label="Apellido 1"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.APELLIDO_2" label="Apellido 2"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <div>Parentesco:</div>
-                                    <v-select :items="Parentesco" v-model="user.PARENTESCO" label="Parentesco" solo>
-                                    </v-select>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.DNI" label="DNI"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <div>PD:</div>
-                                    <v-select :items="Pd" v-model="user.PD" label="PD" solo></v-select>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="10">
-                                    <v-text-field v-model="user.DIRECCION" label="Direccion"></v-text-field>
-                                </v-col>
-                                <v-col cols="2">
-                                    <v-text-field v-model="user.COD_POSTAL" label="Codigo postal"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.LOCALIDAD" label="Localidad"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.PROVINCIA" label="Provincia"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.PAIS" label="Pais"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.MOVIL" type="number" label="Movil"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.FIJO" type="number" label="Fijo"></v-text-field>
-                                </v-col>
-                                <v-col cols="4">
-                                    <v-text-field v-model="user.EMAIL" label="Email"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="3">
-                                    <div>Edad:</div>
-                                    <v-select :items="Edad" v-model="user.EDAD" label="Edad" solo></v-select>
-                                </v-col>
-                                <v-col cols="3">
-                                    <div>Sola:</div>
-                                    <v-select :items="Sola" v-model="user.SOLA" label="Sola" solo></v-select>
-                                </v-col>
-                                <v-col cols="3">
-                                    <div>Mayor:</div>
-                                    <v-select :items="Mayor" v-model="user.MAYOR" label="Mayor" solo></v-select>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-text-field v-model="user.TEFILA" label="Tefilá"></v-text-field>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12">
-                                    <v-text-field v-model="user.OBSERVACIONES" label="Observaciones"></v-text-field>
-                                </v-col>
-                            </v-row>
-                        </v-container>
-                    </v-card-text>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="red darken-1" text @click="dialog = false">
-                            Cancelar
-                        </v-btn>
-                        <v-btn color="blue darken-1" type="submit" text> Guardar </v-btn>
-                    </v-card-actions>
-                </v-form>
-
-                <!-- <v-form v-else @submit.prevent="agregarProducto"> -->
-            </v-card>
-        </v-dialog>
+        <ventanaModal  :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" @dialogModal="dialog = $event"  @agregarModal="agregarModal"/>
+        <!-- ventana modal para FILTROS -->
+        <ventanaModal  :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event"  @agregarModal="agregarFilterModal"/>
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
         <v-snackbar v-model="snackbar">
             {{ mensaje }}
@@ -172,11 +69,13 @@
     var url = "http://localhost:3000/api/hojas/";
     import axios from "axios";
     import filtro from "./Filtro.vue";
+    import ventanaModal from "./ventanaModal.vue";
 
 export default {
     name:'CrudClientes',
     components:{
-        filtro
+        filtro,
+        ventanaModal
     },
     data() {
         return {
@@ -184,14 +83,20 @@ export default {
             users:[],
             columnas: [ //EDITAR INFORMACION
                 {text: "ID", value: "ID", class: "Header_Tabla",align: 'center', width: "80px", style:'text-center'},
-                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO",align: 'center', class: "text--center Header_Tabla", width: "180px", style:'text-center'},
-                {text: "SOCIO", value: "SOCIO", class: "Header_Tabla",align: 'center', filter: this.socioFilter, width: "90px", style:'text-center'},
-                {text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla",align: 'center', filter: this.nameFilter, width: "150px",},
-                {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0",align: 'center', filter: this.apellidoFilter, width: "150px",},
+                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO",align: 'center', class: "Header_Tabla ", width: "180px", style:'text-center' },
+                {text: "SOCIO", value: "SOCIO", class: "Header_Tabla",align: 'center', width: "90px", style:'text-center' , filter: this.socioFilter},
+                {text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla",align: 'center', width: "150px", filter: this.nameFilter},
+                {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0",align: 'center', width: "150px", filter: this.apellido1Filter},
                 {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0",align: 'center', width: "150px",},
                 {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0",align: 'center', width: "150px",},
                 {text: "DNI", value: "DNI", class: "Header_Tabla p-0",align: 'center', width: "150px",},
                 {text: "PD", value: "PD", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0",align: 'center', width: "150px"},
+                {text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
                 {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0",align: 'center', width: "150px",},
                 {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla",align: 'center', width: "150px",},
                 {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla",align: 'center', width: "150px",},
@@ -205,10 +110,15 @@ export default {
                 {text: "MAYOR", value: "MAYOR", class: "Header_Tabla",align: 'center', width: "150px",},
                 {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla",align: 'center', width: "150px",},
                 {text: "OBSERVACIONES", value: "OBSERVACIONES",align: 'center', class: "Header_Tabla", width: "300px",},
+                {text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla",align: 'center',  width: "300px"},
+                {text: "JESED", value: "JESED", class: "Header_Tabla",align: 'center', width: "150px",},
                 {text: "ACCIONES", value: "actions", class: "Header_Tabla",align: 'center', sortable: false, width: "300px",},
                 ],
             //aqui van los valores pa los select
-            Socio:['SI','NO'],
+            Socio:[{text:'elegir socio', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
             Parentesco:['Conyuje','Hijos','Padres','Otros'],
             Pd:['SI','NO'],
             Edad:['BEBE','3-18','19-30','31-50','51-70','+71'],
@@ -224,6 +134,12 @@ export default {
                 PARENTESCO:'',
                 DNI:'',
                 PD:'',
+                FECHA_NACIMIENTO:'',
+                FECHA_NACIMIENTO_HEBREO:'',
+                FECHA_CASAMIENTO:'',
+                FECHA_CASAMIENTO_HEBREO:'',
+                FECHA_DEFUNCION:'',
+                FECHA_DEFUNCION_HEBREO:'',
                 DIRECCION:'',
                 COD_POSTAL:'',
                 LOCALIDAD:'',
@@ -237,10 +153,52 @@ export default {
                 MAYOR:'',
                 TEFILA:'',
                 OBSERVACIONES:'',
+                CUOTAS:'',
+                CUOTA_LICEO:'',
+                FORMA_PAGO:'',
+                OBSERVACIONES2:'',
+                JESED:'',
+            },
+            //variable para el filtro
+            userFiltro:{
+                ID:'',
+                NUM_SOCIO: '',
+                SOCIO: '',
+                NOMBRE: '',
+                APELLIDO_1:'',
+                APELLIDO_2:'',
+                PARENTESCO:'',
+                DNI:'',
+                PD:'',
+                FECHA_NACIMIENTO:'',
+                FECHA_NACIMIENTO_HEBREO:'',
+                FECHA_CASAMIENTO:'',
+                FECHA_CASAMIENTO_HEBREO:'',
+                FECHA_DEFUNCION:'',
+                FECHA_DEFUNCION_HEBREO:'',
+                DIRECCION:'',
+                COD_POSTAL:'',
+                LOCALIDAD:'',
+                PROVINCIA:'',
+                PAIS:'',
+                MOVIL:'',
+                FIJO:'',
+                EMAIL:'',
+                EDAD:'',
+                SOLA:'',
+                MAYOR:'',
+                TEFILA:'',
+                OBSERVACIONES:'',
+                CUOTAS:'',
+                CUOTA_LICEO:'',
+                FORMA_PAGO:'',
+                OBSERVACIONES2:'',
+                JESED:'',
             },
             search: '',
             //dialog y modal
             dialog:false,
+            dialogFiltro:false,
             formTitle:'',
             //edicion
             isEditing:false,
@@ -251,19 +209,13 @@ export default {
                 itemsPerPage: 100
             },
             //variable para el filtro
-            filtros:{
-                nameValue:'',
-                apellidoValue:'',
-                socioValue:'',  
-            },
             tablaFiltrada:[],
-            //otros filtro
-            nameValue:'',
-            apellidoValue:'',
-            socioValue:'',
             //SNACKBAR para mensajes
             snackbar:false,
             mensaje:'',
+            //date
+            date:new Date().toISOString().substr(0, 10),
+
         }
     },
     props:{
@@ -278,29 +230,8 @@ export default {
             if(this.adminVerification){
                 return this.columnas
             }else{
-                let columnasMod=[{text: "ID", value: "ID", class: "Header_Tabla", width: "50px"},
-                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO", class: "Header_Tabla", width: "150px",},
-                {text: "SOCIO", value: "SOCIO", class: "Header_Tabla", filter: this.socioFilter, width: "70px",},
-                {text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla p-0", filter: this.nameFilter, width: "150px",},
-                {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0", filter: this.apellidoFilter, width: "150px",},
-                {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0", width: "150px",},
-                {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0", width: "150px",},
-                {text: "DNI", value: "DNI", class: "Header_Tabla p-0", width: "150px",},
-                {text: "PD", value: "PD", class: "Header_Tabla p-0", width: "150px",},
-                {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0", width: "150px",},
-                {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla", width: "150px",},
-                {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla", width: "150px",},
-                {text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla", width: "150px",},
-                {text: "PAIS", value: "PAIS", class: "Header_Tabla", width: "150px",},
-                {text: "MOVIL", value: "MOVIL", class: "Header_Tabla", width: "150px",},
-                {text: "FIJO", value: "FIJO", class: "Header_Tabla", width: "150px",},
-                {text: "EMAIL", value: "EMAIL", class: "Header_Tabla", width: "150px",},
-                {text: "EDAD", value: "EDAD", class: "Header_Tabla", width: "150px",},
-                {text: "SOLA", value: "SOLA", class: "Header_Tabla", width: "150px",},
-                {text: "MAYOR", value: "MAYOR", class: "Header_Tabla", width: "150px",},
-                {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", width: "150px",},
-                {text: "OBSERVACIONES", value: "OBSERVACIONES", class: "Header_Tabla", width: "150px",},
-                ];
+                let columnasMod= this.columnas
+                columnasMod.pop()
                 return columnasMod
             }
         }
@@ -312,9 +243,18 @@ export default {
             this.users=datos.data
             this.loading=false
         },
+        agregarModal(e){
+            this.user=e
+            this.addAndEditUser()
+        },
+        agregarFilterModal(e){
+            this.userFiltro=e
+            this.dialogFiltro=false
+            // this.addAndEditUser()
+        },
         prepareEdit(item){
             this.isEditing=true
-            this.formTitle='Edicion del usuario '+item.NOMBRE
+            this.formTitle='Edicion del cliente: '+item.NOMBRE
             this.user=JSON.parse(JSON.stringify(item))
             this.dialog=true;
         },
@@ -333,7 +273,7 @@ export default {
             this.snackbar=true
             if (datos.data==true) this.mensaje='actualizacion ejecutada exitosamente'
             else this.mensaje='error del sistema'
-            this.resetUser()
+            this.resetUser(this.user)
             this.getUsers(this.idHoja)//pa que cargue en la app
             this.loading=false;
         },
@@ -348,38 +288,51 @@ export default {
             else this.mensaje='error del sistema'
             this.loading=false;
         },
-        resetUser(){
-            this.user.ID=''
-            this.user.NUM_SOCIO=''
-            this.user.SOCIO=''
-            this.user.NOMBRE=''
-            this.user.APELLIDO_1=''
-            this.user.APELLIDO_2=''
-            this.user.PARENTESCO=''
-            this.user.DNI=''
-            this.user.PD=''
-            this.user.DIRECCION=''
-            this.user.COD_POSTAL=''
-            this.user.LOCALIDAD=''
-            this.user.PROVINCIA=''
-            this.user.PAIS=''
-            this.user.MOVIL=''
-            this.user.FIJO=''
-            this.user.EMAIL=''
-            this.user.EDAD=''
-            this.user.SOLA=''
-            this.user.MAYOR=''
-            this.user.TEFILA=''
-            this.user.OBSERVACIONES=''
+        resetUser(usuario){
+            usuario.ID=''
+            usuario.NUM_SOCIO=''
+            usuario.SOCIO=''
+            usuario.NOMBRE=''
+            usuario.APELLIDO_1=''
+            usuario.APELLIDO_2=''
+            usuario.PARENTESCO=''
+            usuario.DNI=''
+            usuario.PD=''
+            usuario.FECHA_NACIMIENTO=''
+            usuario.FECHA_NACIMIENTO_HEBREO=''
+            usuario.FECHA_CASAMIENTO=''
+            usuario.FECHA_CASAMIENTO_HEBREO=''
+            usuario.FECHA_DEFUNCION=''
+            usuario.FECHA_DEFUNCION_HEBREO=''
+            usuario.DIRECCION=''
+            usuario.COD_POSTAL=''
+            usuario.LOCALIDAD=''
+            usuario.PROVINCIA=''
+            usuario.PAIS=''
+            usuario.MOVIL=''
+            usuario.FIJO=''
+            usuario.EMAIL=''
+            usuario.EDAD=''
+            usuario.SOLA=''
+            usuario.MAYOR=''
+            usuario.TEFILA=''
+            usuario.OBSERVACIONES=''
+            usuario.CUOTAS=''
+            usuario.CUOTA_LICEO=''
+            usuario.FORMA_PAGO=''
+            usuario.OBSERVACIONES2=''
+            usuario.JESED=''
         },
         async descargar(){
             let respuesta=await axios.get('http://localhost:3000/download', { responseType: 'blob' })
+            let name=await axios.get('http://localhost:3000/download/name')
             if (respuesta.data==false) {
                 console.log('error al descargar el archivo');
             }else{
                 const link = document.createElement('a')
                 link.href=window.URL.createObjectURL(new Blob([respuesta.data]));
-                link.setAttribute('download', 'servidor.encrypted')
+                console.log(new Blob([respuesta.data]));
+                link.setAttribute('download', name.data)
                 document.body.appendChild(link)
                 link.click()
             }
@@ -427,20 +380,17 @@ export default {
             }
         },
         // filtros
-        funcionFiltro(value){
-            this.filtros=value
-        },
         nameFilter(value) {
-            if (!this.filtros.nameValue) return true;
-            return value.toLowerCase().includes(this.filtros.nameValue.toLowerCase());
+            if (!this.userFiltro.NOMBRE) return true;
+            return value.toLowerCase().includes(this.userFiltro.NOMBRE.toLowerCase());
         },
-        apellidoFilter(value) {
-            if (!this.filtros.apellidoValue)return true;
-            return value.toLowerCase().includes(this.filtros.apellidoValue.toLowerCase());
+        apellido1Filter(value) {
+            if (!this.userFiltro.APELLIDO_1)return true;
+            return value.toLowerCase().includes(this.userFiltro.APELLIDO_1.toLowerCase());
         },
         socioFilter(value) {
-            if (!this.filtros.socioValue) return true;
-            return value.toLowerCase().includes(this.filtros.socioValue.toLowerCase());
+            if (!this.userFiltro.SOCIO) return true;
+            return value.toLowerCase().includes(this.userFiltro.SOCIO.toLowerCase());
         },
     }
         
@@ -453,8 +403,8 @@ export default {
     }
 
     .Tabla_Principal {
-        border: 5px solid red;
-        min-width: 70%;
+        border: 5px solid blue;
+        
           text-align: center;
          vertical-align: middle;
     }
@@ -475,8 +425,8 @@ export default {
     }
 
     .Header_Tabla {
-        border: 1px solid black;
-        background-color: #616161;
+        border: 1px solid black !important;
+        background-color: #616161 !important;
         color: white !important;
         text-align: none;
 

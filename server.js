@@ -98,9 +98,9 @@ app.post('/api/admin', (req,res)=>{
 //subida del servidor
 app.post('/file', async(req, res) => {
     try {
+        localStorage.setItem('fileName', req.body.name)
         FileSystem.copyFile(req.body.file, `${configDir}/${req.body.name}`, (err) => {
             if (err) throw err;
-            localStorage.setItem('fileName', req.body.name)
         });
         res.send(true)
     } catch (error) {
@@ -138,6 +138,14 @@ app.get('/download', (req,res)=>{
         res.send(false)
     }
 })
+app.get('/download/name', (req,res)=>{
+    try {
+        res.send(localStorage.getItem('fileName'));
+    } catch (error) {
+        console.log(error);
+        res.send('server.encrypted')
+    }
+})
 //descarga del excel
 app.get('/download/excel', (req,res)=>{
     try {
@@ -150,11 +158,9 @@ app.get('/download/excel', (req,res)=>{
         XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
         XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
         XLSX.writeFile(workBook,`${configDir}/datos.xlsx`)
-        console.log(archivos.indexOf(`datos.xlsx`));
         if(archivos.indexOf(`datos.xlsx`) === -1){
             archivos.push(`datos.xlsx`)
         }
-        console.log(`${configDir}/datos.xlsx`);
         res.download(`${configDir}/datos.xlsx`);
         // res.send(`datos.xlsx`)
         
@@ -172,8 +178,10 @@ app.post('/filter', async(req, res) => {
         XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
         XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
         XLSX.writeFile(workBook,`${configDir}/filtrado.xlsx`)
+        if(archivos.indexOf(`filtrado.xlsx`) === -1){
+            archivos.push(`filtrado.xlsx`)
+        }
         res.download(`${configDir}/filtrado.xlsx`);
-        // res.send(`datos.xlsx`)
     } catch (error) {
         console.log(error);
         res.send(false)
