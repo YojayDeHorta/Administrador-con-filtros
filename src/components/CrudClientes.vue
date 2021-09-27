@@ -83,38 +83,38 @@ export default {
             users:[],
             columnas: [ //EDITAR INFORMACION
                 {text: "ID", value: "ID", class: "Header_Tabla",align: 'center', width: "80px", style:'text-center'},
-                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO",align: 'center', class: "Header_Tabla ", width: "180px", style:'text-center' },
+                {text: "NUMERO DE SOCIO", value: "NUM_SOCIO",align: 'center', class: "Header_Tabla ", width: "180px", style:'text-center', filter: this.numSocioFilter},
                 {text: "SOCIO", value: "SOCIO", class: "Header_Tabla",align: 'center', width: "90px", style:'text-center' , filter: this.socioFilter},
                 {text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla",align: 'center', width: "150px", filter: this.nameFilter},
                 {text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0",align: 'center', width: "150px", filter: this.apellido1Filter},
-                {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0",align: 'center', width: "150px",},
-                {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0",align: 'center', width: "150px",},
-                {text: "DNI", value: "DNI", class: "Header_Tabla p-0",align: 'center', width: "150px",},
-                {text: "PD", value: "PD", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px"},
-                {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0",align: 'center', width: "150px",},
-                {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "PAIS", value: "PAIS", class: "Header_Tabla",align: 'center', width: "150px"},
-                {text: "MOVIL", value: "MOVIL", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "FIJO", value: "FIJO", class: "Header_Tabla",align: 'center', width: "150px"},
-                {text: "EMAIL", value: "EMAIL", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "EDAD", value: "EDAD", class: "Header_Tabla",align: 'center', width: "150px"},
-                {text: "SOLA", value: "SOLA", class: "Header_Tabla",align: 'center', width: "150px"},
-                {text: "MAYOR", value: "MAYOR", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0",align: 'center', width: "150px", filter: this.apellido2Filter},
+                {text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.parentescoFilter},
+                {text: "DNI", value: "DNI", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.dniFilter},
+                {text: "PD", value: "PD", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.pdFilter},
+                {text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaNacimientoFilter},
+                {text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaNacimientoHebreoFilter},
+                {text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaCasamientoFilter},
+                {text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaCasamientoHebreoFilter},
+                {text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaDefuncionFilter},
+                {text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.fechaDefuncionHebreoFilter},
+                {text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0",align: 'center', width: "150px",filter: this.direccionFilter},
+                {text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla",align: 'center', width: "150px",filter: this.codigoPostalFilter},
+                {text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla",align: 'center', width: "150px",filter: this.localidadFilter},
+                {text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla",align: 'center', width: "150px",filter: this.provinciaFilter},
+                {text: "PAIS", value: "PAIS", class: "Header_Tabla",align: 'center', width: "150px",filter: this.paisFilter},
+                {text: "MOVIL", value: "MOVIL", class: "Header_Tabla",align: 'center', width: "150px",filter: this.movilFilter},
+                {text: "FIJO", value: "FIJO", class: "Header_Tabla",align: 'center', width: "150px",filter: this.fijoFilter},
+                {text: "EMAIL", value: "EMAIL", class: "Header_Tabla",align: 'center', width: "150px",filter: this.emailFilter},
+                {text: "EDAD", value: "EDAD", class: "Header_Tabla",align: 'center', width: "150px",filter: this.edadFilter},
+                {text: "SOLA", value: "SOLA", class: "Header_Tabla",align: 'center', width: "150px",filter: this.solaFilter},
+                {text: "MAYOR", value: "MAYOR", class: "Header_Tabla",align: 'center', width: "150px",filter: this.mayorFilter},
+                {text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla",align: 'center', width: "150px",filter: this.tefilaFilter},
                 {text: "OBSERVACIONES", value: "OBSERVACIONES",align: 'center', class: "Header_Tabla", width: "300px",},
-                {text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla",align: 'center', width: "150px",},
-                {text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla",align: 'center', width: "150px",filter: this.cuotasFilter},
+                {text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla",align: 'center', width: "150px",filter: this.cuotaLiceoFilter},
+                {text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla",align: 'center', width: "150px",filter: this.formaPagoFilter},
                 {text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla",align: 'center',  width: "300px"},
-                {text: "JESED", value: "JESED", class: "Header_Tabla",align: 'center', width: "150px",},
+                {text: "JESED", value: "JESED", class: "Header_Tabla",align: 'center', width: "150px",filter: this.jessedFilter},
                 {text: "ACCIONES", value: "actions", class: "Header_Tabla",align: 'center', sortable: false, width: "300px",},
                 ],
             //aqui van los valores pa los select
@@ -248,6 +248,7 @@ export default {
             this.addAndEditUser()
         },
         agregarFilterModal(e){
+            console.log(e);
             this.userFiltro=e
             this.dialogFiltro=false
             // this.addAndEditUser()
@@ -380,18 +381,127 @@ export default {
             }
         },
         // filtros
-        nameFilter(value) {
-            if (!this.userFiltro.NOMBRE) return true;
-            return value.toLowerCase().includes(this.userFiltro.NOMBRE.toLowerCase());
+        numSocioFilter(value) {//numero de socio
+            if (!this.userFiltro.NUM_SOCIO) return true;
+            return value.toLowerCase().includes(this.userFiltro.NUM_SOCIO.toLowerCase());
         },
-        apellido1Filter(value) {
-            if (!this.userFiltro.APELLIDO_1)return true;
-            return value.toLowerCase().includes(this.userFiltro.APELLIDO_1.toLowerCase());
-        },
-        socioFilter(value) {
+        socioFilter(value) {//socio
             if (!this.userFiltro.SOCIO) return true;
             return value.toLowerCase().includes(this.userFiltro.SOCIO.toLowerCase());
         },
+        nameFilter(value) {//nombre
+            if (!this.userFiltro.NOMBRE) return true;
+            return value.toLowerCase().includes(this.userFiltro.NOMBRE.toLowerCase());
+        },
+        apellido1Filter(value) {//apellido 1
+            if (!this.userFiltro.APELLIDO_1)return true;
+            return value.toLowerCase().includes(this.userFiltro.APELLIDO_1.toLowerCase());
+        },
+        apellido2Filter(value) {//apellido 2
+            if (!this.userFiltro.APELLIDO_2)return true;
+            return value.toLowerCase().includes(this.userFiltro.APELLIDO_2.toLowerCase());
+        },
+        parentescoFilter(value) {//PARENTESCO
+            if (!this.userFiltro.PARENTESCO)return true;
+            return value.toLowerCase().includes(this.userFiltro.PARENTESCO.toLowerCase());
+        },
+        dniFilter(value) {//DNI
+            if (!this.userFiltro.DNI)return true;
+            return value.toLowerCase().includes(this.userFiltro.DNI.toLowerCase());
+        },
+        pdFilter(value) {//PD
+            if (!this.userFiltro.PD)return true;
+            return value.toLowerCase().includes(this.userFiltro.PD.toLowerCase());
+        },
+        fechaNacimientoFilter(value) {//FECHA_NACIMIENTO
+            if (!this.userFiltro.FECHA_NACIMIENTO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO.toLowerCase());
+        },
+        fechaNacimientoHebreoFilter(value) {//FECHA_NACIMIENTO_HEBREO
+            if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO_HEBREO.toLowerCase());
+        },
+        fechaCasamientoFilter(value) {//FECHA_CASAMIENTO
+            if (!this.userFiltro.FECHA_CASAMIENTO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO.toLowerCase());
+        },
+        fechaCasamientoHebreoFilter(value) {//FECHA_CASAMIENTO_HEBREO
+            if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO_HEBREO.toLowerCase());
+        },
+        fechaDefuncionFilter(value) {//FECHA_DEFUNCION
+            if (!this.userFiltro.FECHA_DEFUNCION)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION.toLowerCase());
+        },
+        fechaDefuncionHebreoFilter(value) {//FECHA_DEFUNCION_HEBREO
+            if (!this.userFiltro.FECHA_DEFUNCION_HEBREO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION_HEBREO.toLowerCase());
+        },
+        direccionFilter(value) {//DIRECCION
+            if (!this.userFiltro.DIRECCION)return true;
+            return value.toLowerCase().includes(this.userFiltro.DIRECCION.toLowerCase());
+        },
+        codigoPostalFilter(value) {//COD_POSTAL
+            if (!this.userFiltro.COD_POSTAL)return true;
+            return value.toLowerCase().includes(this.userFiltro.COD_POSTAL.toLowerCase());
+        },
+        localidadFilter(value) {//LOCALIDAD
+            if (!this.userFiltro.LOCALIDAD)return true;
+            return value.toLowerCase().includes(this.userFiltro.LOCALIDAD.toLowerCase());
+        },
+        provinciaFilter(value) {//PROVINCIA
+            if (!this.userFiltro.PROVINCIA)return true;
+            return value.toLowerCase().includes(this.userFiltro.PROVINCIA.toLowerCase());
+        },
+        paisFilter(value) {//PAIS
+            if (!this.userFiltro.PAIS)return true;
+            return value.toLowerCase().includes(this.userFiltro.PAIS.toLowerCase());
+        },
+        movilFilter(value) {//MOVIL
+            if (!this.userFiltro.MOVIL)return true;
+            return value.toLowerCase().includes(this.userFiltro.MOVIL.toLowerCase());
+        },
+        fijoFilter(value) {//FIJO
+            if (!this.userFiltro.FIJO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FIJO.toLowerCase());
+        },
+        emailFilter(value) {//EMAIL
+            if (!this.userFiltro.EMAIL)return true;
+            return value.toLowerCase().includes(this.userFiltro.EMAIL.toLowerCase());
+        },
+        edadFilter(value) {//EDAD
+            if (!this.userFiltro.EDAD)return true;
+            return value.toLowerCase().includes(this.userFiltro.EDAD.toLowerCase());
+        },
+        solaFilter(value) {//SOLA
+            if (!this.userFiltro.SOLA)return true;
+            return value.toLowerCase().includes(this.userFiltro.SOLA.toLowerCase());
+        },
+        mayorFilter(value) {//MAYOR
+            if (!this.userFiltro.MAYOR)return true;
+            return value.toLowerCase().includes(this.userFiltro.MAYOR.toLowerCase());
+        },
+        tefilaFilter(value) {//TEFILA
+            if (!this.userFiltro.TEFILA)return true;
+            return value.toLowerCase().includes(this.userFiltro.TEFILA.toLowerCase());
+        },
+        cuotasFilter(value) {//CUOTAS
+            if (!this.userFiltro.CUOTAS)return true;
+            return value.toLowerCase().includes(this.userFiltro.CUOTAS.toLowerCase());
+        },
+        cuotaLiceoFilter(value) {//CUOTA_LICEO
+            if (!this.userFiltro.CUOTA_LICEO)return true;
+            return value.toLowerCase().includes(this.userFiltro.CUOTA_LICEO.toLowerCase());
+        },
+        formaPagoFilter(value) {//FORMA_PAGO
+            if (!this.userFiltro.FORMA_PAGO)return true;
+            return value.toLowerCase().includes(this.userFiltro.FORMA_PAGO.toLowerCase());
+        },
+        jessedFilter(value) {//JESED
+            if (!this.userFiltro.JESED)return true;
+            return value.toLowerCase().includes(this.userFiltro.JESED.toLowerCase());
+        },
+        
     }
         
 };

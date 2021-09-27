@@ -239,8 +239,13 @@ export default {
             cuota.value=''
         },
         submitForm(){
-            this.user.CUOTAS=this.cuotaSelect.simbolo+this.cuotaSelect.value
-            this.user.CUOTA_LICEO=this.cuotaLiceoSelect.simbolo+this.cuotaLiceoSelect.value
+            if (this.cuotaSelect.value!='') {
+                this.user.CUOTAS=this.cuotaSelect.simbolo+this.cuotaSelect.value
+            }
+            if (this.cuotaLiceoSelect.value!='') {
+                this.user.CUOTA_LICEO=this.cuotaLiceoSelect.simbolo+this.cuotaLiceoSelect.value
+            }
+            
             this.resetCuota(this.cuotaSelect)
             this.resetCuota(this.cuotaLiceoSelect)
             if (this.filtro) {
