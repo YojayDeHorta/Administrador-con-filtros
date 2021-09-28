@@ -570,14 +570,13 @@ export default {
 
 .Header_Tabla {
     border: 1px solid black !important;
-    background-color: #616161 !important;
+    background-color: #757575 !important;
     color: white !important;
-    text-align: none;
 
 }
 
 tbody tr:nth-of-type(odd) {
-    background-color: rgba(112, 128, 144, 0.3);
+    background-color: rgba(112, 128, 144, 0.1);
 }
 
 tbody td {
