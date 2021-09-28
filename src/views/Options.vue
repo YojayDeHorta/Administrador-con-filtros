@@ -6,11 +6,11 @@
         <section class="Opciones text-center d-flex justify-center">
             <router-link class="Editar" to="/Cruds">
                 <v-icon class="ico-editar">mdi-clipboard-edit</v-icon>
-                <p class="text-center">Editar</p>
+                <p class="Letra text-center">Editar</p>
             </router-link>
             <router-link class="Buscar" to="/Filter">
                 <v-icon class="ico-buscar">mdi-clipboard-search</v-icon>
-                <p class="text-center">Filtrar</p>
+                <p class="Letra text-center">Filtrar</p>
             </router-link>
         </section>
     </v-container>
@@ -22,43 +22,55 @@ export default {
 </script>
 <style scoped>
 
-.Titulo{
-    /*border:5px solid red;*/
-    font-size:90px;
+.Titulo {
+    overflow: hidden;
+    text-transform: uppercase;
+    font-size: calc(1rem + 4vw);
 
 }
 
-.barra{
-    border:5px solid #B0BEC5;
-    margin:auto;
-    width:10%;
+.barra {
+    border: 5px solid #B0BEC5;
+    margin: auto;
+    width: 20%;
 }
 
 .Opciones {
-    /*border: 8px solid red;*/
+    width: 100%;
+    overflow: hidden;
 }
 
-.ico-buscar,.ico-editar{
-   /* border:5px solid yellow;*/
-     font-size:350px;
-}
 
 .Opciones .Buscar,
 .Opciones .Editar {
+    text-decoration: none;
     width: 38%;
-   /* border: 5px solid red;*/
-    font-size:80px;
-    margin-right:50px;
-    text-decoration:none;
-    color:black;
+    margin: auto;
+}
+
+
+
+.ico-buscar,
+.ico-editar {
+    color: #616161;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 20vw;
+
+}
+
+.Letra {
+    font-size: 5vw;
+    margin: 0;
+    padding: 0;
+     color: #616161;
 }
 
 
 .Editar:hover,
 .Buscar:hover {
-    border:2px solid grey;
+     border:2px solid grey;
 }
-
-
 
 </style>
