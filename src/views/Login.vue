@@ -78,7 +78,6 @@
                         this.login.pass = ''
                         this.mensaje = 'login realizado correctamente'
                         this.$router.push('/options')
-                        vm.$forceUpdate();
                     }
                     console.log(res.data)
                 }
