@@ -81,7 +81,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.LOCALIDAD" label="Localidad" :rules="provinciaRules"></v-text-field>
+                                <v-text-field v-model="user.LOCALIDAD" label="Localidad" :rules="localidadRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field v-model="user.PROVINCIA" label="Provincia" :rules="provinciaRules"></v-text-field>
@@ -92,13 +92,13 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.MOVIL" type="number" label="Movil"></v-text-field>
+                                <v-text-field v-model="user.MOVIL" type="number" label="Movil" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.FIJO" type="number" label="Fijo"></v-text-field>
+                                <v-text-field v-model="user.FIJO" type="number" label="Fijo" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.EMAIL" label="Email"></v-text-field>
+                                <v-text-field v-model="user.EMAIL" label="Email" :rules="emailRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -115,12 +115,12 @@
                                 <v-select :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <v-col cols="3">
-                                <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="provinciaRules"></v-text-field>
+                                <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="direccionRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="12"><!-- Observaciones -->
-                                <v-text-field v-model="user.OBSERVACIONES" label="Observaciones"></v-text-field>
+                                <v-text-field v-model="user.OBSERVACIONES" label="Observaciones" :rules="observacionesRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -131,10 +131,10 @@
                                         <h4>Cuotas:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" :rules="selectRules" outlined></v-select>
+                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
-                                        <v-text-field v-model="cuotaSelect.value" label="Digite una cuota">
+                                        <v-text-field v-model="cuotaSelect.value" :rules="cuotaRules" label="Digite una cuota">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaSimbol}}</div>
                                             </template>
@@ -149,10 +149,10 @@
                                         <h4>Cuota liceo:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo" :rules="selectRules" outlined></v-select>
+                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo"  outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
-                                        <v-text-field v-model="cuotaLiceoSelect.value" label="Digite la Cuota liceo">
+                                        <v-text-field v-model="cuotaLiceoSelect.value" :rules="cuotaRules" label="Digite la Cuota liceo">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaLiceoSimbol}}</div>
                                             </template>
@@ -173,7 +173,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12">
-                                <v-text-field v-model="user.OBSERVACIONES2" label="Observaciones 2"></v-text-field>
+                                <v-text-field v-model="user.OBSERVACIONES2" label="Observaciones 2" :rules="observacionesRules"></v-text-field>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -230,17 +230,45 @@ export default {
             ],
             direccionRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => (v && v.length <= 95) || 'el numero de caracteres maximos permitidos es 90'
+                v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
             ],
             codPostalRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
                 v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido',
             ],
+            codPostalRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido',
+            ],
+            localidadRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
+            ],
             provinciaRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
                 v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'valor no valido',
-                v => (v && v.length <= 95) || 'el numero de caracteres maximos permitidos es 35'
-            ]
+                v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
+            ],
+            telefonoRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || 'telefono no valido',
+                v => (v && v.length <= 20) || 'el numero de caracteres maximos permitidos es 20'
+            ],
+            emailRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'digite un email valido (name@mail.com)',
+                v => (v && v.length <= 80) || 'el numero de caracteres maximos permitidos es 80'
+            ],
+            observacionesRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => (v && v.length <= 280) || 'el numero de caracteres maximos permitidos es 280'
+            ],
+            cuotaRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
+                v => (v && v.length <= 30) || 'el numero de caracteres maximos permitidos es 30'
+            ],
+
         }
     },
     props:{
@@ -249,32 +277,47 @@ export default {
         formTitle:null,
         filtro:null,
     },
-    computed:{
-        computedCuotaSimbol(){    
-            if(this.dialog){
+    watch: {
+        dialog: {
+            handler(dial) {
+                if (dial) {
+                    console.log('dialog');
+                    this.resetCuota(this.cuotaSelect)
+                    this.resetCuota(this.cuotaLiceoSelect)
+                    if (this.user.CUOTAS!='') {
+                        this.cuotaSelect.simbolo=this.user.CUOTAS[0]
+                        this.cuotaSelect.value=this.user.CUOTAS.slice(1)
+                    }
+                    if (this.user.CUOTA_LICEO!='') {
+                        this.cuotaLiceoSelect.simbolo=this.user.CUOTA_LICEO[0]
+                        this.cuotaLiceoSelect.value=this.user.CUOTA_LICEO.slice(1)
+                    }
+                    if (this.formTitle=='Agregar cliente') this.resetForm()   
+                }
                 
-                this.resetCuota(this.cuotaSelect)
-                this.resetCuota(this.cuotaLiceoSelect)
-            }      
-            if (this.user.CUOTAS!='') {
-                this.cuotaSelect.simbolo=this.user.CUOTAS[0]
-                this.cuotaSelect.value=this.user.CUOTAS.slice(1)
-            }
+            },
+            deep: true,
+            immediate: true,
+        }
+    },
+    computed:{
+        computedCuotaSimbol(){   
             return this.cuotaSelect.simbolo
         },
         computedCuotaLiceoSimbol(){            
-            if (this.user.CUOTA_LICEO!='') {
-                this.cuotaLiceoSelect.simbolo=this.user.CUOTA_LICEO[0]
-                this.cuotaLiceoSelect.value=this.user.CUOTA_LICEO.slice(1)
-            }
             return this.cuotaLiceoSelect.simbolo
         }
     },
+
     methods:{
         resetValidation () {
             this.$refs.form.resetValidation()
         },
+        resetForm () {
+            this.$refs.form.reset()
+        },
         resetCuota(cuota){
+            console.log('reset');
             cuota.simbolo='$'
             cuota.value=''
         },
@@ -287,6 +330,7 @@ export default {
                 this.resetCuota(this.cuotaSelect)
                 this.resetCuota(this.cuotaLiceoSelect)
                 this.$emit('agregarModal',this.user)
+
             }
             
             

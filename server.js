@@ -80,21 +80,6 @@ app.post('/api/hojas/:idHoja', (req,res)=>{
     }
 })
 
-//confirmacion del admin
-app.post('/api/admin', (req,res)=>{
-    try {
-        if (req.body.user=='admin'&&req.body.pass=='admin') {
-            res.send(true)
-        }else{
-            res.send(false)
-        }
-
-    } catch (error) {
-        console.log(error);
-        res.send(false)
-    }
-})
-
 //subida del servidor
 app.post('/file', async(req, res) => {
     try {
@@ -196,7 +181,33 @@ else{
         console.log('listening on *:3000');
     });
 }
-
+//confirmacion de los roles
+app.post('/api/admin', (req,res)=>{
+    try {
+        if (req.body.user=='admin'&&req.body.pass=='admin') {
+            res.send(true)
+        }else{
+            res.send(false)
+        }
+        switch (req.body.user | req.body.pass) {
+            case 'admin'|'admin': 
+                res.send(3)
+                break;
+            case 'secretaria'|'secretaria':
+                res.send(2) 
+                break;
+            case 'conserje'|'conserje': 
+                res.send(1) 
+                break;
+            default:
+                res.send(0)
+                break;
+        }
+    } catch (error) {
+        console.log(error);
+        res.send('0')
+    }
+})
 
 
 export{

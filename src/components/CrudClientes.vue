@@ -59,7 +59,7 @@
         <!-- ventana modal para FILTROS -->
         <ventanaModal  :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event"  @agregarModal="agregarFilterModal"/>
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
-        <v-snackbar v-model="snackbar">
+        <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
