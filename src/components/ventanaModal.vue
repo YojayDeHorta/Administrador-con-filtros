@@ -4,18 +4,17 @@
         <v-dialog v-model="dialog" max-width="1200px" fullscreen hide-overlay transition="dialog-bottom-transition">
       
         <v-card class="Marco_Editar">
-            <v-form @submit.prevent="submitForm" v-model="valid" lazy-validation ref="form">
-                <v-app-bar fixed dark color="primary" >
-
+            <br><br>
+            <v-form class="mt-10" style="border:5px solid red" @submit.prevent="submitForm" v-model="valid" lazy-validation ref="form">
+                <v-app-bar fixed dark color="#607D8B" >
                 <v-btn icon dark @click="$emit('dialogModal',false);resetValidation()"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>{{ formTitle }}</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-toolbar-items v-if="filtro"> <v-btn dark text   type="submit" > añadir filtros </v-btn></v-toolbar-items>
+                <v-toolbar-items v-if="filtro"> <v-btn dark text   type="submit" > <h3><v-icon class="mr-2">mdi-clipboard-text-search</v-icon>Buscar </h3></v-btn></v-toolbar-items>
                 <v-toolbar-items v-else> <v-btn dark text   type="submit" > Guardar </v-btn></v-toolbar-items>
  
                 </v-app-bar>
-                
-                <v-card-text class="mt-14">
+                <v-card-text class="mt-10">
                     <v-container>
                         <v-row>
                             <v-col cols="6">
@@ -340,6 +339,11 @@ export default {
 }
 </script>
 <style >
+    
+    .Marco_Editar{
+        border:5px solid red;
+    }
+
     .override-class  {
         display: inline-block;
         width: 100px;

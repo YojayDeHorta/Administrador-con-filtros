@@ -1,50 +1,44 @@
 <template>
     <v-container class="CRUD-P pb-0" fluid fill-height>
-        <v-row class="Iconos_Descarga d-flex">
-            <v-col cols="6">
-            </v-col>
-            <v-col cols="6" class="OP-TABLAS text-right">
-                <v-btn class="btn-text" style="color:white !important" color="orange darken-1" @click="descargar()" v-if="adminVerification">
-                    <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
-                </v-btn>&nbsp;&nbsp;
-                <!--descarga normal-->
-                <v-btn style="color:white !important" class="btn-text" color="teal darken-1" @click="descargarExcel()" v-if="adminVerification">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
-                </v-btn>&nbsp;&nbsp;
-                <!--descarga de excel-->
-                <v-btn style="color:white !important" color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
-                    <v-icon color="white">mdi-file-download</v-icon>descargar tabla
-                </v-btn>
-                <!--descarga filtrada-->
-                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
-                    <span v-if="file==null">
-                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
-                    </span>
-                    <span v-else>
-                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
-                    </span>
-                </v-btn>
-                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+        <v-row class="Iconos_Descarga d-flex justify-center mt-10 mb-10">
+            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
+                <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
+            </v-btn>&nbsp;&nbsp;&nbsp;
+            <v-btn @click="dialogFiltro=true">
+                <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
+            </v-btn>&nbsp;&nbsp;&nbsp;
+            <v-btn color="red white--text" @click="resetUser(userFiltro)">
+                <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
+            </v-btn>&nbsp;&nbsp;&nbsp;
+            <v-btn style="color:white !important;" color="orange darken-1" @click="descargar()" v-if="adminVerification">
+                <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
+            </v-btn>
+            <!--descarga normal-->
+            <v-btn style="color:white !important; " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="adminVerification">
+                <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
+            </v-btn>
+            <!--descarga de excel-->
+            <v-btn style="color:white !important;" color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
+                <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
+            </v-btn>
+            <!--descarga filtrada-->
+            <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
+                <span v-if="file==null">
+                    <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
+                </span>
+                <span v-else>
+                    <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
+                </span>
+            </v-btn>
+            <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+        </v-row>
+        <!--
+        <v-row cols="5" class="Añadir_Quitar d-flex justify-center mt-7 mb-1">
+            <v-col cols="5" class="Buscar_Tabla  pt-0">
+                <v-text-field style="" class="pl-5" v-model="search" append-icon="mdi-magnify" label="Buscar en la tabla" single-line hide-details></v-text-field>
             </v-col>
         </v-row>
-        <v-row class="Añadir_Quitar mt-10 pl-2 pr-2">
-            <v-col >
-                <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn @click="dialogFiltro=true">
-                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn color="red white--text" @click="resetUser(userFiltro)">
-                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
-                </v-btn>
-            </v-col>
-            <!--
-            <v-col  cols="5" class="Buscar_Tabla  pt-0">
-                <v-text-field style="width:80%" class="Buscar_Text" v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
-            </v-col>
-      -->
-        </v-row>
+    -->
         <v-row class="d-flex justify-center p-0 ">
             <v-col>
                 <div class="Tabla_Principal ">
@@ -520,42 +514,41 @@ export default {
 };
 </script>
 <style>
-
-.Buscar_Text{
-  /*  border: 5px solid black;*/
+.Buscar_Text {
+    /*  border: 5px solid black;*/
 
 }
 
-.Buscar_Tabla{
-    /*border: 5px solid purple !important;*/
-    padding-left: 10%;
+.Buscar_Tabla {
+   /* border: 5px solid purple !important;*/
+    text-align: center;
 }
 
 .Iconos_Descarga {
-   /* border: 5px solid red;*/
+    /* border: 5px solid red;*/
     padding-left: 25px;
 }
 
 
 .Añadir_Quitar {
     /* border: 5px solid purple !important;*/
-   /* padding-left: 10px;*/
+    /* padding-left: 10px;*/
 }
 
 .Marco_Editar {
-   /* border: 5px solid red;*/
+    /* border: 5px solid red;*/
 }
 
 .Tabla_Principal {
-    border: 5px solid blue;
+ /*   border: 5px solid blue;
 
     text-align: center;
-    vertical-align: middle;
+    vertical-align: middle;*/
 }
 
 .Op-Iconos {
     width: 1000%;
-   /* border: 5px solid red;*/
+    /* border: 5px solid red;*/
     margin: auto;
 }
 
@@ -570,13 +563,13 @@ export default {
 
 .Header_Tabla {
     border: 1px solid black !important;
-    background-color: #757575 !important;
-    color: white !important;
+    background-color: #CFD8DC !important;
+    color: black !important;
 
 }
 
 tbody tr:nth-of-type(odd) {
-    background-color: rgba(112, 128, 144, 0.1);
+    background-color: #FAFAFA;
 }
 
 tbody td {
