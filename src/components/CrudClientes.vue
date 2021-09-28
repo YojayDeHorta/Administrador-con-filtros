@@ -383,123 +383,123 @@ export default {
         // filtros
         numSocioFilter(value) {//numero de socio
             if (!this.userFiltro.NUM_SOCIO) return true;
-            return value.toLowerCase().includes(this.userFiltro.NUM_SOCIO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.NUM_SOCIO.toString().toLowerCase());
         },
         socioFilter(value) {//socio
             if (!this.userFiltro.SOCIO) return true;
-            return value.toLowerCase().includes(this.userFiltro.SOCIO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.SOCIO.toString().toLowerCase());
         },
         nameFilter(value) {//nombre
             if (!this.userFiltro.NOMBRE) return true;
-            return value.toLowerCase().includes(this.userFiltro.NOMBRE.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.NOMBRE.toString().toLowerCase());
         },
         apellido1Filter(value) {//apellido 1
             if (!this.userFiltro.APELLIDO_1)return true;
-            return value.toLowerCase().includes(this.userFiltro.APELLIDO_1.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.APELLIDO_1.toString().toLowerCase());
         },
         apellido2Filter(value) {//apellido 2
             if (!this.userFiltro.APELLIDO_2)return true;
-            return value.toLowerCase().includes(this.userFiltro.APELLIDO_2.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.APELLIDO_2.toString().toLowerCase());
         },
         parentescoFilter(value) {//PARENTESCO
             if (!this.userFiltro.PARENTESCO)return true;
-            return value.toLowerCase().includes(this.userFiltro.PARENTESCO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.PARENTESCO.toString().toLowerCase());
         },
         dniFilter(value) {//DNI
             if (!this.userFiltro.DNI)return true;
-            return value.toLowerCase().includes(this.userFiltro.DNI.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.DNI.toString().toLowerCase());
         },
         pdFilter(value) {//PD
             if (!this.userFiltro.PD)return true;
-            return value.toLowerCase().includes(this.userFiltro.PD.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.PD.toString().toLowerCase());
         },
         fechaNacimientoFilter(value) {//FECHA_NACIMIENTO
             if (!this.userFiltro.FECHA_NACIMIENTO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO.toString().toLowerCase());
         },
         fechaNacimientoHebreoFilter(value) {//FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO_HEBREO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO_HEBREO.toString().toLowerCase());
         },
         fechaCasamientoFilter(value) {//FECHA_CASAMIENTO
             if (!this.userFiltro.FECHA_CASAMIENTO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO.toString().toLowerCase());
         },
         fechaCasamientoHebreoFilter(value) {//FECHA_CASAMIENTO_HEBREO
             if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO_HEBREO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO_HEBREO.toString().toLowerCase());
         },
         fechaDefuncionFilter(value) {//FECHA_DEFUNCION
             if (!this.userFiltro.FECHA_DEFUNCION)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION.toString().toLowerCase());
         },
         fechaDefuncionHebreoFilter(value) {//FECHA_DEFUNCION_HEBREO
             if (!this.userFiltro.FECHA_DEFUNCION_HEBREO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION_HEBREO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION_HEBREO.toString().toLowerCase());
         },
         direccionFilter(value) {//DIRECCION
             if (!this.userFiltro.DIRECCION)return true;
-            return value.toLowerCase().includes(this.userFiltro.DIRECCION.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.DIRECCION.toString().toLowerCase());
         },
         codigoPostalFilter(value) {//COD_POSTAL
             if (!this.userFiltro.COD_POSTAL)return true;
-            return value.toLowerCase().includes(this.userFiltro.COD_POSTAL.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.COD_POSTAL.toString().toLowerCase());
         },
         localidadFilter(value) {//LOCALIDAD
             if (!this.userFiltro.LOCALIDAD)return true;
-            return value.toLowerCase().includes(this.userFiltro.LOCALIDAD.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.LOCALIDAD.toString().toLowerCase());
         },
         provinciaFilter(value) {//PROVINCIA
             if (!this.userFiltro.PROVINCIA)return true;
-            return value.toLowerCase().includes(this.userFiltro.PROVINCIA.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.PROVINCIA.toString().toLowerCase());
         },
         paisFilter(value) {//PAIS
             if (!this.userFiltro.PAIS)return true;
-            return value.toLowerCase().includes(this.userFiltro.PAIS.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.PAIS.toString().toLowerCase());
         },
         movilFilter(value) {//MOVIL
             if (!this.userFiltro.MOVIL)return true;
-            return value.toLowerCase().includes(this.userFiltro.MOVIL.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.MOVIL.toString().toLowerCase());
         },
         fijoFilter(value) {//FIJO
             if (!this.userFiltro.FIJO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FIJO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FIJO.toString().toLowerCase());
         },
         emailFilter(value) {//EMAIL
             if (!this.userFiltro.EMAIL)return true;
-            return value.toLowerCase().includes(this.userFiltro.EMAIL.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.EMAIL.toString().toLowerCase());
         },
         edadFilter(value) {//EDAD
             if (!this.userFiltro.EDAD)return true;
-            return value.toLowerCase().includes(this.userFiltro.EDAD.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.EDAD.toString().toLowerCase());
         },
         solaFilter(value) {//SOLA
             if (!this.userFiltro.SOLA)return true;
-            return value.toLowerCase().includes(this.userFiltro.SOLA.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.SOLA.toString().toLowerCase());
         },
         mayorFilter(value) {//MAYOR
             if (!this.userFiltro.MAYOR)return true;
-            return value.toLowerCase().includes(this.userFiltro.MAYOR.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.MAYOR.toString().toLowerCase());
         },
         tefilaFilter(value) {//TEFILA
             if (!this.userFiltro.TEFILA)return true;
-            return value.toLowerCase().includes(this.userFiltro.TEFILA.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.TEFILA.toString().toLowerCase());
         },
         cuotasFilter(value) {//CUOTAS
             if (!this.userFiltro.CUOTAS)return true;
-            return value.toLowerCase().includes(this.userFiltro.CUOTAS.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.CUOTAS.toString().toLowerCase());
         },
         cuotaLiceoFilter(value) {//CUOTA_LICEO
             if (!this.userFiltro.CUOTA_LICEO)return true;
-            return value.toLowerCase().includes(this.userFiltro.CUOTA_LICEO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.CUOTA_LICEO.toString().toLowerCase());
         },
         formaPagoFilter(value) {//FORMA_PAGO
             if (!this.userFiltro.FORMA_PAGO)return true;
-            return value.toLowerCase().includes(this.userFiltro.FORMA_PAGO.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.FORMA_PAGO.toString().toLowerCase());
         },
         jessedFilter(value) {//JESED
             if (!this.userFiltro.JESED)return true;
-            return value.toLowerCase().includes(this.userFiltro.JESED.toLowerCase());
+            return value.toString().toLowerCase().includes(this.userFiltro.JESED.toString().toLowerCase());
         },
         
     }

@@ -5,11 +5,13 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 import {archivos} from '../server' 
+import {server} from '../server' 
 require('../server');
 const fs = require('fs');
 const path = require('path');
 // require('@electron/remote/main').initialize()
-
+const gotTheLock = app.requestSingleInstanceLock()
+let win=null
 
 
 // Scheme must be registered before the app is ready
@@ -18,8 +20,12 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  server.listen(3000, () => {
+    console.log('listening on *:3000');
+  });
+
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     webPreferences: {
       show: false,
       // Use pluginOptions.nodeIntegration, leave this alone
@@ -67,17 +73,31 @@ app.on('activate', () => {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
-  if (isDevelopment && !process.env.IS_TEST) {
-    // Install Vue Devtools
-    try {
-      await installExtension(VUEJS_DEVTOOLS)
-    } catch (e) {
-      console.error('Vue Devtools failed to install:', e.toString())
+if (!gotTheLock) {
+  app.quit()
+} else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (win) {
+      if (win.isMinimized()) win.restore()
+      win.focus()
     }
-  }
-  createWindow()
-})
+  })
+    
+  // Create win, load the rest of the app, etc...
+  app.on('ready', async () => {
+    if (isDevelopment && !process.env.IS_TEST) {
+      // Install Vue Devtools
+      try {
+        await installExtension(VUEJS_DEVTOOLS)
+      } catch (e) {
+        console.error('Vue Devtools failed to install:', e.toString())
+      }
+    }
+    createWindow()
+  })
+}
+
 
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {

@@ -188,9 +188,18 @@ app.post('/filter', async(req, res) => {
     }
 });
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
-});
+if (true){
+    console.log("prendido");
+}
+else{
+    server.listen(3000, () => {
+        console.log('listening on *:3000');
+    });
+}
+
+
+
 export{
-    archivos
+    archivos,
+    server
 }
