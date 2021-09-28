@@ -27,15 +27,23 @@
                 <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
             </v-col>
         </v-row>
-        <v-row class="Añadir_Quitar mt-10">
-            <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
-            </v-btn>&nbsp;&nbsp;&nbsp;
-            <v-btn @click="dialogFiltro=true"><v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro</v-btn>&nbsp;&nbsp;&nbsp;
-            <v-btn color="red white--text" @click="resetUser(userFiltro)"><v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro</v-btn>
-            <v-col style="margin:auto" cols="5" class="OP-TABLAS  pt-0">
-                <v-text-field v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
+        <v-row class="Añadir_Quitar mt-10 pl-2 pr-2">
+            <v-col >
+                <v-btn v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
+                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
+                </v-btn>&nbsp;&nbsp;&nbsp;
+                <v-btn @click="dialogFiltro=true">
+                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
+                </v-btn>&nbsp;&nbsp;&nbsp;
+                <v-btn color="red white--text" @click="resetUser(userFiltro)">
+                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
+                </v-btn>
             </v-col>
+            <!--
+            <v-col  cols="5" class="Buscar_Tabla  pt-0">
+                <v-text-field style="width:80%" class="Buscar_Text" v-model="search" append-icon="mdi-magnify" v-if="adminVerification" label="Buscar en la tabla" single-line hide-details></v-text-field>
+            </v-col>
+      -->
         </v-row>
         <v-row class="d-flex justify-center p-0 ">
             <v-col>
@@ -512,18 +520,30 @@ export default {
 };
 </script>
 <style>
+
+.Buscar_Text{
+  /*  border: 5px solid black;*/
+
+}
+
+.Buscar_Tabla{
+    /*border: 5px solid purple !important;*/
+    padding-left: 10%;
+}
+
 .Iconos_Descarga {
-    border: 5px solid red;
-    color: white !important;
+   /* border: 5px solid red;*/
+    padding-left: 25px;
 }
 
 
 .Añadir_Quitar {
-   /* border: 5px solid purple !important;*/
+    /* border: 5px solid purple !important;*/
+   /* padding-left: 10px;*/
 }
 
 .Marco_Editar {
-    border: 5px solid red;
+   /* border: 5px solid red;*/
 }
 
 .Tabla_Principal {
@@ -535,7 +555,7 @@ export default {
 
 .Op-Iconos {
     width: 1000%;
-    border: 5px solid red;
+   /* border: 5px solid red;*/
     margin: auto;
 }
 
