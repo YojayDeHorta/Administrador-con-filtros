@@ -173,42 +173,27 @@ app.post('/filter', async(req, res) => {
     }
 });
 
-if (true){
-    console.log("prendido");
-}
-else{
-    server.listen(3000, () => {
-        console.log('listening on *:3000');
-    });
-}
+
 //confirmacion de los roles
-app.post('/api/admin', (req,res)=>{
+app.post('/login/users', (req,res)=>{
     try {
-        if (req.body.user=='admin'&&req.body.pass=='admin') {
-            res.send(true)
-        }else{
-            res.send(false)
-        }
-        switch (req.body.user | req.body.pass) {
-            case 'admin'|'admin': 
-                res.send(3)
-                break;
-            case 'secretaria'|'secretaria':
-                res.send(2) 
-                break;
-            case 'conserje'|'conserje': 
-                res.send(1) 
-                break;
-            default:
-                res.send(0)
-                break;
-        }
-    } catch (error) {
+       
+        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'admin'})
+        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretaria'}) 
+        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserje'}) 
+        else res.send(false)
+        
+    }catch (error) {
         console.log(error);
-        res.send('0')
+        res.send(false)
     }
 })
 
+/*
+server.listen(3000, () => {
+    console.log('listening on *:3000');
+});
+*/
 
 export{
     archivos,

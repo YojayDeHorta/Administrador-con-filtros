@@ -75,13 +75,18 @@ export default {
             drawer: false,
             //dialog y datos para el admin
             dialogAdmin: false,
-            admin: {
+            login: {
                 user: '',
                 pass: ''
             },
             //codigo del snackbar para mensajes
             snackbar: false,
             mensaje: '',
+        }
+    },
+    updated() {
+        if(sessionStorage.getItem("token")){
+            console.log(sessionStorage.getItem("nombre"));
         }
     },
     methods: {
