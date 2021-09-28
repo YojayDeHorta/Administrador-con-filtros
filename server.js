@@ -178,9 +178,9 @@ app.post('/filter', async(req, res) => {
 app.post('/login/users', (req,res)=>{
     try {
        
-        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'admin'})
-        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretaria'}) 
-        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserje'}) 
+        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'adminToken'})
+        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretariaToken'}) 
+        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserjeToken'}) 
         else res.send(false)
         
     }catch (error) {

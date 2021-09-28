@@ -5,11 +5,13 @@
     <!-- <Crud :adminVerification="adminVerification" ></Crud> -->
     
       <router-view/>
+      
   </v-main>
   </v-app>
 </template>
 
 <script>
+
 import Navbar from './components/Navbar';
 export default {
   name: 'App',
@@ -23,6 +25,11 @@ export default {
     drawer:false,
     adminVerification:false
   }),
+  computed:{
+    
+      
+    
+  },
   methods: {
     cambioAdmin(value){
       console.log("valor del padre"+value);

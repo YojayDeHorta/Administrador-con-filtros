@@ -3,8 +3,8 @@
         <h1 class="Titulo text-center">Opciones</h1>
         <h2 class="barra"></h2>
         <br> <br> <br>
-        <section class="Opciones text-center d-flex justify-center">
-            <router-link class="Editar" to="/Cruds">
+        <section class="Opciones text-center d-flex justify-center" v-if="$store.getters.token">
+            <router-link class="Editar" to="/Cruds" v-if="$store.getters.token!='conserjeToken'">
                 <v-icon class="ico-editar">mdi-clipboard-edit</v-icon>
                 <p class="Letra text-center">Editar</p>
             </router-link>

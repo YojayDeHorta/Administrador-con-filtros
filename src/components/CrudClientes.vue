@@ -14,7 +14,7 @@
                 <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
             </v-btn>
             <!--descarga normal-->
-            <v-btn style="color:white !important; " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="adminVerification">
+            <v-btn style="color:white !important; " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken'">
                 <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
             </v-btn>
             <!--descarga de excel-->
@@ -61,9 +61,9 @@
             </v-col>
         </v-row>
         <!-- ventana modal para crear/editar -->
-        <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" @dialogModal="dialog = $event" @agregarModal="agregarModal" />
+        <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" :isEditing="isEditing" @dialogModal="dialog = $event" @agregarModal="agregarModal" />
         <!-- ventana modal para FILTROS -->
-        <ventanaModal :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" />
+        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" />
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
         <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
@@ -74,13 +74,14 @@
 <script>
 var url = "http://localhost:3000/api/hojas/";
 import axios from "axios";
-import filtro from "./Filtro.vue";
+import ventanaFiltro from "./ventanaFiltro.vue";
 import ventanaModal from "./ventanaModal.vue";
+import {mapGetters} from 'vuex'
 
 export default {
     name: 'CrudClientes',
     components: {
-        filtro,
+        ventanaFiltro,
         ventanaModal
     },
     data() {
@@ -88,40 +89,40 @@ export default {
             loading: false,
             users: [],
             columnas: [ //EDITAR INFORMACION
-                { text: "ID", value: "ID", class: "Header_Tabla", align: 'center', width: "80px", style: 'text-center' },
-                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla ", width: "180px", style: 'text-center', filter: this.numSocioFilter },
-                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter },
-                { text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla", align: 'center', width: "150px", filter: this.nameFilter },
-                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido1Filter },
-                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido2Filter },
-                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.parentescoFilter },
-                { text: "DNI", value: "DNI", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.dniFilter },
-                { text: "PD", value: "PD", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.pdFilter },
-                { text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoFilter },
-                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoHebreoFilter },
-                { text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoFilter },
-                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoHebreoFilter },
-                { text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionFilter },
-                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionHebreoFilter },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.direccionFilter },
-                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.codigoPostalFilter },
-                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.localidadFilter },
-                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.provinciaFilter },
-                { text: "PAIS", value: "PAIS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.paisFilter },
-                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.movilFilter },
-                { text: "FIJO", value: "FIJO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.fijoFilter },
-                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.emailFilter },
-                { text: "EDAD", value: "EDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.edadFilter },
-                { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter },
-                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter },
-                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.tefilaFilter },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px", },
-                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter },
-                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter },
-                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter },
-                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla", align: 'center', width: "300px" },
-                { text: "JESED", value: "JESED", class: "Header_Tabla", align: 'center', width: "150px", filter: this.jessedFilter },
-                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px", },
+                { text: "ID", value: "ID", class: "Header_Tabla", align: 'center', width: "80px", style: 'text-center' ,show:true},
+                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla ", width: "180px", style: 'text-center', filter: this.numSocioFilter,show:true },
+                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter,show:true },
+                { text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla", align: 'center', width: "150px", filter: this.nameFilter,show:true },
+                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido1Filter,show:true },
+                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido2Filter ,show:true},
+                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.parentescoFilter ,show:true},
+                { text: "DNI", value: "DNI", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.dniFilter ,show:true},
+                { text: "PD", value: "PD", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.pdFilter ,show:true},
+                { text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoFilter ,show:true},
+                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoHebreoFilter ,show:true},
+                { text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoFilter ,show:true},
+                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoHebreoFilter ,show:true},
+                { text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionFilter ,show:true},
+                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionHebreoFilter ,show:true},
+                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.direccionFilter ,show:true},
+                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.codigoPostalFilter ,show:true},
+                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.localidadFilter ,show:true},
+                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.provinciaFilter ,show:true},
+                { text: "PAIS", value: "PAIS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.paisFilter ,show:true},
+                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.movilFilter ,show:true},
+                { text: "FIJO", value: "FIJO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.fijoFilter ,show:true},
+                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.emailFilter ,show:true},
+                { text: "EDAD", value: "EDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.edadFilter ,show:true},
+                { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter ,show:true},
+                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter ,show:true},
+                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.tefilaFilter ,show:true},
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px" ,show:true},
+                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter,show:false },
+                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter,show:false},
+                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter,show:false },
+                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla", align: 'center', width: "300px",show:false },
+                { text: "JESED", value: "JESED", class: "Header_Tabla", align: 'center', width: "150px", filter: this.jessedFilter,show:false },
+                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px",show:true },
             ],
             //aqui van los valores pa los select
             Socio: [{ text: 'elegir socio', value: '' }, { text: 'SI', value: 'SI' }, { text: 'NO', value: 'NO' }],
@@ -229,16 +230,28 @@ export default {
         idHoja: null,
     },
     mounted() {
-        this.getUsers(this.idHoja)
-
+        if (this.token) {
+            this.getUsers(this.idHoja)
+        }else{
+            this.$router.push('/')
+        }
+        
+        
     },
     computed: {
+        ...mapGetters([
+            'token',
+            'username'
+        ]),
         computedHeaders() {
-            if (this.adminVerification) {
+            if (this.token=='adminToken') {
                 return this.columnas
-            } else {
-                let columnasMod = this.columnas
-                columnasMod.pop()
+            }
+            else {
+                let columnasMod = this.columnas.filter(x=>x.show)
+                if (!this.adminVerification) {
+                    columnasMod.pop()
+                }
                 return columnasMod
             }
         }
@@ -514,10 +527,7 @@ export default {
 };
 </script>
 <style>
-.Buscar_Text {
-    /*  border: 5px solid black;*/
 
-}
 
 .Buscar_Tabla {
    /* border: 5px solid purple !important;*/
@@ -528,23 +538,26 @@ export default {
     /* border: 5px solid red;*/
     padding-left: 25px;
 }
+ /*
+.Buscar_Text {
+     border: 5px solid black;
 
-
+}
 .Añadir_Quitar {
-    /* border: 5px solid purple !important;*/
-    /* padding-left: 10px;*/
+     border: 5px solid purple !important;
+     padding-left: 10px;
 }
 
 .Marco_Editar {
-    /* border: 5px solid red;*/
+     border: 5px solid red;
 }
 
 .Tabla_Principal {
- /*   border: 5px solid blue;
+    border: 5px solid blue;
 
     text-align: center;
-    vertical-align: middle;*/
-}
+    vertical-align: middle;
+}*/
 
 .Op-Iconos {
     width: 1000%;

@@ -8,27 +8,32 @@
                  <span>Volver</span>
             </v-btn> -->
             <v-toolbar-title class="text-uppercase grey--text">
-                Prototipo
+                Prototipo 
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
-            <v-btn  exact text class="gray">
-                <span>Usuario</span>
-                <v-icon>mdi-account-circle</v-icon>
+            
+            <!-- roles -->
+            <v-btn  exact text class="gray" v-if="token">
+                <span>{{username}}</span>
+                <v-icon v-if="token=='adminToken'">mdi-account-circle</v-icon><!-- admin -->
+                <v-icon v-if="token=='secretariaToken'">mdi-account-circle</v-icon><!-- secretaria -->
+                <v-icon v-if="token=='conserjeToken'">mdi-account-circle</v-icon><!-- conserje -->
             </v-btn>
-            <v-btn :to="{name: 'Options'}" exact text class="gray">
-                <span>Menu</span>
+            <!-- menu -->
+            <v-btn :to="{name: 'Options'}" v-if="token" exact text class="gray">
+                <span>Opciones</span>
                 <v-icon>mdi-equal-box</v-icon>
             </v-btn>
-            <v-btn text :to="{name: 'Login'}" v-if="!adminVerification" class="gray" exact>
-                <span>Log in</span>
-                <v-icon>mdi-login-variant </v-icon>
-            </v-btn>
-            <v-btn text @click="logout()" v-else class="gray">
+            <!-- login -->
+            <v-btn text @click="logout()" v-if="token" class="gray">
                 <span>Log out</span>
                 <v-icon>mdi-home-export-outline </v-icon>
             </v-btn>
-            
+            <v-btn text :to="{name: 'Login'}" v-else class="gray" exact>
+                <span>Log in</span>
+                <v-icon>mdi-login-variant </v-icon>
+            </v-btn>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" temporary>
             <v-list-item>
@@ -63,7 +68,7 @@
 </template>
 <script>
 import axios from 'axios'
-var url = "http://localhost:3000/api/admin"
+import {mapGetters} from 'vuex'
 
 export default {
     name: 'Navbar',
@@ -106,8 +111,8 @@ export default {
             }
         },
         logout() {
-            this.$emit('escuchar', false)
-            sessionStorage.removeItem('Admin')
+            this.$store.commit('resetLogin')
+            this.$router.push('/')
             this.snackbar = true
             this.mensaje = 'cerrado de sesion realizado correctamente'
         },
@@ -115,6 +120,10 @@ export default {
 
     },
     computed: {
+        ...mapGetters([
+            'token',
+            'username'
+        ]),
         hasHistory() {
             this.historial = window.history.length
             console.log(this.historial);

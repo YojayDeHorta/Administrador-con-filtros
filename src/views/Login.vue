@@ -40,51 +40,62 @@
         <v-snackbar v-model="snackbar">
             {{ mensaje }}
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
-        </v-snackbar>   
+        </v-snackbar>
+        
     </div>
 </template>
 <script>
-    import axios from "axios";
-    
-    export default {
-        name: "Home",
-        data() {
-            return {
-                login: {
-                    user: '',
-                    pass: ''
-                },
-                //codigo del snackbar para mensajes
-                snackbar: false,
-                mensaje: '',
-                //reglas
-                Rules:[
-                 v=>!!v || 'Este campo no puede estar vacio',
-                ],
-            }
-        },
-        methods: {
-            async submitAdmin() {
-                if (this.$refs.form.validate()==true) {
-                    let res = await axios.post('http://localhost:3000/login/users', this.login)
-                    this.snackbar = true
-                    if (!res.data)this.mensaje = 'error - usuario o contraseña incorrecta'
-                    else {
-                        if (res.data.token=='admin') sessionStorage.setItem("token",res.data.token);
-                        else if(res.data.token=='secretaria')sessionStorage.setItem("token",res.data.token);
-                        else if (res.data.token=='conserje')sessionStorage.setItem("token",res.data.token);
-                        sessionStorage.setItem("nombre",res.data.user);
-                        this.login.user = ''
-                        this.login.pass = ''
-                        this.mensaje = 'login realizado correctamente'
-                        this.$router.push('/options')
-                    }
-                    console.log(res.data)
+import axios from "axios";
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
+export default {
+    name: "Home",
+    data() {
+        return {
+            login: {
+                user: '',
+                pass: ''
+            },
+            //codigo del snackbar para mensajes
+            snackbar: false,
+            mensaje: '',
+            //reglas
+            Rules:[
+                v=>!!v || 'Porfavor llena este campo',
+            ],
+        }
+    },computed:{
+        ...mapGetters([
+            'token',
+            'username'
+        ]),
+    },
+    methods: {
+        ...mapActions([
+            'getLogin',
+        ]),
+        async submitAdmin() {
+            if (this.$refs.form.validate()==true) {
+                let res = await axios.post('http://localhost:3000/login/users', this.login)
+                this.snackbar = true
+                if (!res.data)this.mensaje = 'error - usuario o contraseña incorrecta'
+                else {
+                    if (res.data.token=='admin') sessionStorage.setItem("token",res.data.token);
+                    else if(res.data.token=='secretaria')sessionStorage.setItem("token",res.data.token);
+                    else if (res.data.token=='conserje')sessionStorage.setItem("token",res.data.token);
+                    sessionStorage.setItem("nombre",res.data.user);
+                    this.login.user = ''
+                    this.login.pass = ''
+                    this.getLogin({username:res.data.user,token:res.data.token})
+                    this.mensaje = 'login realizado correctamente'
+                    this.$router.push('/options')
                 }
                 
-            },
+            }
+            
         },
-    };
+    }
+};
 </script>
 <style scoped>
     .Marco_Login {
