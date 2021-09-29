@@ -26,7 +26,7 @@
                     </v-card>
                 </template>
             </v-dialog>
-            <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
+            <!-- SNACKBAR PARA MOSTRAR MENSAJESs -->
         <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
