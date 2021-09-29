@@ -21,7 +21,7 @@
                     <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
                 </v-btn>
                 <!--descarga normal-->
-                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken'">
+                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
                     <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
                 </v-btn>
                 <!--descarga de excel-->
