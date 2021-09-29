@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-col cols="auto" v-if="rol=='secretariaRol'">
-            <v-dialog transition="dialog-bottom-transition" max-width="600">
+            <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="600">
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn color="primary" v-bind="attrs" v-on="on">Datos&nbsp;OCULTOS</v-btn>
                 </template>
@@ -45,6 +45,7 @@ export default {
     data() {
         return {
             password:'',
+            dialog:false,
             Rules:[
                 v=>!!v || 'Porfavor llena este campo',
             ],
@@ -65,8 +66,9 @@ export default {
                 let res = await axios.post('http://localhost:3000/passwordreq', {token:this.token,pass:this.password})
                 this.snackbar = true
                 if (res.data){
-                    this.$store.commit('resetLogin',res.data)
-
+                    this.$store.commit('setAdmin',res.data)
+                    this.mensaje = 'contraseña exitosa'
+                    dialog=false
                 }else {
                     this.mensaje = 'error - usuario o contraseña incorrecta'
                 }
