@@ -18,36 +18,36 @@
                     <v-container>
                         <v-row>
                             <v-col cols="6">
-                                <v-text-field v-model="user.NUM_SOCIO" label="Numero de socio" ></v-text-field>
+                                <v-text-field v-model="user.NUM_SOCIO" label="Filtrar por Numero de socio" ></v-text-field>
                             </v-col>
                             <v-col cols="6" class="pt-0 mt-0">
-                                <div>SOCIO:</div><!-- item-text="text" item-value="value" -->
-                                <v-select item-text="text" item-value="value" :items="Socio"  v-model="user.SOCIO" label="elija si es o no socio"  outlined></v-select>
+                                <div> Socio:</div><!-- item-text="text" item-value="value" -->
+                                <v-select item-text="text" item-value="value" :items="Socio"  v-model="user.SOCIO" label="Elegir filtro"  outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.NOMBRE" label="Nombre" ></v-text-field>
+                                <v-text-field v-model="user.NOMBRE" label="Filtrar por Nombre" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.APELLIDO_1" label="Apellido 1" ></v-text-field>
+                                <v-text-field v-model="user.APELLIDO_1" label="Filtrar por Apellido 1" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.APELLIDO_2" label="Apellido 2" ></v-text-field>
+                                <v-text-field v-model="user.APELLIDO_2" label="Filtrar por Apellido 2" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="4">
                                 <div>Parentesco:</div>
-                                <v-select item-text="text" item-value="value" :items="Parentesco" v-model="user.PARENTESCO" label="Elegir parentesco"  outlined>
+                                <v-select item-text="text" item-value="value" :items="Parentesco" v-model="user.PARENTESCO" label="Elegir filtro"  outlined>
                                 </v-select>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.DNI" label="DNI" ></v-text-field>
+                                <v-text-field v-model="user.DNI" label="Filtrar por DNI" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <div>PD:</div>
-                                <v-select item-text="text" item-value="value" :items="Pd" v-model="user.PD" label="Elegir PD" outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Pd" v-model="user.PD" label="Elegir filtro" outlined></v-select>
                             </v-col>
                         </v-row>
                         <!-- filtro de las fechas -->
@@ -55,20 +55,20 @@
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>fecha de nacimiento(filtro):</h4>
+                                        <h4>elija el filtro para el nacimiento:</h4>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO" :label="SimbolosSelect.FECHA_NACIMIENTO" outlined></v-select>
                                     </v-col>
                                     <v-col cols="5" >
-                                        <v-text-field type="date" label="Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1900-01-01" ></v-text-field>
+                                        <v-text-field type="date" label="fecha de nacimiento" v-model="user.FECHA_NACIMIENTO" min="1900-01-01" ></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>fecha de nacimiento hebreo(fil..</h4>
+                                        <h5>elija el filtro para el nacimiento (hebreo):</h5>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" :label="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" outlined></v-select>
@@ -81,7 +81,7 @@
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>Fecha de casamiento(filtro)</h4>
+                                        <h4>elija el filtro para el casamiento:</h4>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO" :label="SimbolosSelect.FECHA_CASAMIENTO" outlined></v-select>
@@ -96,7 +96,7 @@
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>Fecha de casamiento hebreo(fil..</h4>
+                                        <h5>elija el filtro para el casamiento (hebreo):</h5>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" :label="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" outlined></v-select>
@@ -109,7 +109,7 @@
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>Fecha de defunción(filtro)</h4>
+                                        <h4>elija el filtro para la defunción:</h4>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION" :label="SimbolosSelect.FECHA_DEFUNCION" outlined></v-select>
@@ -122,7 +122,7 @@
                             <v-col cols="4">
                                 <v-row>
                                     <v-col cols="3" class="text-center">
-                                        <h4>Fecha de defunción hebreo(fil..</h4>
+                                        <h5>elija el filtro para la defunción (hebreo):</h5>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION_HEBREO" :label="SimbolosSelect.FECHA_DEFUNCION_HEBREO" outlined></v-select>
@@ -135,49 +135,49 @@
                         </v-row>
                         <v-row>
                             <v-col cols="10">
-                                <v-text-field v-model="user.DIRECCION" label="Direccion" ></v-text-field>
+                                <v-text-field v-model="user.DIRECCION" label="Filtrar por Direccion" ></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field v-model="user.COD_POSTAL" label="Codigo postal" ></v-text-field>
+                                <v-text-field v-model="user.COD_POSTAL" label="Filtrar por Codigo postal" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.LOCALIDAD" label="Localidad" ></v-text-field>
+                                <v-text-field v-model="user.LOCALIDAD" label="Filtrar por Localidad" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.PROVINCIA" label="Provincia" ></v-text-field>
+                                <v-text-field v-model="user.PROVINCIA" label="Filtrar por Provincia" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.PAIS" label="Pais" ></v-text-field>
+                                <v-text-field v-model="user.PAIS" label="Filtrar por Pais" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.MOVIL" type="number" label="Movil" ></v-text-field>
+                                <v-text-field v-model="user.MOVIL" type="number" label="Filtrar por Movil" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.FIJO" type="number" label="Fijo" ></v-text-field>
+                                <v-text-field v-model="user.FIJO" type="number" label="Filtrar por Fijo" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.EMAIL" label="Email" ></v-text-field>
+                                <v-text-field v-model="user.EMAIL" label="Filtrar por Email" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="3">
                                 <div>Edad:</div>
-                                <v-select item-text="text" item-value="value" :items="Edad" v-model="user.EDAD" label="Elegir Edad"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Edad" v-model="user.EDAD" label="Elegir filtro"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <div>Sola:</div>
-                                <v-select item-text="text" item-value="value" :items="Sola" v-model="user.SOLA" label="Elegir Sola"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Sola" v-model="user.SOLA" label="Elegir filtro"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <div>Mayor:</div>
-                                <v-select item-text="text" item-value="value" :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Mayor" v-model="user.MAYOR" label="Elegir filtro"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
-                                <v-text-field v-model="user.TEFILA" label="Tefilá" ></v-text-field>
+                                <v-text-field v-model="user.TEFILA" label="Filtrar por Tefilá" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -225,12 +225,12 @@
                             <!-- forma de pago -->
                             <v-col cols="2">
                                 <div>Forma de pago:</div>
-                                <v-select item-text="text" item-value="value" :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma de pago"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir filtro"  outlined></v-select>
                             </v-col>
                             <!-- jessed -->
                             <v-col cols="2" >
                                 <div>Jessed:</div>
-                                <v-select item-text="text" item-value="value" :items="Jessed" v-model="user.JESED" label=" Jessed"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Jessed" v-model="user.JESED" label=" Elegir filtro"  outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row v-if="token=='adminToken'">

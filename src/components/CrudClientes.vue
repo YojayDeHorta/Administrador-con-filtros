@@ -453,23 +453,33 @@ export default {
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO_HEBREO.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
         },
         fechaCasamientoFilter(value) { //FECHA_CASAMIENTO
             if (!this.userFiltro.FECHA_CASAMIENTO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_CASAMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO)
         },
         fechaCasamientoHebreoFilter(value) { //FECHA_CASAMIENTO_HEBREO
             if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO_HEBREO.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
         },
         fechaDefuncionFilter(value) { //FECHA_DEFUNCION
             if (!this.userFiltro.FECHA_DEFUNCION) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_DEFUNCION=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION)
+            if (this.SimbolosSelect.FECHA_DEFUNCION=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION)
+            if (this.SimbolosSelect.FECHA_DEFUNCION=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION)
         },
         fechaDefuncionHebreoFilter(value) { //FECHA_DEFUNCION_HEBREO
             if (!this.userFiltro.FECHA_DEFUNCION_HEBREO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION_HEBREO.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
         },
         direccionFilter(value) { //DIRECCION
             if (!this.userFiltro.DIRECCION) return true;
