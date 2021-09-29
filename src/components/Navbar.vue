@@ -17,8 +17,8 @@
             <v-btn  exact text class="gray" v-if="token">
                 <span>{{username}}</span>
                 <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
-                <v-icon v-if="token=='secretariaToken'">mdi-account-circle</v-icon><!-- secretaria -->
-                <v-icon v-if="token=='conserjeToken'">mdi-account-circle</v-icon><!-- conserje -->
+                <v-icon v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->
+                <v-icon v-if="token=='conserjeToken'">mdi-account-eye</v-icon><!-- conserje -->
             </v-btn>
             <!-- menu -->
             <v-btn :to="{name: 'Options'}" v-if="token" exact text class="gray">

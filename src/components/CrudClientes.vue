@@ -2,42 +2,76 @@
     <v-container class="CRUD-P pb-0" fluid fill-height>
         <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10" style="border:5px solid red">
             <v-col style="border:5px solid black">
-                <v-btn style="width:25%;font-size:0.8vw" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn style="width:25%;font-size:0.8vw"  @click="dialogFiltro=true">
-                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn style="width:25%;font-size:0.8vw"  color="red white--text" @click="resetUser(userFiltro)">
-                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
-                </v-btn>&nbsp;&nbsp;&nbsp;
+                <div style="border:5px solid black;width:70%;height:100%">
+                    <v-expansion-panels>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header disable-icon-rotate>
+                                <strong class="text-center">OPCIONES del documento</strong>
+                                <template v-slot:actions>
+                                    <v-icon color="teal">
+                                        mdi-cloud-download
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content class="text-center mb-5" style="border:5px solid red">
+                                <v-btn style="width:28%;font-size:0.65vw" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
+                                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                                <v-btn style="width:28%;font-size:0.65vw" @click="dialogFiltro=true">
+                                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                                <v-btn style="width:28%;font-size:0.65vw" color="red white--text" @click="resetUser(userFiltro)">
+                                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                </div>
             </v-col>
-            <v-col class="text-right" style="border:5px solid black">
-               <Oculto></Oculto>
-            <!--
+            <v-col class="d-flex justify-end" style="border:5px solid black">
+                <div style="border:5px solid black;width:70%;height:100%">
+                    <v-expansion-panels>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header disable-icon-rotate>
+                                <strong class="text-center">OPCIONES DE DESCARGA</strong>
+                                <template v-slot:actions>
+                                    <v-icon color="teal">
+                                        mdi-cloud-download
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content class="text-center mb-5" style="border:5px solid red">
+                                <!--
+                                <Oculto></Oculto>
+                            -->
+                                <v-btn style="color:white !important;width:27%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
+                                    <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;encriptado
+                                </v-btn>
+                                <!--descarga normal-->
+                                <v-btn style="color:white !important;width:27%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken'">
+                                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;Excel
+                                </v-btn>
+                                <!--descarga de excel-->
+                                <v-btn style="color:white!important;width:25%;" color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
+                                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
+                                </v-btn>
+                                <!--descarga filtrada-->
+                                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
+                                    <span v-if="file==null">
+                                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
+                                    </span>
+                                    <span v-else>
+                                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
+                                    </span>
+                                </v-btn>
+                                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                </div>
+                <!--
                 <v-btn class="mr-5" style="width:19%;font-size:10px"></v-btn>
             -->
-                <v-btn style="color:white !important;width:27%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
-                    <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
-                </v-btn>
-                <!--descarga normal-->
-                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
-                </v-btn>
-                <!--descarga de excel-->
-                <v-btn  style="color:white!important;width:25%;" color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
-                </v-btn>
-                <!--descarga filtrada-->
-                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
-                    <span v-if="file==null">
-                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
-                    </span>
-                    <span v-else>
-                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
-                    </span>
-                </v-btn>
-                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
             </v-col>
         </v-row>
         <!--
@@ -51,7 +85,7 @@
             <v-col>
                 <div class="Tabla_Principal ">
                     <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
-                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header @current-items="getFiltered" :footer-props="{
+                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="62vh" fixed-header @current-items="getFiltered" :footer-props="{
                         'items-per-page-text': 'usuarios por pagina',
                         'items-per-page-options': [10, 50, 100, 200, -1],
                         }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Tabla text--center ">
@@ -71,7 +105,7 @@
         <!-- ventana modal para crear/editar -->
         <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" :isEditing="isEditing" @dialogModal="dialog = $event" @agregarModal="agregarModal" />
         <!-- ventana modal para FILTROS -->
-        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" @simbolos="SimbolosSelect=$event" />
+        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" />
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
         <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
@@ -93,7 +127,8 @@ export default {
     name: 'CrudClientes',
     components: {
         ventanaFiltro,
-        ventanaModal,Oculto
+        ventanaModal,
+        Oculto
     },
     data() {
         return {
@@ -127,7 +162,7 @@ export default {
                 { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter, show: true },
                 { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter, show: true },
                 { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "100px", filter: this.tefilaFilter, show: true },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "15px", show: true },
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla observaciones", width: '20', show: true },
                 { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false },
                 { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false },
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
@@ -136,6 +171,12 @@ export default {
                 { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px", show: true },
             ],
             //aqui van los valores pa los select
+            Socio: [{ text: 'elegir socio', value: '' }, { text: 'SI', value: 'SI' }, { text: 'NO', value: 'NO' }],
+            Parentesco: ['Conyuje', 'Hijos', 'Padres', 'Otros'],
+            Pd: ['SI', 'NO'],
+            Edad: ['BEBE', '3-18', '19-30', '31-50', '51-70', '+71'],
+            Sola: ['SI', 'NO'],
+            Mayor: ['SI', 'NO'],
             user: {
                 ID: '',
                 NUM_SOCIO: '',
@@ -206,14 +247,6 @@ export default {
                 FORMA_PAGO: '',
                 OBSERVACIONES2: '',
                 JESED: '',
-            },
-            SimbolosSelect:{
-                FECHA_NACIMIENTO: '',
-                FECHA_NACIMIENTO_HEBREO: '',
-                FECHA_CASAMIENTO: '',
-                FECHA_CASAMIENTO_HEBREO: '',
-                FECHA_DEFUNCION: '',
-                FECHA_DEFUNCION_HEBREO: '',
             },
             search: '',
             //dialog y modal
@@ -447,9 +480,7 @@ export default {
         },
         fechaNacimientoFilter(value) { //FECHA_NACIMIENTO
             if (!this.userFiltro.FECHA_NACIMIENTO) return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO.toString().toLowerCase());
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;
@@ -551,8 +582,6 @@ export default {
     padding-left: 25px;
 }
 
-
-
 /*
 .Buscar_Text {
      border: 5px solid black;
@@ -574,6 +603,9 @@ export default {
     vertical-align: middle;
 }*/
 
+
+
+
 .Op-Iconos {
     width: 1000%;
     /* border: 5px solid red;*/
@@ -594,29 +626,31 @@ export default {
     background-color: #CFD8DC !important;
     color: black !important;
 
+
 }
+
+.observaciones {
+    border: 5px solid red !important;
+    padding: 0;
+    margin: 0;
+
+}
+
 
 tbody tr:nth-of-type(odd) {
     background-color: #FAFAFA;
 }
 
-tbody{
-   border: 5px solid red;
+tbody {
+    border: 5px solid red;
 }
 
-/*
 tbody td {
     padding: auto;
     border: 0.2px solid purple;
-    align-items: left;
-  
-    width: 10%;
-}*/
-
-table.v-table thead tr th {
-  font-size: 10px!important;
-  color: red !important;
+    width: 20% !important;
+    padding: 0;
+    margin: 0;
+    white-space: normal
 }
-
-
 </style>
