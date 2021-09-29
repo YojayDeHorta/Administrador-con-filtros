@@ -18,6 +18,9 @@
                             -->
                             </div>
                         </v-card-text>
+                        <v-card-actions class="justify-end">
+                            <v-btn text @click="dialog.value = false">Close</v-btn>
+                        </v-card-actions>
                     </v-card>
                 </template>
             </v-dialog>
