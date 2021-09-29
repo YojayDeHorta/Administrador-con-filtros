@@ -21,7 +21,7 @@
                     <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
                 </v-btn>
                 <!--descarga normal-->
-                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken'">
+                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
                     <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
                 </v-btn>
                 <!--descarga de excel-->
@@ -71,7 +71,7 @@
         <!-- ventana modal para crear/editar -->
         <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" :isEditing="isEditing" @dialogModal="dialog = $event" @agregarModal="agregarModal" />
         <!-- ventana modal para FILTROS -->
-        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" />
+        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" @simbolos="SimbolosSelect=$event" />
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
         <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
@@ -136,12 +136,6 @@ export default {
                 { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px", show: true },
             ],
             //aqui van los valores pa los select
-            Socio: [{ text: 'elegir socio', value: '' }, { text: 'SI', value: 'SI' }, { text: 'NO', value: 'NO' }],
-            Parentesco: ['Conyuje', 'Hijos', 'Padres', 'Otros'],
-            Pd: ['SI', 'NO'],
-            Edad: ['BEBE', '3-18', '19-30', '31-50', '51-70', '+71'],
-            Sola: ['SI', 'NO'],
-            Mayor: ['SI', 'NO'],
             user: {
                 ID: '',
                 NUM_SOCIO: '',
@@ -212,6 +206,14 @@ export default {
                 FORMA_PAGO: '',
                 OBSERVACIONES2: '',
                 JESED: '',
+            },
+            SimbolosSelect:{
+                FECHA_NACIMIENTO: '',
+                FECHA_NACIMIENTO_HEBREO: '',
+                FECHA_CASAMIENTO: '',
+                FECHA_CASAMIENTO_HEBREO: '',
+                FECHA_DEFUNCION: '',
+                FECHA_DEFUNCION_HEBREO: '',
             },
             search: '',
             //dialog y modal
@@ -445,7 +447,9 @@ export default {
         },
         fechaNacimientoFilter(value) { //FECHA_NACIMIENTO
             if (!this.userFiltro.FECHA_NACIMIENTO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO.toString().toLowerCase());
+            if (this.SimbolosSelect.FECHA_NACIMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO)
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;

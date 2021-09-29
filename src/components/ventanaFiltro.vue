@@ -22,7 +22,7 @@
                             </v-col>
                             <v-col cols="6" class="pt-0 mt-0">
                                 <div>SOCIO:</div><!-- item-text="text" item-value="value" -->
-                                <v-select :items="Socio"  v-model="user.SOCIO" label="elija si es o no socio"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Socio"  v-model="user.SOCIO" label="elija si es o no socio"  outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -39,7 +39,7 @@
                         <v-row>
                             <v-col cols="4">
                                 <div>Parentesco:</div>
-                                <v-select :items="Parentesco" v-model="user.PARENTESCO" label="Elegir parentesco"  outlined>
+                                <v-select item-text="text" item-value="value" :items="Parentesco" v-model="user.PARENTESCO" label="Elegir parentesco"  outlined>
                                 </v-select>
                             </v-col>
                             <v-col cols="4">
@@ -47,27 +47,90 @@
                             </v-col>
                             <v-col cols="4">
                                 <div>PD:</div>
-                                <v-select :items="Pd" v-model="user.PD" label="Elegir PD" outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Pd" v-model="user.PD" label="Elegir PD" outlined></v-select>
+                            </v-col>
+                        </v-row>
+                        <!-- filtro de las fechas -->
+                        <v-row>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>fecha de nacimiento(filtro):</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO" :label="SimbolosSelect.FECHA_NACIMIENTO" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1900-01-01" ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>fecha de nacimiento hebreo(fil..</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" :label="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" min="1900-01-01" ></v-text-field>
+                                    </v-col>
+                                </v-row>
+                            </v-col>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>Fecha de casamiento(filtro)</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO" :label="SimbolosSelect.FECHA_CASAMIENTO" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" min="1900-01-01" > </v-text-field>
+                                    </v-col>
+                                </v-row>
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" ></v-text-field>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>Fecha de casamiento hebreo(fil..</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" :label="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" min="1900-01-01" ></v-text-field>          
+                                    </v-col>
+                                </v-row>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>Fecha de defunción(filtro)</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION" :label="SimbolosSelect.FECHA_DEFUNCION" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" min="1900-01-01" ></v-text-field> 
+                                    </v-col>
+                                </v-row>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" ></v-text-field>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
+                            <v-col cols="4">
+                                <v-row>
+                                    <v-col cols="3" class="text-center">
+                                        <h4>Fecha de defunción hebreo(fil..</h4>
+                                    </v-col>
+                                    <v-col cols="4" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION_HEBREO" :label="SimbolosSelect.FECHA_DEFUNCION_HEBREO" outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="5" >
+                                        <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" min="1900-01-01" ></v-text-field>
+                                    </v-col>
+                                </v-row>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -103,15 +166,15 @@
                         <v-row>
                             <v-col cols="3">
                                 <div>Edad:</div>
-                                <v-select :items="Edad" v-model="user.EDAD" label="Elegir Edad"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Edad" v-model="user.EDAD" label="Elegir Edad"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <div>Sola:</div>
-                                <v-select :items="Sola" v-model="user.SOLA" label="Elegir Sola"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Sola" v-model="user.SOLA" label="Elegir Sola"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <div>Mayor:</div>
-                                <v-select :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <v-text-field v-model="user.TEFILA" label="Tefilá" ></v-text-field>
@@ -130,7 +193,7 @@
                                         <h4>Cuotas:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" outlined></v-select>
+                                        <v-select item-text="text" item-value="value" :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
                                         <v-text-field v-model="cuotaSelect.value"  label="Digite una cuota">
@@ -148,7 +211,7 @@
                                         <h4>Cuota liceo:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo"  outlined></v-select>
+                                        <v-select item-text="text" item-value="value" :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo"  outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
                                         <v-text-field v-model="cuotaLiceoSelect.value"  label="Digite la Cuota liceo">
@@ -162,12 +225,12 @@
                             <!-- forma de pago -->
                             <v-col cols="2">
                                 <div>Forma de pago:</div>
-                                <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma de pago"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma de pago"  outlined></v-select>
                             </v-col>
                             <!-- jessed -->
                             <v-col cols="2" >
                                 <div>Jessed:</div>
-                                <v-select :items="Jessed" v-model="user.JESED" label=" Jessed"  outlined></v-select>
+                                <v-select item-text="text" item-value="value" :items="Jessed" v-model="user.JESED" label=" Jessed"  outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row v-if="token=='adminToken'">
@@ -194,26 +257,35 @@ export default {
     name:'ventanaModal',
     data() {
         return {
-            Socio:['SI','NO'],
-            //Socio:[{text:'elegir', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
-            Parentesco:['Conyuje','Hijos','Padres','Otros'],
-            Pd:['SI','NO'],
-            Edad:['BEBE','3-18','19-30','31-50','51-70','+71'],
-            Sola:['SI','NO'],
-            Mayor:['SI','NO'],
+            Socio:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
+            Parentesco:[{text:'ninguno', value:''},{text:'Conyuje', value:'Conyuje'},{text:'Hijos', value:'Hijos'},{text:'Padres', value:'Padres'},{text:'Otros', value:'Otros'}],
+            Pd:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
+            Edad:[{text:'ninguno', value:''},{text:'BEBE', value:'BEBE'},{text:'3-18', value:'3-18'},{text:'19-30', value:'19-30'},{text:'31-50', value:'31-50'},{text:'51-70', value:'51-70'},{text:'+71', value:'+71'}],
+            Sola:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
+            Mayor:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
             Cuotas:[{text:'Euro', value:'€'},{text:'Dolar', value:'$'},{text:'Shekel', value:'₪'}],
             CuotaLiceo:[{text:'Euro', value:'€'},{text:'Dolar', value:'$'},{text:'Shekel', value:'₪'}],
             cuotaSelect:{simbolo:'$', value:''},
             cuotaLiceoSelect:{simbolo:'$', value:''},
-            FormaPago:['CAJA','BANCO','TARJETA','PAYPAL','OTROS'],
-            Jessed:['SI','NO'],
+            FormaPago:[{text:'ninguno', value:''},{text:'CAJA', value:'CAJA'},{text:'BANCO', value:'BANCO'},{text:'TARJETA', value:'TARJETA'},{text:'PAYPAL', value:'PAYPAL'},{text:'OTROS', value:'OTROS'}],
+            Jessed:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
+            //simbolos
+            Simbolos:[{text:'ninguno', value:''},{text:'mayores a', value:'>'},{text:'menores a', value:'<'},{text:'igual a', value:'='}],
+            SimbolosSelect:{
+                FECHA_NACIMIENTO: '',
+                FECHA_NACIMIENTO_HEBREO: '',
+                FECHA_CASAMIENTO: '',
+                FECHA_CASAMIENTO_HEBREO: '',
+                FECHA_DEFUNCION: '',
+                FECHA_DEFUNCION_HEBREO: '',
+            },
             //reglas del form
             valid: true,
             selectRules:[v=>!!v || 'Porfavor elija una opcion',],
             
             FechaRules:[
                 v=>!!v || 'elija una Fecha valida',
-                // v => (v && new Date(v).getTime() <= new Date(v).getTime('1950-01-01')) || 'la fecha que intentas añadir es muy antigua'
+                // v => (v && new Date(v).getTime() <= new Date(v).getTime('1900-01-01')) || 'la fecha que intentas añadir es muy antigua'
             ]
 
         }
@@ -282,6 +354,8 @@ export default {
             if (this.cuotaLiceoSelect.value!='') this.user.CUOTA_LICEO=this.cuotaLiceoSelect.simbolo+this.cuotaLiceoSelect.value
             this.resetCuota(this.cuotaSelect)
             this.resetCuota(this.cuotaLiceoSelect)
+
+            this.$emit('simbolos',this.SimbolosSelect)
             this.$emit('agregarModal',this.user)
             
         },
