@@ -100,7 +100,7 @@ export default {
 </script>
 <style scoped>
     .Marco_Login {
-        border: 5px solid red;
+       /* border: 5px solid red;*/
 
     }
 

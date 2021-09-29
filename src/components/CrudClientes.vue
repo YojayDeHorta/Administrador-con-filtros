@@ -1,10 +1,10 @@
 <template>
     <v-container class="CRUD-P pb-0" fluid fill-height>
-        <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10" style="border:5px solid red">
+        <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10">
             <!---->
             <!---->
-            <v-col class="d-flex justify-start" style="border:5px solid black">
-                <div style="border:5px solid red;width:80%">
+            <v-col class="d-flex justify-start">
+                <div style="width:83%">
                     <v-expansion-panels>
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
@@ -15,25 +15,23 @@
                                     </v-icon>
                                 </template>
                             </v-expansion-panel-header>
-                            <v-expansion-panel-content>
-                                <v-btn style="width:22%;font-size:0.55vw;" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
+                            <v-expansion-panel-content class="text-center">
+                                <v-btn style="width:25%;font-size:0.65vw" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
                                     <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
                                 </v-btn>&nbsp;&nbsp;&nbsp;
-                                <v-btn style="border:5px solid red;width:22%;font-size:0.55vw;"  @click="dialogFiltro=true">
+                                <v-btn style="width:22%;font-size:0.65vw" @click="dialogFiltro=true">
                                     <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
-                                </v-btn>&nbsp;&nbsp;&nbsp;
-                                <v-btn style="width:25%;font-size:0.50vw" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
-                                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
-                                </v-btn>&nbsp;&nbsp;&nbsp;
-                                <Oculto></Oculto>
-                                  
+                                </v-btn>
+                                <v-btn class="mr-2 ml-3" style="width:23%;font-size:0.65vw;" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
+                                    <v-icon >mdi-clipboard-remove</v-icon>borrar filtro
+                                </v-btn>
                             </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>
                 </div>
             </v-col>
-            <v-col class="d-flex justify-end" style="border:5px solid black">
-                <div class="" style="border:5px solid red;width:70%">
+            <v-col class="d-flex justify-end">
+                <div class="" style="width:83%">
                     <v-expansion-panels>
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
@@ -45,19 +43,19 @@
                                 </template>
                             </v-expansion-panel-header>
                             <v-expansion-panel-content class="text-center">
-                                <v-btn style="color:white !important;width:28%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
+                                <v-btn class="mr-2" style="color:white !important;width:25%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
                                     <v-icon color="white">mdi-file-lock</v-icon>&nbsp;&nbsp;encriptado
                                 </v-btn>
                                 <!--descarga normal-->
-                                <v-btn style="color:white !important;width:28%;font-size:0.65vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
+                                <v-btn style="color:white !important;width:20%;font-size:0.65vw" class="btn-text ml-2 mr-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
                                     <v-icon color="white">mdi-file-excel</v-icon>&nbsp;&nbsp;Excel
                                 </v-btn>
                                 <!--descarga de excel filtrada, necesario para las descargas-->
-                                <v-btn style="color:white!important;width:32%;font-size:0.65vw" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
+                                <v-btn class="mr-1" style="color:white!important;width:26%;font-size:0.65vw" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
                                     <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
                                 </v-btn>
                                 <!--descarga filtrada-->
-                                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
+                                <v-btn style="width:22%;font-size:0.65vw" color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
                                     <span v-if="file==null">
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
                                     </span>
@@ -81,7 +79,12 @@
     -->
         <v-row class="d-flex justify-center p-0 ">
             <v-col>
-                <div class="Tabla_Principal ">
+                <div>
+                    <div style="width:10%;margin:0">
+                        <Oculto></Oculto>
+                    </div>
+                </div>
+                <div class="Tabla_Principal">
                     <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
                     <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header @current-items="getFiltered" :footer-props="{
                         'items-per-page-text': 'usuarios por pagina',
@@ -148,7 +151,7 @@ export default {
                 { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaCasamientoHebreoFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaDefuncionFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-5", align: 'center', width: "350px",filter: this.direccionFilter, show: true },
+                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.direccionFilter, show: true },
                 { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.codigoPostalFilter, show: true },
                 { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.localidadFilter, show: true },
                 { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.provinciaFilter, show: true },
@@ -668,13 +671,10 @@ export default {
 .Marco_Editar {
      border: 5px solid red;
 }
-
+*/
 .Tabla_Principal {
-    border: 5px solid blue;
-
-    text-align: center;
-    vertical-align: middle;
-}*/
+  height: 100%;
+}
 
 .Op-Iconos {
     width: 1000%;

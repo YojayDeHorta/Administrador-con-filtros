@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div >
         <v-col cols="auto" v-if="rol=='secretariaRol'">
             <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="600">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn color="primary" v-bind="attrs" v-on="on">Datos&nbsp;OCULTOS</v-btn>
+                    <v-btn style="font-size:0.65vw;color:white" color="#607D8B" v-bind="attrs" v-on="on">Datos&nbsp;OCULTOS</v-btn>
                 </template>
                 <template v-slot:default="dialog">
                     <v-card>
                         <v-form @submit.prevent="FormPassword" lazy-validation ref="form">
-                            <v-toolbar style="border:5px solid red !important;width:100%;font-size:0.65vw" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
+                            <v-toolbar style="width:100%;font-size:0.65vw" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
                             <v-card-text>
                                 <div class="text-h2 text-center pa-12">
                                     <h6 class="text-center mb-10" style="font-size:15px">Ingrese la contraseña para mostrar los datos</h6>
@@ -20,7 +20,7 @@
                                 </div>
                             </v-card-text>
                             <v-card-actions class="justify-end">
-                                <v-btn text @click="dialog.value = false">Close</v-btn>
+                                <v-btn text @click="dialog.value = false">Cancelar</v-btn>
                             </v-card-actions>
                         </v-form>
                     </v-card>
