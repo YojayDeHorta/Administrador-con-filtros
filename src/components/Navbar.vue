@@ -16,7 +16,7 @@
             <!-- roles -->
             <v-btn  exact text class="gray" v-if="token">
                 <span>{{username}}</span>
-                <v-icon v-if="token=='adminToken'">mdi-account-circle</v-icon><!-- admin -->
+                <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
                 <v-icon v-if="token=='secretariaToken'">mdi-account-circle</v-icon><!-- secretaria -->
                 <v-icon v-if="token=='conserjeToken'">mdi-account-circle</v-icon><!-- conserje -->
             </v-btn>
