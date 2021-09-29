@@ -126,8 +126,8 @@ export default {
                 { text: "EDAD", value: "EDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.edadFilter, show: true },
                 { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter, show: true },
                 { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter, show: true },
-                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.tefilaFilter, show: true },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px", show: true },
+                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "100px", filter: this.tefilaFilter, show: true },
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "15px", show: true },
                 { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false },
                 { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false },
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
@@ -547,6 +547,8 @@ export default {
     padding-left: 25px;
 }
 
+
+
 /*
 .Buscar_Text {
      border: 5px solid black;
@@ -594,10 +596,23 @@ tbody tr:nth-of-type(odd) {
     background-color: #FAFAFA;
 }
 
+tbody{
+   border: 5px solid red;
+}
+
+/*
 tbody td {
     padding: auto;
-    border: 0.2px solid black;
-    padding: 15px;
-    width: 50%;
+    border: 0.2px solid purple;
+    align-items: left;
+  
+    width: 10%;
+}*/
+
+table.v-table thead tr th {
+  font-size: 10px!important;
+  color: red !important;
 }
+
+
 </style>
