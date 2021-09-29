@@ -130,7 +130,7 @@
                                         <h4>Cuotas:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" outlined></v-select>
+                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" label="Elegir moneda" outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
                                         <v-text-field v-model="cuotaSelect.value" :rules="cuotaRules" label="Digite una cuota">
@@ -148,7 +148,7 @@
                                         <h4>Cuota liceo:</h4>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo"  outlined></v-select>
+                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" label="Elegir moneda"  outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
                                         <v-text-field v-model="cuotaLiceoSelect.value" :rules="cuotaRules" label="Digite la Cuota liceo">
@@ -226,7 +226,7 @@ export default {
                 v => (v && v.length <= 45) || 'el numero de caracteres maximos permitidos es 45'
             ],
             FechaRules:[
-                v=>!!v || 'elija una Fecha valida',
+                v=>!!v || 'elija una Fecha valida (mes/dia/año)',
                 // v => (v && new Date(v).getTime() <= new Date(v).getTime('1950-01-01')) || 'la fecha que intentas añadir es muy antigua'
             ],
             direccionRules:[
@@ -235,11 +235,7 @@ export default {
             ],
             codPostalRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido',
-            ],
-            codPostalRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido',
+                v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido(5 numeros)',
             ],
             localidadRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
@@ -283,7 +279,6 @@ export default {
         dialog: {
             handler(dial) {
                 if (dial) {
-                    console.log('dialog');
                     this.resetCuota(this.cuotaSelect)
                     this.resetCuota(this.cuotaLiceoSelect)
                     if (this.user.CUOTAS!='') {
@@ -294,7 +289,8 @@ export default {
                         this.cuotaLiceoSelect.simbolo=this.user.CUOTA_LICEO[0]
                         this.cuotaLiceoSelect.value=this.user.CUOTA_LICEO.slice(1)
                     }
-                    if (this.formTitle=='Agregar cliente') this.resetForm()   
+                     if (this.formTitle=='Agregar cliente' && this.dialog)  this.$nextTick(() => this.$refs.form.reset());
+                      
                 }
                 
             },
@@ -320,26 +316,25 @@ export default {
             this.$refs.form.resetValidation()
         },
         resetForm () {
-            this.$refs.form.reset()
+            // this.$refs.form.reset()
+            if (this.$refs[form]) {
+                this.$refs.form.reset();
+            }
         },
         resetCuota(cuota){
-            console.log('reset');
             cuota.simbolo='$'
             cuota.value=''
         },
         submitForm(){
-            
-            console.log(this.user);
             if (this.$refs.form.validate()==true) {
                 if (this.cuotaSelect.value!='') this.user.CUOTAS=this.cuotaSelect.simbolo+this.cuotaSelect.value
                 if (this.cuotaLiceoSelect.value!='') this.user.CUOTA_LICEO=this.cuotaLiceoSelect.simbolo+this.cuotaLiceoSelect.value
                 this.resetCuota(this.cuotaSelect)
                 this.resetCuota(this.cuotaLiceoSelect)
                 this.$emit('agregarModal',this.user)
-
+            }else{
+                
             }
-            
-            
         },
         
     }

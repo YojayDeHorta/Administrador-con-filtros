@@ -67,7 +67,8 @@ export default {
     },computed:{
         ...mapGetters([
             'token',
-            'username'
+            'username',
+            'rol',
         ]),
     },
     methods: {
@@ -86,11 +87,11 @@ export default {
                     sessionStorage.setItem("nombre",res.data.user);
                     this.login.user = ''
                     this.login.pass = ''
-                    this.getLogin({username:res.data.user,token:res.data.token})
+                    this.getLogin({username:res.data.user,token:res.data.token,rol:res.data.rol})
                     this.mensaje = 'login realizado correctamente'
                     this.$router.push('/options')
                 }
-                
+                this.login.pass = ''
             }
             
         },

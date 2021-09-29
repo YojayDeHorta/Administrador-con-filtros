@@ -54,39 +54,30 @@
                         <v-row>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h4>elija el filtro para el nacimiento:</h4>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO" label="filtro para el nacimiento" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO" :label="SimbolosSelect.FECHA_NACIMIENTO" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="fecha de nacimiento" v-model="user.FECHA_NACIMIENTO" min="1900-01-01" ></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h5>elija el filtro para el nacimiento (hebreo):</h5>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" label="filtro, nacimiento (hebreo)" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" :label="SimbolosSelect.FECHA_NACIMIENTO_HEBREO" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" min="1900-01-01" ></v-text-field>
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h4>elija el filtro para el casamiento:</h4>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO" label="filtro para el casamiento" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO" :label="SimbolosSelect.FECHA_CASAMIENTO" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" min="1900-01-01" > </v-text-field>
                                     </v-col>
                                 </v-row>
@@ -95,39 +86,30 @@
                         <v-row>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h5>elija el filtro para el casamiento (hebreo):</h5>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" label="filtro, casamiento (hebreo)" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" :label="SimbolosSelect.FECHA_CASAMIENTO_HEBREO" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" min="1900-01-01" ></v-text-field>          
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h4>elija el filtro para la defunción:</h4>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION" label="filtro para el defunción" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION" :label="SimbolosSelect.FECHA_DEFUNCION" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" min="1900-01-01" ></v-text-field> 
                                     </v-col>
                                 </v-row>
                             </v-col>
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="3" class="text-center">
-                                        <h5>elija el filtro para la defunción (hebreo):</h5>
+                                    <v-col cols="6" >
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION_HEBREO" label="filtro, defunción (hebreo)" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.FECHA_DEFUNCION_HEBREO" :label="SimbolosSelect.FECHA_DEFUNCION_HEBREO" outlined></v-select>
-                                    </v-col>
-                                    <v-col cols="5" >
+                                    <v-col cols="6" >
                                         <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" min="1900-01-01" ></v-text-field>
                                     </v-col>
                                 </v-row>
@@ -164,19 +146,20 @@
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="3">
+                            <v-col cols="2">
                                 <div>Edad:</div>
                                 <v-select item-text="text" item-value="value" :items="Edad" v-model="user.EDAD" label="Elegir filtro"  outlined></v-select>
                             </v-col>
-                            <v-col cols="3">
+                            <v-col cols="2">
                                 <div>Sola:</div>
                                 <v-select item-text="text" item-value="value" :items="Sola" v-model="user.SOLA" label="Elegir filtro"  outlined></v-select>
                             </v-col>
-                            <v-col cols="3">
+                            <v-col cols="2">
                                 <div>Mayor:</div>
                                 <v-select item-text="text" item-value="value" :items="Mayor" v-model="user.MAYOR" label="Elegir filtro"  outlined></v-select>
                             </v-col>
-                            <v-col cols="3">
+                            
+                            <v-col cols="6">
                                 <v-text-field v-model="user.TEFILA" label="Filtrar por Tefilá" ></v-text-field>
                             </v-col>
                         </v-row>
@@ -187,15 +170,19 @@
                         </v-row>
                         <v-row v-if="token=='adminToken'">
                             <!-- cuotas -->
-                            <v-col cols="4">
-                                <v-row>
+                            
+                            <v-col cols="6">
+                                <v-row>  
                                     <v-col cols="2" class="text-center">
                                         <h4>Cuotas:</h4>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select item-text="text" item-value="value" :items="Cuotas" v-model="cuotaSelect.simbolo" :label="cuotaSelect.simbolo" outlined></v-select>
+                                    <v-col cols="3">
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.CUOTAS" label="Elegir filtro, cuotas" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="6" >
+                                    <v-col cols="3" >
+                                        <v-select item-text="text" item-value="value" :items="Cuotas" v-model="cuotaSelect.simbolo" label="Elegir moneda"  outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="4" >
                                         <v-text-field v-model="cuotaSelect.value"  label="Digite una cuota">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaSimbol}}</div>
@@ -205,15 +192,19 @@
                                 </v-row>
                             </v-col>
                             <!-- cuota liceo -->
-                            <v-col cols="4">
+                            
+                            <v-col cols="6">
                                 <v-row>
                                     <v-col cols="2" class="text-center">
                                         <h4>Cuota liceo:</h4>
                                     </v-col>
-                                    <v-col cols="4" >
-                                        <v-select item-text="text" item-value="value" :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" :label="cuotaLiceoSelect.simbolo"  outlined></v-select>
+                                    <v-col cols="3">
+                                        <v-select :items="Simbolos"  item-text="text" item-value="value" v-model="SimbolosSelect.CUOTA_LICEO" label="Elegir filtro, cuota liceo" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="6" >
+                                    <v-col cols="3" >
+                                        <v-select item-text="text" item-value="value" :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" label="Elegir moneda"  outlined></v-select>
+                                    </v-col>
+                                    <v-col cols="4" >
                                         <v-text-field v-model="cuotaLiceoSelect.value"  label="Digite la Cuota liceo">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaLiceoSimbol}}</div>
@@ -222,19 +213,20 @@
                                     </v-col>
                                 </v-row>
                             </v-col>
-                            <!-- forma de pago -->
-                            <v-col cols="2">
-                                <div>Forma de pago:</div>
-                                <v-select item-text="text" item-value="value" :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir filtro"  outlined></v-select>
-                            </v-col>
+                            
+                        </v-row>
+                        <v-row v-if="token=='adminToken'">
                             <!-- jessed -->
                             <v-col cols="2" >
                                 <div>Jessed:</div>
                                 <v-select item-text="text" item-value="value" :items="Jessed" v-model="user.JESED" label=" Elegir filtro"  outlined></v-select>
                             </v-col>
-                        </v-row>
-                        <v-row v-if="token=='adminToken'">
-                            <v-col cols="12">
+                            <!-- forma de pago -->
+                            <v-col cols="2">
+                                <div>Forma de pago:</div>
+                                <v-select item-text="text" item-value="value" :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir filtro"  outlined></v-select>
+                            </v-col>
+                            <v-col cols="8">
                                 <v-text-field v-model="user.OBSERVACIONES2" label="Observaciones 2" ></v-text-field>
                             </v-col>
                         </v-row>
@@ -271,6 +263,7 @@ export default {
             Jessed:[{text:'ninguno', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
             //simbolos
             Simbolos:[{text:'ninguno', value:''},{text:'mayores a', value:'>'},{text:'menores a', value:'<'},{text:'igual a', value:'='}],
+            CuotaFiltro:[{text:'ninguno', value:''},{text:'mayores a', value:'>'},{text:'menores a', value:'<'},{text:'igual a', value:'='}],
             SimbolosSelect:{
                 FECHA_NACIMIENTO: '',
                 FECHA_NACIMIENTO_HEBREO: '',
@@ -278,6 +271,8 @@ export default {
                 FECHA_CASAMIENTO_HEBREO: '',
                 FECHA_DEFUNCION: '',
                 FECHA_DEFUNCION_HEBREO: '',
+                CUOTAS: '',
+                CUOTA_LICEO: '',
             },
             //reglas del form
             valid: true,
@@ -300,7 +295,6 @@ export default {
         dialog: {
             handler(dial) {
                 if (dial) {
-                    console.log('dialog');
                     this.resetCuota(this.cuotaSelect)
                     this.resetCuota(this.cuotaLiceoSelect)
                     if (this.user.CUOTAS!='') {
@@ -337,24 +331,20 @@ export default {
             this.$refs.form.resetValidation()
         },
         resetForm () {
-            this.$refs.form.reset()
+            if (this.$refs[form]) {
+                this.$refs.form.reset();
+            }
+            // this.$refs.form.reset()
         },
         resetCuota(cuota){
-            console.log('reset');
             cuota.simbolo='$'
             cuota.value=''
         },
         submitForm(){
-            
-            /*if (this.$refs.form.validate()==true) {
-                
-
-            }*/
             if (this.cuotaSelect.value!='') this.user.CUOTAS=this.cuotaSelect.simbolo+this.cuotaSelect.value
             if (this.cuotaLiceoSelect.value!='') this.user.CUOTA_LICEO=this.cuotaLiceoSelect.simbolo+this.cuotaLiceoSelect.value
             this.resetCuota(this.cuotaSelect)
             this.resetCuota(this.cuotaLiceoSelect)
-
             this.$emit('simbolos',this.SimbolosSelect)
             this.$emit('agregarModal',this.user)
             

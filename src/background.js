@@ -12,7 +12,9 @@ const path = require('path');
 // require('@electron/remote/main').initialize()
 const gotTheLock = app.requestSingleInstanceLock()
 let win=null
-
+//menu
+const Menu=electron.Menu
+const MenuItem=electron.MenuItem
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -95,6 +97,14 @@ if (!gotTheLock) {
       }
     }
     createWindow()
+    //pal menu
+    const ctxMenu= new Menu()
+    ctxMenu.append(new MenuItem({label:'cortar',role:'cut'}))
+    ctxMenu.append(new MenuItem({label:'copiar',role:'copy'}))
+    ctxMenu.append(new MenuItem({label:'pegar',role:'paste'}))
+    win.webContents.on('context-menu',function(e,params){
+      ctxMenu.popup(win,params.x,params.y)
+    })
   })
 }
 

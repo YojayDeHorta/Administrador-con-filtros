@@ -8,9 +8,13 @@
                 <v-btn style="width:25%;font-size:0.8vw"  @click="dialogFiltro=true">
                     <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
                 </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn style="width:25%;font-size:0.8vw"  color="red white--text" @click="resetUser(userFiltro)">
+                <v-btn style="width:25%;font-size:0.8vw" v-if="countFilter!=0"  color="red white--text" @click="borrarFilter()">
                     <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
                 </v-btn>&nbsp;&nbsp;&nbsp;
+                <!--descarga de excel filtrada, necesario para las descargas-->
+                <v-btn  style="color:white!important;width:25%;" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
+                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
+                </v-btn>
             </v-col>
             <v-col class="text-right" style="border:5px solid black">
                <Oculto></Oculto>
@@ -23,10 +27,6 @@
                 <!--descarga normal-->
                 <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
                     <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
-                </v-btn>
-                <!--descarga de excel-->
-                <v-btn  style="color:white!important;width:25%;" color="teal darken-1 white--text" v-if="!adminVerification" @click="descargarFiltro()">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
                 </v-btn>
                 <!--descarga filtrada-->
                 <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
@@ -69,9 +69,9 @@
             </v-col>
         </v-row>
         <!-- ventana modal para crear/editar -->
-        <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" :isEditing="isEditing" @dialogModal="dialog = $event" @agregarModal="agregarModal" />
+        <ventanaModal :dialog="dialog" :user="user" :formTitle="formTitle" :filtro="false" :isEditing="isEditing" @dialogModal="dialog = $event;isEditing=false" @agregarModal="agregarModal" />
         <!-- ventana modal para FILTROS -->
-        <ventanaFiltro :dialog="dialogFiltro" :user="userFiltro" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" @simbolos="SimbolosSelect=$event" />
+        <ventanaFiltro :dialog="dialogFiltro" :user="JSON.parse(JSON.stringify(userFiltro))" :formTitle="'Agregar Filtros'" :filtro="true" @dialogModal="dialogFiltro = $event" @agregarModal="agregarFilterModal" @simbolos="SimbolosSelect=$event" />
         <!-- SNACKBAR PARA MOSTRAR MENSAJES -->
         <v-snackbar v-model="snackbar" timeout="2000">
             {{ mensaje }}
@@ -127,11 +127,11 @@ export default {
                 { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter, show: true },
                 { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter, show: true },
                 { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.tefilaFilter, show: true },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px", show: true },
-                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false },
-                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false },
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px", filter: this.observacionesFilter, show: true },
+                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false , sortable: false},
+                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false , sortable: false},
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
-                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla", align: 'center', width: "300px", show: false },
+                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla", align: 'center', width: "300px", filter: this.observaciones2Filter, show: false },
                 { text: "JESED", value: "JESED", class: "Header_Tabla", align: 'center', width: "150px", filter: this.jessedFilter, show: false },
                 { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px", show: true },
             ],
@@ -215,6 +215,7 @@ export default {
                 FECHA_DEFUNCION: '',
                 FECHA_DEFUNCION_HEBREO: '',
             },
+            countFilter:0,
             search: '',
             //dialog y modal
             dialog: false,
@@ -254,18 +255,22 @@ export default {
     computed: {
         ...mapGetters([
             'token',
-            'username'
+            'username',
+            'rol',
         ]),
         computedHeaders() {
+            let columnasMod=[]
             if (this.token == 'adminToken') {
-                return this.columnas
+                columnasMod =this.columnas
+                
             } else {
-                let columnasMod = this.columnas.filter(x => x.show)
-                if (!this.adminVerification) {
-                    columnasMod.pop()
-                }
-                return columnasMod
+                columnasMod = this.columnas.filter(x => x.show)
+                
             }
+            if (!this.adminVerification) {
+                columnasMod.pop()
+            }
+            return columnasMod
         }
     },
     methods: {
@@ -280,10 +285,28 @@ export default {
             this.addAndEditUser()
         },
         agregarFilterModal(e) {
-            console.log(e);
+            if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) { 
+                this.countFilter=0 
+                for (let key  in e) {
+                    if (e[key]!='') {
+                        this.columnas[this.countFilter].class='Header_Filter'
+                    }else{
+                        this.columnas[this.countFilter].class='Header_Tabla'
+                    }
+                    this.countFilter++
+                }
+                this.snackbar = true
+                this.mensaje='filtros añadidos exitosamente'
+            }
             this.userFiltro = e
             this.dialogFiltro = false
-            // this.addAndEditUser()
+        },
+        borrarFilter(){
+            this.countFilter=0
+            for (let i = 0; i < this.columnas.length; i++) {
+                this.columnas[i].class='Header_Tabla';
+            }
+            this.resetUser(this.userFiltro)
         },
         prepareEdit(item) {
             this.isEditing = true
@@ -300,8 +323,8 @@ export default {
             } else {
                 let index = this.users.map(function(x) { return x.ID; }).indexOf(this.user.ID)
                 this.users[index] = JSON.parse(JSON.stringify(this.user))
-                this.isEditing = false
             }
+            this.isEditing = false
             let datos = await axios.post(url + this.idHoja, this.users)
             this.snackbar = true
             if (datos.data == true) this.mensaje = 'actualizacion ejecutada exitosamente'
@@ -360,7 +383,8 @@ export default {
             let respuesta = await axios.get('http://localhost:3000/download', { responseType: 'blob' })
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
-                console.log('error al descargar el archivo');
+                this.snackbar = true
+                this.mensaje='error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -373,7 +397,8 @@ export default {
         async descargarExcel() {
             let respuesta = await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
             if (respuesta.data == false) {
-                console.log('error al descargar el archivo');
+                this.snackbar = true
+                this.mensaje='error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -388,12 +413,22 @@ export default {
         async submitFile() {
             this.file = this.$refs.file.files[0];
             if (this.file !== null) {
-                let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
-                if (respuesta.data == true) {
-                    this.getUsers(this.idHoja) //pa que cargue en la app
-                } else {
-                    console.log('error al subir el archivo');
+                if (this.file.name.split('.').pop()=='xlsx'&&this.token!='adminToken') {
+                    this.snackbar = true
+                    this.mensaje='usted no esta autorizado a subir archivos de excel'
+                    this.file=null
+                }else{
+                    let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
+                    if (respuesta.data == true) {
+                        this.getUsers(this.idHoja) //pa que cargue en la app
+                        this.snackbar = true
+                        this.mensaje='archivo cargado exitosamente'
+                    } else {
+                        this.snackbar = true
+                        this.mensaje='error al subir el archivo - formato no valido'
+                    }
                 }
+                
             }
         },
         //descarga de filtros
@@ -403,7 +438,8 @@ export default {
         async descargarFiltro() {
             let respuesta = await axios.post('http://localhost:3000/filter', this.tablaFiltrada, { responseType: 'blob' })
             if (respuesta.data == false) {
-                console.log('error al descargar el archivo');
+                this.snackbar = true
+                this.mensaje='error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -447,36 +483,42 @@ export default {
         },
         fechaNacimientoFilter(value) { //FECHA_NACIMIENTO
             if (!this.userFiltro.FECHA_NACIMIENTO) return true;
+            if (this.SimbolosSelect.FECHA_NACIMIENTO=='') return true;
             if (this.SimbolosSelect.FECHA_NACIMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO)
             if (this.SimbolosSelect.FECHA_NACIMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO)
             if (this.SimbolosSelect.FECHA_NACIMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO)
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='') return true;
             if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
             if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
             if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
         },
         fechaCasamientoFilter(value) { //FECHA_CASAMIENTO
             if (!this.userFiltro.FECHA_CASAMIENTO) return true;
+            if (this.SimbolosSelect.FECHA_CASAMIENTO=='') return true;
             if (this.SimbolosSelect.FECHA_CASAMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO)
             if (this.SimbolosSelect.FECHA_CASAMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO)
             if (this.SimbolosSelect.FECHA_CASAMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO)
         },
         fechaCasamientoHebreoFilter(value) { //FECHA_CASAMIENTO_HEBREO
             if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO) return true;
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='') return true;
             if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
             if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
             if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
         },
         fechaDefuncionFilter(value) { //FECHA_DEFUNCION
             if (!this.userFiltro.FECHA_DEFUNCION) return true;
+            if (this.SimbolosSelect.FECHA_DEFUNCION=='') return true;
             if (this.SimbolosSelect.FECHA_DEFUNCION=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION)
             if (this.SimbolosSelect.FECHA_DEFUNCION=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION)
             if (this.SimbolosSelect.FECHA_DEFUNCION=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION)
         },
         fechaDefuncionHebreoFilter(value) { //FECHA_DEFUNCION_HEBREO
             if (!this.userFiltro.FECHA_DEFUNCION_HEBREO) return true;
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='') return true;
             if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
             if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
             if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
@@ -529,22 +571,41 @@ export default {
             if (!this.userFiltro.TEFILA) return true;
             return value.toString().toLowerCase().includes(this.userFiltro.TEFILA.toString().toLowerCase());
         },
+        observacionesFilter(value) { //OBSERVACIONES
+            if (!this.userFiltro.OBSERVACIONES) return true;
+            return value.toString().toLowerCase().includes(this.userFiltro.OBSERVACIONES.toString().toLowerCase());
+        },
         cuotasFilter(value) { //CUOTAS
             if (!this.userFiltro.CUOTAS) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.CUOTAS.toString().toLowerCase());
+            if (this.SimbolosSelect.CUOTAS=='') return true;
+            let userFilter=Number(this.userFiltro.CUOTAS.slice(1))
+            let valueFilter=Number(value.slice(1))
+            if (this.SimbolosSelect.CUOTAS=='>') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter>userFilter
+            if (this.SimbolosSelect.CUOTAS=='<') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter<userFilter
+            if (this.SimbolosSelect.CUOTAS=='=') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter==userFilter
         },
         cuotaLiceoFilter(value) { //CUOTA_LICEO
             if (!this.userFiltro.CUOTA_LICEO) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.CUOTA_LICEO.toString().toLowerCase());
+            if (this.SimbolosSelect.CUOTA_LICEO=='') return true;
+            let userFilter=Number(this.userFiltro.CUOTA_LICEO.slice(1))
+            let valueFilter=Number(value.slice(1))
+            if (this.SimbolosSelect.CUOTA_LICEO=='>') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter>userFilter
+            if (this.SimbolosSelect.CUOTA_LICEO=='<') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter<userFilter
+            if (this.SimbolosSelect.CUOTA_LICEO=='=') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter==userFilter
         },
         formaPagoFilter(value) { //FORMA_PAGO
             if (!this.userFiltro.FORMA_PAGO) return true;
             return value.toString().toLowerCase().includes(this.userFiltro.FORMA_PAGO.toString().toLowerCase());
         },
+        observaciones2Filter(value) { //OBSERVACIONES2
+            if (!this.userFiltro.OBSERVACIONES2) return true;
+            return value.toString().toLowerCase().includes(this.userFiltro.OBSERVACIONES2.toString().toLowerCase());
+        },
         jessedFilter(value) { //JESED
             if (!this.userFiltro.JESED) return true;
             return value.toString().toLowerCase().includes(this.userFiltro.JESED.toString().toLowerCase());
         },
+        
 
     }
 
@@ -599,11 +660,15 @@ export default {
 
 .Header_Tabla {
     border: 1px solid black !important;
-    background-color: #CFD8DC !important;
+    background-color: #CFD8DC !important;  
     color: black !important;
-
 }
-
+.Header_Filter {
+    /* esta es pa cuando se agarra un filtro */
+    border: 1px solid black !important;
+    background-color: #5EC241 !important;  
+    color: black !important;
+}
 tbody tr:nth-of-type(odd) {
     background-color: #FAFAFA;
 }

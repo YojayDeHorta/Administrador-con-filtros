@@ -83,11 +83,25 @@ app.post('/api/hojas/:idHoja', (req,res)=>{
 //subida del servidor
 app.post('/file', async(req, res) => {
     try {
-        localStorage.setItem('fileName', req.body.name)
-        FileSystem.copyFile(req.body.file, `${configDir}/${req.body.name}`, (err) => {
-            if (err) throw err;
-        });
-        res.send(true)
+        let nombre=req.body.name
+        if(nombre.split('.').pop()=='encrypted'){
+            localStorage.setItem('fileName', nombre)
+            FileSystem.copyFile(req.body.file, `${configDir}/${nombre}`, (err) => {
+                if (err) throw err;
+            });
+            res.send(true)
+        }else if(nombre.split('.').pop()=='xlsx'){
+            const excel=XLSX.readFile(req.body.file)
+            var nombreHoja=excel.SheetNames;
+            let arrayOfArrays=[]
+            for (let i = 0; i < nombreHoja.length; i++) {
+                let datos= XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[i]])
+                arrayOfArrays.push(datos)            
+            }
+            localStorage.setItem('fileName', `${nombre.split('.')[0]}.encrypted`)
+            encrypt(JSON.stringify(arrayOfArrays))
+            res.send(true)
+        }else res.send(false)
     } catch (error) {
         console.log(error);
         res.send(false)
@@ -178,9 +192,22 @@ app.post('/filter', async(req, res) => {
 app.post('/login/users', (req,res)=>{
     try {
        
-        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'adminToken'})
-        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretariaToken'}) 
-        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserjeToken'}) 
+        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'adminToken',rol:'adminRol'})
+        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretariaToken',rol:'secretariaRol'}) 
+        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserjeToken',rol:'conserjeRol'}) 
+        else res.send(false)
+        
+    }catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
+//confirmacion de los roles
+app.post('/passwordreq', (req,res)=>{
+    try {
+       
+        if(req.body.token=='secretariaToken'&&req.body.pass=='12345678')res.send('adminToken') 
+
         else res.send(false)
         
     }catch (error) {
