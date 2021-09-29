@@ -8,7 +8,7 @@
                 <template v-slot:default="dialog">
                     <v-card>
                         <v-form @submit.prevent="FormPassword" lazy-validation ref="form">
-                            <v-toolbar style="border:5px solid red !important" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
+                            <v-toolbar style="border:5px solid red !important;width:100%;font-size:0.65vw" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
                             <v-card-text>
                                 <div class="text-h2 text-center pa-12">
                                     <h6 class="text-center mb-10" style="font-size:15px">Ingrese la contraseña para mostrar los datos</h6>

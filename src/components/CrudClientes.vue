@@ -1,43 +1,75 @@
 <template>
     <v-container class="CRUD-P pb-0" fluid fill-height>
         <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10" style="border:5px solid red">
-            <v-col style="border:5px solid black">
-                <v-btn style="width:25%;font-size:0.8vw" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn style="width:25%;font-size:0.8vw"  @click="dialogFiltro=true">
-                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <v-btn style="width:25%;font-size:0.8vw" v-if="countFilter!=0"  color="red white--text" @click="borrarFilter()">
-                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
-                </v-btn>&nbsp;&nbsp;&nbsp;
-                <!--descarga de excel filtrada, necesario para las descargas-->
-                <v-btn  style="color:white!important;width:25%;" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;tabla filtrada
-                </v-btn>
+            <!---->
+            <!---->
+            <v-col class="d-flex justify-start" style="border:5px solid black">
+                <div style="border:5px solid red;width:80%">
+                    <v-expansion-panels>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header disable-icon-rotate>
+                                <strong class="text-center">OPCIONES DE USUARIO</strong>
+                                <template v-slot:actions>
+                                    <v-icon color="gray">
+                                        mdi-ballot
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <v-btn style="width:22%;font-size:0.55vw;" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
+                                    <v-icon class="mr-2">mdi-account-plus</v-icon> Añadir Cliente
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                                <v-btn style="border:5px solid red;width:22%;font-size:0.55vw;"  @click="dialogFiltro=true">
+                                    <v-icon class="mr-2">mdi-clipboard-text-search</v-icon>añadir filtro
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                                <v-btn style="width:25%;font-size:0.50vw" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
+                                    <v-icon class="mr-2">mdi-clipboard-remove</v-icon>borrar filtro
+                                </v-btn>&nbsp;&nbsp;&nbsp;
+                                <Oculto></Oculto>
+                                  
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                </div>
             </v-col>
-            <v-col class="text-right" style="border:5px solid black">
-               <Oculto></Oculto>
-            <!--
-                <v-btn class="mr-5" style="width:19%;font-size:10px"></v-btn>
-            -->
-                <v-btn style="color:white !important;width:27%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
-                    <v-icon color="white">mdi-download-lock</v-icon>&nbsp;&nbsp;documento encriptado
-                </v-btn>
-                <!--descarga normal-->
-                <v-btn   style="color:white !important;width:25%;font-size:0.8vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
-                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;documento Excel
-                </v-btn>
-                <!--descarga filtrada-->
-                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
-                    <span v-if="file==null">
-                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
-                    </span>
-                    <span v-else>
-                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
-                    </span>
-                </v-btn>
-                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+            <v-col class="d-flex justify-end" style="border:5px solid black">
+                <div class="" style="border:5px solid red;width:70%">
+                    <v-expansion-panels>
+                        <v-expansion-panel>
+                            <v-expansion-panel-header disable-icon-rotate>
+                                <strong class="text-center">OPCIONES DE DESCARGA</strong>
+                                <template v-slot:actions>
+                                    <v-icon color="teal">
+                                        mdi-cloud-download
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content class="text-center">
+                                <v-btn style="color:white !important;width:28%;font-size:0.65vw" color="orange darken-1" @click="descargar()" v-if="adminVerification">
+                                    <v-icon color="white">mdi-file-lock</v-icon>&nbsp;&nbsp;encriptado
+                                </v-btn>
+                                <!--descarga normal-->
+                                <v-btn style="color:white !important;width:28%;font-size:0.65vw " class="btn-text ml-2" color="teal darken-1" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
+                                    <v-icon color="white">mdi-file-excel</v-icon>&nbsp;&nbsp;Excel
+                                </v-btn>
+                                <!--descarga de excel filtrada, necesario para las descargas-->
+                                <v-btn style="color:white!important;width:32%;font-size:0.65vw" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
+                                    <v-icon color="white">mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
+                                </v-btn>
+                                <!--descarga filtrada-->
+                                <v-btn color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
+                                    <span v-if="file==null">
+                                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
+                                    </span>
+                                    <span v-else>
+                                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
+                                    </span>
+                                </v-btn>
+                                <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
+                </div>
             </v-col>
         </v-row>
         <!--
@@ -93,47 +125,48 @@ export default {
     name: 'CrudClientes',
     components: {
         ventanaFiltro,
-        ventanaModal,Oculto
+        ventanaModal,
+        Oculto
     },
     data() {
         return {
             loading: false,
             users: [],
             columnas: [ //EDITAR INFORMACION
-                { text: "ID", value: "ID", class: "Header_Tabla", align: 'center', width: "80px", style: 'text-center', show: true },
-                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla ", width: "180px", style: 'text-center', filter: this.numSocioFilter, show: true },
-                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
-                { text: "NOMBRE", value: "NOMBRE", class: " Header_Tabla", align: 'center', width: "150px", filter: this.nameFilter, show: true },
-                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
-                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
-                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
-                { text: "DNI", value: "DNI", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.dniFilter, show: true },
-                { text: "PD", value: "PD", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.pdFilter, show: true },
-                { text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoFilter, show: true },
-                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaNacimientoHebreoFilter, show: true },
-                { text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoFilter, show: true },
-                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaCasamientoHebreoFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-0", align: 'center', width: "150px", filter: this.direccionFilter, show: true },
-                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
-                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.localidadFilter, show: true },
-                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.provinciaFilter, show: true },
-                { text: "PAIS", value: "PAIS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.paisFilter, show: true },
-                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.movilFilter, show: true },
-                { text: "FIJO", value: "FIJO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.fijoFilter, show: true },
-                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla", align: 'center', width: "150px", filter: this.emailFilter, show: true },
-                { text: "EDAD", value: "EDAD", class: "Header_Tabla", align: 'center', width: "150px", filter: this.edadFilter, show: true },
-                { text: "SOLA", value: "SOLA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.solaFilter, show: true },
-                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla", align: 'center', width: "150px", filter: this.mayorFilter, show: true },
-                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla", align: 'center', width: "150px", filter: this.tefilaFilter, show: true },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla", width: "300px", filter: this.observacionesFilter, show: true },
-                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false , sortable: false},
-                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false , sortable: false},
-                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
-                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla", align: 'center', width: "300px", filter: this.observaciones2Filter, show: false },
-                { text: "JESED", value: "JESED", class: "Header_Tabla", align: 'center', width: "150px", filter: this.jessedFilter, show: false },
-                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "300px", show: true },
+                { text: "ID", value: "ID", class: "Header_Tabla p-5", align: 'center', width: "350px", style: 'text-center', show: true },
+                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla p-5", width: "350px", style: 'text-center', filter: this.numSocioFilter, show: true },
+                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla p-5", align: 'center', width: "350px", style: 'text-center', filter: this.socioFilter, show: true },
+                { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.nameFilter, show: true },
+                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.apellido1Filter, show: true },
+                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.apellido2Filter, show: true },
+                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.parentescoFilter, show: true },
+                { text: "DNI", value: "DNI", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.dniFilter, show: true },
+                { text: "PD", value: "PD", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.pdFilter, show: true },
+                { text: "FECHA DE NACIMIENTO(ESPAÑOL)", value: "FECHA_NACIMIENTO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaNacimientoFilter, show: true },
+                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaNacimientoHebreoFilter, show: true },
+                { text: "FECHA DE CASAMIENTO(ESPAÑOL)", value: "FECHA_CASAMIENTO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaCasamientoFilter, show: true },
+                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaCasamientoHebreoFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN(ESPAÑOL)", value: "FECHA_DEFUNCION", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaDefuncionFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fechaDefuncionHebreoFilter, show: true },
+                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla p-5", align: 'center', width: "350px",filter: this.direccionFilter, show: true },
+                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.codigoPostalFilter, show: true },
+                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.localidadFilter, show: true },
+                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.provinciaFilter, show: true },
+                { text: "PAIS", value: "PAIS", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.paisFilter, show: true },
+                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.movilFilter, show: true },
+                { text: "FIJO", value: "FIJO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.fijoFilter, show: true },
+                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.emailFilter, show: true },
+                { text: "EDAD", value: "EDAD", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.edadFilter, show: true },
+                { text: "SOLA", value: "SOLA", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.solaFilter, show: true },
+                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.mayorFilter, show: true },
+                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.tefilaFilter, show: true },
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla p-5", width: "350px", filter: this.observacionesFilter, show: true },
+                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.cuotasFilter, show: false, sortable: false },
+                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.cuotaLiceoFilter, show: false, sortable: false },
+                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.formaPagoFilter, show: false },
+                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
+                { text: "JESED", value: "JESED", class: "Header_Tabla p-5", align: 'center', width: "350px", filter: this.jessedFilter, show: false },
+                { text: "ACCIONES", value: "actions", class: "Header_Tabla p-5", align: 'center', sortable: false, width: "350px", show: true },
             ],
             //aqui van los valores pa los select
             user: {
@@ -207,7 +240,7 @@ export default {
                 OBSERVACIONES2: '',
                 JESED: '',
             },
-            SimbolosSelect:{
+            SimbolosSelect: {
                 FECHA_NACIMIENTO: '',
                 FECHA_NACIMIENTO_HEBREO: '',
                 FECHA_CASAMIENTO: '',
@@ -215,7 +248,7 @@ export default {
                 FECHA_DEFUNCION: '',
                 FECHA_DEFUNCION_HEBREO: '',
             },
-            countFilter:0,
+            countFilter: 0,
             search: '',
             //dialog y modal
             dialog: false,
@@ -259,13 +292,13 @@ export default {
             'rol',
         ]),
         computedHeaders() {
-            let columnasMod=[]
+            let columnasMod = []
             if (this.token == 'adminToken') {
-                columnasMod =this.columnas
-                
+                columnasMod = this.columnas
+
             } else {
                 columnasMod = this.columnas.filter(x => x.show)
-                
+
             }
             if (!this.adminVerification) {
                 columnasMod.pop()
@@ -285,26 +318,26 @@ export default {
             this.addAndEditUser()
         },
         agregarFilterModal(e) {
-            if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) { 
-                this.countFilter=0 
-                for (let key  in e) {
-                    if (e[key]!='') {
-                        this.columnas[this.countFilter].class='Header_Filter'
-                    }else{
-                        this.columnas[this.countFilter].class='Header_Tabla'
+            if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
+                this.countFilter = 0
+                for (let key in e) {
+                    if (e[key] != '') {
+                        this.columnas[this.countFilter].class = 'Header_Filter'
+                    } else {
+                        this.columnas[this.countFilter].class = 'Header_Tabla'
                     }
                     this.countFilter++
                 }
                 this.snackbar = true
-                this.mensaje='filtros añadidos exitosamente'
+                this.mensaje = 'filtros añadidos exitosamente'
             }
             this.userFiltro = e
             this.dialogFiltro = false
         },
-        borrarFilter(){
-            this.countFilter=0
+        borrarFilter() {
+            this.countFilter = 0
             for (let i = 0; i < this.columnas.length; i++) {
-                this.columnas[i].class='Header_Tabla';
+                this.columnas[i].class = 'Header_Tabla';
             }
             this.resetUser(this.userFiltro)
         },
@@ -384,7 +417,7 @@ export default {
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje='error al descargar el archivo'
+                this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -398,7 +431,7 @@ export default {
             let respuesta = await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje='error al descargar el archivo'
+                this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -413,22 +446,22 @@ export default {
         async submitFile() {
             this.file = this.$refs.file.files[0];
             if (this.file !== null) {
-                if (this.file.name.split('.').pop()=='xlsx'&&this.token!='adminToken') {
+                if (this.file.name.split('.').pop() == 'xlsx' && this.token != 'adminToken') {
                     this.snackbar = true
-                    this.mensaje='usted no esta autorizado a subir archivos de excel'
-                    this.file=null
-                }else{
+                    this.mensaje = 'usted no esta autorizado a subir archivos de excel'
+                    this.file = null
+                } else {
                     let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
                     if (respuesta.data == true) {
                         this.getUsers(this.idHoja) //pa que cargue en la app
                         this.snackbar = true
-                        this.mensaje='archivo cargado exitosamente'
+                        this.mensaje = 'archivo cargado exitosamente'
                     } else {
                         this.snackbar = true
-                        this.mensaje='error al subir el archivo - formato no valido'
+                        this.mensaje = 'error al subir el archivo - formato no valido'
                     }
                 }
-                
+
             }
         },
         //descarga de filtros
@@ -439,7 +472,7 @@ export default {
             let respuesta = await axios.post('http://localhost:3000/filter', this.tablaFiltrada, { responseType: 'blob' })
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje='error al descargar el archivo'
+                this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -483,45 +516,45 @@ export default {
         },
         fechaNacimientoFilter(value) { //FECHA_NACIMIENTO
             if (!this.userFiltro.FECHA_NACIMIENTO) return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='') return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO == '') return true;
+            if (this.SimbolosSelect.FECHA_NACIMIENTO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_NACIMIENTO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_NACIMIENTO)
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='') return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '') return true;
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
         },
         fechaCasamientoFilter(value) { //FECHA_CASAMIENTO
             if (!this.userFiltro.FECHA_CASAMIENTO) return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO=='') return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO == '') return true;
+            if (this.SimbolosSelect.FECHA_CASAMIENTO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_CASAMIENTO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_CASAMIENTO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_CASAMIENTO)
         },
         fechaCasamientoHebreoFilter(value) { //FECHA_CASAMIENTO_HEBREO
             if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='') return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '') return true;
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
         },
         fechaDefuncionFilter(value) { //FECHA_DEFUNCION
             if (!this.userFiltro.FECHA_DEFUNCION) return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION=='') return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION)
-            if (this.SimbolosSelect.FECHA_DEFUNCION=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION)
-            if (this.SimbolosSelect.FECHA_DEFUNCION=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION)
+            if (this.SimbolosSelect.FECHA_DEFUNCION == '') return true;
+            if (this.SimbolosSelect.FECHA_DEFUNCION == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_DEFUNCION)
+            if (this.SimbolosSelect.FECHA_DEFUNCION == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_DEFUNCION)
+            if (this.SimbolosSelect.FECHA_DEFUNCION == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_DEFUNCION)
         },
         fechaDefuncionHebreoFilter(value) { //FECHA_DEFUNCION_HEBREO
             if (!this.userFiltro.FECHA_DEFUNCION_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='') return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='>') return Date.parse(value)>Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='<') return Date.parse(value)<Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO=='=') return Date.parse(value)==Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '') return true;
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
         },
         direccionFilter(value) { //DIRECCION
             if (!this.userFiltro.DIRECCION) return true;
@@ -577,21 +610,21 @@ export default {
         },
         cuotasFilter(value) { //CUOTAS
             if (!this.userFiltro.CUOTAS) return true;
-            if (this.SimbolosSelect.CUOTAS=='') return true;
-            let userFilter=Number(this.userFiltro.CUOTAS.slice(1))
-            let valueFilter=Number(value.slice(1))
-            if (this.SimbolosSelect.CUOTAS=='>') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter>userFilter
-            if (this.SimbolosSelect.CUOTAS=='<') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter<userFilter
-            if (this.SimbolosSelect.CUOTAS=='=') return this.userFiltro.CUOTAS[0]==value[0] && valueFilter==userFilter
+            if (this.SimbolosSelect.CUOTAS == '') return true;
+            let userFilter = Number(this.userFiltro.CUOTAS.slice(1))
+            let valueFilter = Number(value.slice(1))
+            if (this.SimbolosSelect.CUOTAS == '>') return this.userFiltro.CUOTAS[0] == value[0] && valueFilter > userFilter
+            if (this.SimbolosSelect.CUOTAS == '<') return this.userFiltro.CUOTAS[0] == value[0] && valueFilter < userFilter
+            if (this.SimbolosSelect.CUOTAS == '=') return this.userFiltro.CUOTAS[0] == value[0] && valueFilter == userFilter
         },
         cuotaLiceoFilter(value) { //CUOTA_LICEO
             if (!this.userFiltro.CUOTA_LICEO) return true;
-            if (this.SimbolosSelect.CUOTA_LICEO=='') return true;
-            let userFilter=Number(this.userFiltro.CUOTA_LICEO.slice(1))
-            let valueFilter=Number(value.slice(1))
-            if (this.SimbolosSelect.CUOTA_LICEO=='>') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter>userFilter
-            if (this.SimbolosSelect.CUOTA_LICEO=='<') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter<userFilter
-            if (this.SimbolosSelect.CUOTA_LICEO=='=') return this.userFiltro.CUOTA_LICEO[0]==value[0] && valueFilter==userFilter
+            if (this.SimbolosSelect.CUOTA_LICEO == '') return true;
+            let userFilter = Number(this.userFiltro.CUOTA_LICEO.slice(1))
+            let valueFilter = Number(value.slice(1))
+            if (this.SimbolosSelect.CUOTA_LICEO == '>') return this.userFiltro.CUOTA_LICEO[0] == value[0] && valueFilter > userFilter
+            if (this.SimbolosSelect.CUOTA_LICEO == '<') return this.userFiltro.CUOTA_LICEO[0] == value[0] && valueFilter < userFilter
+            if (this.SimbolosSelect.CUOTA_LICEO == '=') return this.userFiltro.CUOTA_LICEO[0] == value[0] && valueFilter == userFilter
         },
         formaPagoFilter(value) { //FORMA_PAGO
             if (!this.userFiltro.FORMA_PAGO) return true;
@@ -605,7 +638,7 @@ export default {
             if (!this.userFiltro.JESED) return true;
             return value.toString().toLowerCase().includes(this.userFiltro.JESED.toString().toLowerCase());
         },
-        
+
 
     }
 
@@ -660,15 +693,17 @@ export default {
 
 .Header_Tabla {
     border: 1px solid black !important;
-    background-color: #CFD8DC !important;  
+    background-color: #CFD8DC !important;
     color: black !important;
 }
+
 .Header_Filter {
     /* esta es pa cuando se agarra un filtro */
     border: 1px solid black !important;
-    background-color: #5EC241 !important;  
+    background-color: #5EC241 !important;
     color: black !important;
 }
+
 tbody tr:nth-of-type(odd) {
     background-color: #FAFAFA;
 }
@@ -677,6 +712,6 @@ tbody td {
     padding: auto;
     border: 0.2px solid black;
     padding: 15px;
-    width: 50%;
+    height: 125px !important;
 }
 </style>
