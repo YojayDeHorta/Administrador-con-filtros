@@ -16,8 +16,20 @@
     </v-container>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 export default {
-
+    mounted(){
+        if (!this.token) {
+            this.$router.push('/')
+        } 
+    },
+    computed:{
+        ...mapGetters([
+            'token',
+            'username',
+            'rol',
+        ]),
+    }
 }
 </script>
 <style scoped>

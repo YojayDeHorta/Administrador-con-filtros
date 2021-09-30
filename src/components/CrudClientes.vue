@@ -283,8 +283,6 @@ export default {
         } else {
             this.$router.push('/')
         }
-
-
     },
     computed: {
         ...mapGetters([
