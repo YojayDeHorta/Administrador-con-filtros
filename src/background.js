@@ -40,6 +40,7 @@ async function createWindow() {
       nativeWindowOpen: true
     }
   })
+  win.setMenu(null)
   win.maximize();
   win.show();
   if (process.env.WEBPACK_DEV_SERVER_URL) {
