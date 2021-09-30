@@ -202,11 +202,23 @@ app.post('/login/users', (req,res)=>{
         res.send(false)
     }
 })
-//confirmacion de los roles
-app.post('/passwordreq', (req,res)=>{
+//ccambio de rol
+app.post('/password/admin', (req,res)=>{
     try {
        
         if(req.body.token=='secretariaToken'&&req.body.pass=='12345678')res.send('adminToken') 
+
+        else res.send(false)
+        
+    }catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
+app.post('/password/secretaria', (req,res)=>{
+    try {
+       
+        if(req.body.rol=='secretariaRol')res.send('secretariaToken') 
 
         else res.send(false)
         

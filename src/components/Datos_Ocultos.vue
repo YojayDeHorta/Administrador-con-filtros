@@ -1,11 +1,9 @@
 <template>
     <div >
         <v-col cols="auto" v-if="rol=='secretariaRol'">
+            <v-btn style="font-size:0.65vw;color:white" color="#607D8B" v-if="rol=='secretariaRol' && token!='adminToken'" @click="dialog=true">Datos&nbsp;OCULTOS</v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
+            <v-btn style="font-size:0.65vw" color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria">quitar &nbsp;PERMISOS </v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
             <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="600">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn style="font-size:0.65vw;color:white" color="#607D8B" v-bind="attrs" v-on="on">Datos&nbsp;OCULTOS</v-btn>
-                </template>
-                <template v-slot:default="dialog">
                     <v-card>
                         <v-form @submit.prevent="FormPassword" lazy-validation ref="form">
                             <v-toolbar style="width:100%;font-size:0.65vw" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
@@ -24,7 +22,6 @@
                             </v-card-actions>
                         </v-form>
                     </v-card>
-                </template>
             </v-dialog>
             <!-- SNACKBAR PARA MOSTRAR MENSAJESs -->
         <v-snackbar v-model="snackbar" timeout="2000">
@@ -63,15 +60,26 @@ export default {
     methods:{
         async FormPassword(){
             if (this.$refs.form.validate()==true){
-                let res = await axios.post('http://localhost:3000/passwordreq', {token:this.token,pass:this.password})
+                let res = await axios.post('http://localhost:3000/password/admin', {token:this.token,pass:this.password})
                 this.snackbar = true
                 if (res.data){
                     this.$store.commit('setAdmin',res.data)
-                    this.mensaje = 'contraseña exitosa'
-                    dialog=false
+                    this.mensaje = 'contraseña exitosa, ya puedes ver los datos ocultos!'
+                    this.password=''
+                    this.dialog=false
                 }else {
                     this.mensaje = 'error - usuario o contraseña incorrecta'
                 }
+            }
+        },
+        async getSecretaria(){
+            let res = await axios.post('http://localhost:3000/password/secretaria', {rol:this.rol})
+            this.snackbar = true
+            if (res.data){
+                this.$store.commit('setAdmin',res.data)
+                this.mensaje = 'permisos quitados exitosamente'
+            }else {
+                this.mensaje = 'error - usuario o contraseña incorrecta'
             }
             
         }

@@ -114,7 +114,7 @@
                                 <v-select :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <v-col cols="3">
-                                <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="direccionRules"></v-text-field>
+                                <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="tefilaRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -233,9 +233,13 @@ export default {
                 v=>!!v || 'Este campo no puede estar vacio',
                 v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
             ],
+            tefilaRules:[
+                v=>!!v || 'Este campo no puede estar vacio',
+                v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
+            ],
             codPostalRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => /\b\d{5}\b/.test(v) || 'escriba un codigo postal valido(5 numeros)',
+                v => /\b\d{5,7}\b/.test(v) || 'escriba un codigo postal valido(5-7 numeros)',
             ],
             localidadRules:[
                 v=>!!v || 'Este campo no puede estar vacio',

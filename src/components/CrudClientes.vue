@@ -95,7 +95,7 @@
                             <v-btn color="green  white--text" @click="prepareEdit(item)">
                                 <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
                             </v-btn>
-                            <v-btn color="red white--text" class="ml-1" @click="deleteUser(item.ID)">
+                            <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;dialogDelete=true">
                                 <v-icon small> mdi-delete </v-icon> eliminar
                             </v-btn>
                         </template>
@@ -112,6 +112,19 @@
             {{ mensaje }}
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
+        <!-- modal para borrar -->
+        <v-dialog v-model="dialogDelete" max-width="500px">
+          <v-card>
+            <v-card-title class="text-h5 text-center">estas seguro de borrar el producto con id: {{idDelete}}?</v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="primary darken-1" text @click="dialogDelete=false;idDelete=null">cancelar</v-btn>
+              <v-btn color="error darken-1" text @click="deleteUser(idDelete)">si</v-btn>
+              <v-spacer></v-spacer>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+
     </v-container>
 </template>
 <script>
@@ -253,9 +266,11 @@ export default {
             },
             countFilter: 0,
             search: '',
+            idDelete:null,
             //dialog y modal
             dialog: false,
             dialogFiltro: false,
+            dialogDelete:false,
             formTitle: '',
             //edicion
             isEditing: false,
@@ -378,6 +393,7 @@ export default {
             this.snackbar = true
             if (datos.data == true) this.mensaje = 'Borrado ejecutado exitosamente'
             else this.mensaje = 'error del sistema'
+            this.dialogDelete=false
             this.loading = false;
         },
         resetUser(usuario) {
