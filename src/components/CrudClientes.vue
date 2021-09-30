@@ -117,16 +117,14 @@ import axios from "axios";
 import ventanaFiltro from "./ventanaFiltro.vue";
 import ventanaModal from "./ventanaModal.vue";
 import Oculto from "./Datos_Ocultos.vue";
-
-
-import { mapGetters } from 'vuex'
+import { mapGetters } from 'vuex';
 
 export default {
     name: 'CrudClientes',
     components: {
         ventanaFiltro,
-        ventanaModal,
-        Oculto
+        ventanaModal,Oculto
+       
     },
     data() {
         return {
