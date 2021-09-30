@@ -33,7 +33,7 @@ export default {
 </script>
 <style scoped>
     .Marco{
-        border:5px solid black;
+        /*border:5px solid black;*/
         padding:5px;
         width:95%;
     }
