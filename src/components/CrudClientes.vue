@@ -753,7 +753,7 @@ tbody td {
     }
 
     .Div_Usuario {
-        border: 5px solid black;
+        /*border: 5px solid black;*/
        
         /*display: flex;
         align-items: center;
