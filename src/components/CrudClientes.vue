@@ -29,13 +29,13 @@
                                 </v-btn>
                                 <!--descarga filtrada-->
                                 <v-btn style="width:22%;font-size:0.65vw" color="secondary" class="ml-1" outlined v-if="adminVerification" @click="chooseFiles()">
-                                    <span v-if="file==null">
+                                    <span >
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
                                     </span>
-                                    <span v-else>
-                                        <v-icon class="mr-1">mdi-file-excel</v-icon> archivo agregado!
-                                        <!-- <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}} -->
-                                    </span>
+                                    <!-- <span v-else>
+                                        <v-icon class="mr-1">mdi-upload</v-icon>agregado
+                                         <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}} 
+                                    </span> -->
                                 </v-btn>
                                 <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
                             </v-expansion-panel-content>
@@ -422,20 +422,23 @@ export default {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
                 console.log(new Blob([respuesta.data]));
-                link.setAttribute('download', name.data)
+                if (name.data) link.setAttribute('download', name.data)
+                else link.setAttribute('download', `datos.encrypted`)
                 document.body.appendChild(link)
                 link.click()
             }
         },
         async descargarExcel() {
             let respuesta = await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
+            let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
                 this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
-                link.setAttribute('download', 'datos.xlsx')
+                if (name.data) link.setAttribute('download', `${name.data.split('.')[0]}.xlsx`)
+                else link.setAttribute('download', `datos.xlsx`)
                 document.body.appendChild(link)
                 link.click()
             }
@@ -450,18 +453,22 @@ export default {
                     this.snackbar = true
                     this.mensaje = 'usted no esta autorizado a subir archivos de excel'
                     this.file = null
+                    his.$refs.file.value=null;
                 } else {
                     let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
                     if (respuesta.data == true) {
                         this.getUsers(this.idHoja) //pa que cargue en la app
                         this.snackbar = true
                         this.mensaje = 'archivo cargado exitosamente'
+                        this.file = null
+                        this.$refs.file.value=null;
+
                     } else {
                         this.snackbar = true
                         this.mensaje = 'error al subir el archivo - formato no valido'
                     }
                 }
-
+                
             }
         },
         //descarga de filtros

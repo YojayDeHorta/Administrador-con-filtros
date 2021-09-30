@@ -93,12 +93,23 @@ app.post('/file', async(req, res) => {
         }else if(nombre.split('.').pop()=='xlsx'){
             const excel=XLSX.readFile(req.body.file)
             var nombreHoja=excel.SheetNames;
-
             var hojita=excel.Sheets[nombreHoja[0]]
-            hojita["AD8"].v=hojita["AD8"].w.replace(/\s/g, '')
-            hojita["AC8"].v=hojita["AC8"].w.replace(/\s/g, '')
-            console.log(hojita["AD8"]);
-            console.log(hojita["X2"]);
+            var prueba=XLSX.utils.sheet_to_json(hojita)
+            console.log(prueba.length);
+            for (let i = 2; i < prueba.length+2; i++) {
+                hojita["AD"+i].v=hojita["AD"+i].w.replace(/\s/g, '').replace(/,/g, '')
+                hojita["AC"+i].v=hojita["AC"+i].w.replace(/\s/g, '').replace(/,/g, '')
+                // console.log(hojita["W"+i]);
+                if(/^-?\d+$/.test(hojita["W"+i].v)){   
+                    // console.log(new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0])
+                    hojita["W"+i].v=new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
+                }
+                if(/^-?\d+$/.test(hojita["X"+i].v)) hojita["X"+i].v=new Date((hojita["X"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(/^-?\d+$/.test(hojita["Y"+i].v)) hojita["Y"+i].v=new Date((hojita["Y"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(/^-?\d+$/.test(hojita["Z"+i].v)) hojita["Z"+i].v=new Date((hojita["Z"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(/^-?\d+$/.test(hojita["AA"+i].v)) hojita["AA"+i].v=new Date((hojita["AA"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(/^-?\d+$/.test(hojita["AB"+i].v)) hojita["AB"+i].v=new Date((hojita["AB"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+            }
 
             let arrayOfArrays=[]
             let datos= XLSX.utils.sheet_to_json(hojita)
@@ -106,7 +117,6 @@ app.post('/file', async(req, res) => {
             arrayOfArrays.push(datos)            
             localStorage.setItem('fileName', `${nombre.split('.')[0]}.encrypted`)
             encrypt(JSON.stringify(arrayOfArrays))
-            console.log(JSON.stringify(arrayOfArrays));
             res.send(true)
         }else res.send(false)
     } catch (error) {
@@ -114,26 +124,6 @@ app.post('/file', async(req, res) => {
         res.send(false)
     }
 });
-function isValidDate(string) {
-    let Jdatos=[]
-    for (let j = 0; j < datos.length; j++) {
-        const dato = datos[j];
-        Jdatos.push({
-            ...dato,
-            FECHA_NACIMIENTO_HEBREO:new Date((dato.FECHA_NACIMIENTO_HEBREO-(25567 + 2))* 86400 * 1000 )
-        });
-    }
-    console.log(Jdatos);
-    let d=Date.parse(string)
-    return d instanceof Date && !isNaN(d);
-}
-function convertedDate(date){
-    var record_date = Date.parse(date)
-    var days = Math.round((record_date - new Date(1899, 11, 30)) / 8.64e7);
-    date = parseInt((days).toFixed(10));
-
-    return date;
-}
 //descarga del servidor
 app.get('/download', (req,res)=>{
     try {
@@ -149,10 +139,11 @@ app.get('/download', (req,res)=>{
 })
 app.get('/download/name', (req,res)=>{
     try {
-        res.send(localStorage.getItem('fileName'));
+        if(localStorage.getItem('fileName')!=null)res.send(localStorage.getItem('fileName'));
+        else res.send(false)
     } catch (error) {
         console.log(error);
-        res.send('server.encrypted')
+        res.send(false)
     }
 })
 //descarga del excel

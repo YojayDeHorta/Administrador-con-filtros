@@ -8,7 +8,7 @@ module.exports = {
         productName: 'Administrador',
         // asar: false,
         win:{
-          icon: "./public/icono.ico"
+          icon: "./public/icono.png"
         },
         directories:{
           buildResources: "public"

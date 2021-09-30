@@ -52,22 +52,22 @@
                         </v-row>
                         <v-row>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="(obligatorio)Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" ></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -86,7 +86,7 @@
                                 <v-text-field v-model="user.PROVINCIA" label="Provincia" :rules="provinciaRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.PAIS" label="Pais" :rules="provinciaRules"></v-text-field>
+                                <v-text-field v-model="user.PAIS" label="Pais" :rules="paisRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -94,7 +94,7 @@
                                 <v-text-field v-model="user.MOVIL"  label="Movil" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.FIJO"  label="Fijo" :rules="telefonoRules"></v-text-field>
+                                <v-text-field v-model="user.FIJO"  label="Fijo" :rules="fijoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field v-model="user.EMAIL" label="Email" :rules="emailRules"></v-text-field>
@@ -234,18 +234,20 @@ export default {
                 v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
             ],
             tefilaRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
+                v => ((v == null)||(v == '')||(v && v.length <= 50)) || 'el numero de caracteres maximos permitidos es 50'
             ],
             codPostalRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /\b\d{5,7}\b/.test(v) || 'escriba un codigo postal valido(5-7 numeros)',
+                v => ((v == null)||(v == '')||/\b\d{5,7}\b/.test(v)) || 'escriba un codigo postal valido(5-7 numeros)',
             ],
             localidadRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
                 v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
             ],
             provinciaRules:[
+                v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'valor no valido',
+                v => ((v == null)||(v == '')||(v && v.length <= 35)) || 'el numero de caracteres maximos permitidos es 35'
+            ],
+            paisRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
                 v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'valor no valido',
                 v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
@@ -255,20 +257,23 @@ export default {
                 v => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || 'telefono no valido',
                 v => (v && v.length <= 20) || 'el numero de caracteres maximos permitidos es 20'
             ],
+            fijoRules:[
+                v => ((v == null)||(v == '')||/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v)) || 'fijo no valido',
+                v => ((v == null)||(v == '')||(v && v.length <= 20)) || 'el numero de caracteres maximos permitidos es 20'
+            ],
             emailRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'digite un email valido (name@mail.com)',
-                v => (v && v.length <= 80) || 'el numero de caracteres maximos permitidos es 80'
+                v => ((v == null)||(v == '')||/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v)) || 'digite un email valido (name@mail.com)',
+                v => ((v == null)||(v == '')||(v && v.length <= 80)) || 'el numero de caracteres maximos permitidos es 80'
             ],
             observacionesRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => (v && v.length <= 280) || 'el numero de caracteres maximos permitidos es 280'
+                v => ((v == null)||(v == '')||(v && v.length <= 280)) || 'el numero de caracteres maximos permitidos es 280'
             ],
             cuotaRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/.test(v) || 'escriba un valor valido',
+                // v => /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/.test(v) || 'escriba un valor valido',
                 // v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
-                v => (v && v.length <= 30) || 'el numero de caracteres maximos permitidos es 30'
+                 v => /^[0-9.]*$/.test(v) || 'escriba un valor valido',
+                v => (v && v.length <= 20) || 'el numero de caracteres maximos permitidos es 20'
             ],
 
         }
