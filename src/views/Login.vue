@@ -6,7 +6,7 @@
         </h1>
         -->
         <div class="Marco_Login d-flex justify-center">
-            <v-card class="login mt-10 mb-10" height="550px" style="width: 450px">
+            <v-card class="login mt-2 mb-10" height="550px" style="width: 450px">
                 <v-form class="login text-center"  @submit.prevent="submitAdmin" ref="form" lazy-validation >
                     <v-card-title class="title d-flex justify-center" align="center">
                         <h2 style="width: 200px" class="Titulo text-center mt-5">
