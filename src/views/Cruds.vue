@@ -1,5 +1,5 @@
 <template>
-    <v-container class="Marco " fluid >
+    <v-container class="Marco mb-10" fluid >
         
         <!-- Crud -->
         <!-- <Crud :adminVerification="true" :column="columnas[select.idHoja]" :idHoja="select.idHoja" ></Crud> -->
@@ -35,7 +35,7 @@ export default {
     .Marco{
         border:5px solid black;
         padding:5px;
-        width:90%;
+        width:95%;
     }
 
     .primary{
