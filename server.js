@@ -93,11 +93,16 @@ app.post('/file', async(req, res) => {
         }else if(nombre.split('.').pop()=='xlsx'){
             const excel=XLSX.readFile(req.body.file)
             var nombreHoja=excel.SheetNames;
+
+            var hojita=excel.Sheets[nombreHoja[0]]
+            hojita["AD8"].v=hojita["AD8"].w.replace(/\s/g, '')
+            console.log(hojita["AD8"]);
+            console.log(hojita["X2"]);
+
             let arrayOfArrays=[]
-            for (let i = 0; i < nombreHoja.length; i++) {
-                let datos= XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[i]])
-                arrayOfArrays.push(datos)            
-            }
+            let datos= XLSX.utils.sheet_to_json(hojita)
+            
+            arrayOfArrays.push(datos)            
             localStorage.setItem('fileName', `${nombre.split('.')[0]}.encrypted`)
             encrypt(JSON.stringify(arrayOfArrays))
             res.send(true)
@@ -107,23 +112,26 @@ app.post('/file', async(req, res) => {
         res.send(false)
     }
 });
-//subida del excel
-app.post('/files', async(req, res) => {
-    try {
-        const excel=XLSX.readFile(req.body.file)
-        var nombreHoja=excel.SheetNames;
-        let arrayOfArrays=[]
-        for (let i = 0; i < nombreHoja.length; i++) {
-            let datos= XLSX.utils.sheet_to_json(excel.Sheets[nombreHoja[i]])
-            arrayOfArrays.push(datos)            
-        }
-        encrypt(JSON.stringify(arrayOfArrays))
-        res.send(true)
-    } catch (error) {
-        console.log(error);
-        res.send(false)
+function isValidDate(string) {
+    let Jdatos=[]
+    for (let j = 0; j < datos.length; j++) {
+        const dato = datos[j];
+        Jdatos.push({
+            ...dato,
+            FECHA_NACIMIENTO_HEBREO:new Date((dato.FECHA_NACIMIENTO_HEBREO-(25567 + 2))* 86400 * 1000 )
+        });
     }
-});
+    console.log(Jdatos);
+    let d=Date.parse(string)
+    return d instanceof Date && !isNaN(d);
+}
+function convertedDate(date){
+    var record_date = Date.parse(date)
+    var days = Math.round((record_date - new Date(1899, 11, 30)) / 8.64e7);
+    date = parseInt((days).toFixed(10));
+
+    return date;
+}
 //descarga del servidor
 app.get('/download', (req,res)=>{
     try {
