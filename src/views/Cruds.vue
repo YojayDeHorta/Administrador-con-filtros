@@ -34,7 +34,8 @@ export default {
 <style scoped>
     .Marco{
         border:5px solid black;
-        width:140%;
+        padding:5px;
+        width:90%;
     }
 
     .primary{
