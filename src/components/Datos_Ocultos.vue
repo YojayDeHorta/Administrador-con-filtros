@@ -6,7 +6,7 @@
             <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="500" >
                     <v-card style=";height:430px">
                         <v-form style="height:400px" @submit.prevent="FormPassword" lazy-validation ref="form">
-                            <v-toolbar style="width:100%;font-size:0.65vw;color:black" class="d-flex justify-center" color="#607D8B" dark><h2>MOSTRAR&nbsp;&nbsp;DATOS&nbsp;&nbsp;OCULTOS</h2></v-toolbar>
+                            <v-toolbar style="width:100%;font-size:0.65vw;color:white" class="d-flex justify-center" color="#607D8B" dark><h2>MOSTRAR&nbsp;&nbsp;DATOS&nbsp;&nbsp;OCULTOS</h2></v-toolbar>
                             <v-card-text>
                                 <div class="text-h2 text-center pa-12">
                                     <h6 class="text-center mb-10" style="font-size:15px">INGRESE&nbsp;&nbsp;LA&nbsp;&nbsp;CONTRASEÑA</h6>

@@ -1,37 +1,31 @@
 <template>
     <v-container>
         <!-- navbar para la app -->
-        <v-app-bar app>
-            <!-- <v-app-bar-nav-icon @click="drawer= !drawer"></v-app-bar-nav-icon> -->
-            <!--<v-btn @click="$router.go(-1)" v-if="isNotLogin" exact text class="gray">
-                <v-icon>mdi-arrow-left-circle</v-icon>
-                 <span>Volver</span>
-            </v-btn> -->
-            <v-toolbar-title class="text-uppercase grey--text">
-                Prototipo 
+        <v-app-bar style="background-color:#607D8B !important" app>
+            <v-toolbar-title style="color:white !important" class="text-uppercase grey--text">
+                <span class="">ADMINISTRACIÓN</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
-            
             <!-- roles -->
-            <v-btn  exact text class="gray" v-if="token">
+            <v-btn exact text class="Btn_Navbar gray" v-if="token">
                 <span>{{username}}</span>
                 <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
                 <v-icon v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->
                 <v-icon v-if="token=='conserjeToken'">mdi-account-eye</v-icon><!-- conserje -->
             </v-btn>
             <!-- menu -->
-            <v-btn :to="{name: 'Options'}" v-if="token" exact text class="gray">
+            <v-btn  :to="{name: 'Options'}" v-if="token" exact text class="Btn_Navbar gray">
                 <span>Opciones</span>
                 <v-icon>mdi-equal-box</v-icon>
             </v-btn>
             <!-- login -->
-            <v-btn text @click="logout()" v-if="token" class="gray">
-                <span>Log out</span>
+            <v-btn  text @click="logout()" v-if="token" class="Btn_Navbar gray">
+                <span class="mr-1">Cerrar Sesión</span>
                 <v-icon>mdi-home-export-outline </v-icon>
             </v-btn>
-            <v-btn text :to="{name: 'Login'}" v-else class="gray" exact>
-                <span>Log in</span>
+            <v-btn  text :to="{name: 'Login'}" v-else class="Btn_Navbar gray" exact>
+                <span class="mr-1">Iniciar Sesión</span>
                 <v-icon>mdi-login-variant </v-icon>
             </v-btn>
         </v-app-bar>
@@ -139,8 +133,14 @@ export default {
     }
 }
 </script>
-<style>
-.caminos {
-    background: red;
+<style scoped>
+
+.Btn_Navbar{
+    color:White !important;
+    margin-left:8px;
 }
+
+
+
+
 </style>

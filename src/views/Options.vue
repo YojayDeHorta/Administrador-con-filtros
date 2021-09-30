@@ -23,17 +23,18 @@ export default {
 <style scoped>
 
 .Titulo {
+    color:#424242 !important;
     overflow: hidden;
     text-transform: uppercase;
     font-size: calc(1rem + 4vw);
 
 }
-
+/*
 .barra {
     border: 5px solid #B0BEC5;
     margin: auto;
     width: 20%;
-}
+}*/
 
 .Opciones {
     width: 100%;
@@ -52,7 +53,7 @@ export default {
 
 .ico-buscar,
 .ico-editar {
-    color: #616161;
+    color: #424242;
     width: 100%;
     padding: 0;
     margin: 0;
