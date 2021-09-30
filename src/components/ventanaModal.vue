@@ -1,7 +1,7 @@
 <template>
     <v-container fluid>
         <!-- ventana modal para crear/editar --> 
-        <v-dialog v-model="dialog" max-width="1200px" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-dialog v-model="dialog" max-width="1200px" fullscreen hide-overlay transition="dialog-bottom-transition" persistent>
       
         <v-card class="Marco_Editar">
             <br><br>

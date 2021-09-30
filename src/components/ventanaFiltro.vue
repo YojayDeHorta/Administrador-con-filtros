@@ -1,11 +1,11 @@
 <template>
     <v-container fluid>
         <!-- ventana modal para crear/editar --> 
-        <v-dialog v-model="dialog" max-width="1200px" fullscreen hide-overlay transition="dialog-bottom-transition">
+        <v-dialog v-model="dialog" max-width="1200px" fullscreen hide-overlay transition="dialog-bottom-transition" persistent>
       
         <v-card class="Marco_Editar">
             <br><br>
-            <v-form class="mt-10" style="border:5px solid red" @submit.prevent="submitForm" v-model="valid" lazy-validation ref="form">
+            <v-form class="mt-10" style="border:5px solid red" @submit.prevent="submitForm" v-model="valid" lazy-validation ref="form" >
                 <v-app-bar fixed dark color="#607D8B" >
                 <v-btn icon dark @click="$emit('dialogModal',false);resetValidation()"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title>{{ formTitle }}</v-toolbar-title>

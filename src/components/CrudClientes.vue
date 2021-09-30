@@ -1,11 +1,11 @@
 <template>
     <v-container class="CRUD-P pb-0" fluid fill-height>
-        <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10">
+        <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10" >
             <!---->
             <!---->
             <v-col class="d-flex justify-end">
                 <div class="" style="width:43%">
-                    <v-expansion-panels>
+                    <v-expansion-panels v-if="adminVerification ||countFilter!=0">
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
                                 <strong class="text-center">OPCIONES DE DESCARGA</strong>
@@ -33,7 +33,8 @@
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
                                     </span>
                                     <span v-else>
-                                        <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}}
+                                        <v-icon class="mr-1">mdi-file-excel</v-icon> archivo agregado!
+                                        <!-- <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}} -->
                                     </span>
                                 </v-btn>
                                 <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
@@ -282,8 +283,6 @@ export default {
         } else {
             this.$router.push('/')
         }
-
-
     },
     computed: {
         ...mapGetters([
