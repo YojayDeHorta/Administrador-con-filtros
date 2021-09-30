@@ -22,7 +22,7 @@
                                     <v-icon>mdi-file-excel</v-icon>&nbsp;Excel
                                 </v-btn>
                                 <!--descarga de excel filtrada, necesario para las descargas-->
-                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
+                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="this.token=='adminToken'&&countFilter!=0" @click="descargarFiltro()">
                                     <v-icon>mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
                                 </v-btn>
                                 <!--descarga filtrada-->
@@ -58,9 +58,9 @@
                         <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
                     </div>
                 </div>
-                <div class="Tabla_Principal">
+                <div class="Tabla_Principal" :style="adminVerification ? '--radius: 280px;' : '--radius: 180px;'"><!-- IMPORTANTE; NO BORRAR-->
                     <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
-                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header @current-items="getFiltered" :footer-props="{
+                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header  @current-items="getFiltered" :footer-props="{
                         'items-per-page-text': 'usuarios por pagina',
                         'items-per-page-options': [10, 50, 100, 200, -1],
                         }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Tabla text--center ">
@@ -72,6 +72,33 @@
                             <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;dialogDelete=true">
                                 <v-icon small> mdi-delete </v-icon> eliminar
                             </v-btn>
+                        </template>
+                        <template slot="items" slot-scope="props">
+                            <tr>         
+                            <td class="text-xs-left headcol">{{ props.item.actions }}</td>
+                            <td class="text-xs-left">{{ props.item.calories }}</td>
+                            <td class="text-xs-left">{{ props.item.fat }}</td>
+                            <td class="text-xs-left">{{ props.item.carbs }}</td>
+                            <td class="text-xs-left">{{ props.item.protein }}</td>
+                            <td class="text-xs-left">{{ props.item.iron }}</td> <td class="text-xs-left">{{ props.item.iron1 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron2 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron3 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron4 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron5 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron6 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron7 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron8 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron9 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron1 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron2 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron3 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron4 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron5 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron6 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron7 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron8 }}</td>
+                            <td class="text-xs-left">{{ props.item.iron9 }}</td>
+                            </tr>
                         </template>
                     </v-data-table>
                 </div>
@@ -101,6 +128,8 @@
         </v-dialog>
     </v-container>
 </template>
+  
+
 <script>
 var url = "http://localhost:3000/api/hojas/";
 import axios from "axios";
@@ -114,7 +143,8 @@ export default {
     components: {
         ventanaFiltro,
         ventanaModal,
-        Oculto
+        Oculto,
+        
 
     },
     data() {
@@ -122,40 +152,40 @@ export default {
             loading: false,
             users: [],
             columnas: [ //EDITAR INFORMACION
-                { text: "ID", value: "ID", class: "Header_Tabla ", align: 'center', width: "70px", style: 'text-center', show: true },
-                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla ", width: "180px", filter: this.numSocioFilter, show: true },
-                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla ", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
-                { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.nameFilter, show: true },
-                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
-                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
-                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
-                { text: "DNI", value: "DNI", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.dniFilter, show: true },
-                { text: "PD", value: "PD", class: "Header_Tabla ", align: 'center', width: "70px", filter: this.pdFilter, show: true },
-                { text: "FECHA DE NACIMIENTO", value: "FECHA_NACIMIENTO", class: "Header_Tabla ", align: 'center', width: "190px", filter: this.fechaNacimientoFilter, show: true },
-                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.fechaNacimientoHebreoFilter, show: true },
-                { text: "FECHA DE CASAMIENTO", value: "FECHA_CASAMIENTO", class: "Header_Tabla ", align: 'center', width: "190px", filter: this.fechaCasamientoFilter, show: true },
-                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.fechaCasamientoHebreoFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla ", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
-                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
-                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
-                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
-                { text: "PAIS", value: "PAIS", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.paisFilter, show: true },
-                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.movilFilter, show: true },
-                { text: "FIJO", value: "FIJO", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
-                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.emailFilter, show: true },
-                { text: "EDAD", value: "EDAD", class: "Header_Tabla ", align: 'center', width: "100px", filter: this.edadFilter, show: true },
-                { text: "SOLA", value: "SOLA", class: "Header_Tabla ", align: 'center', width: "100px", filter: this.solaFilter, show: true },
-                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla ", align: 'center', width: "100px", filter: this.mayorFilter, show: true },
-                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla ", align: 'center', width: "250px", filter: this.tefilaFilter, show: true },
-                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla ", width: "400px", filter: this.observacionesFilter, show: true },
-                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.cuotasFilter, show: false, sortable: false },
-                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false, sortable: false },
-                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla ", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
-                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla ", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
-                { text: "JESED", value: "JESED", class: "Header_Tabla ", align: 'center', width: "100px", filter: this.jessedFilter, show: false },
-                { text: "ACCIONES", value: "actions", class: "Header_Tabla p-2", align: 'center', sortable: false, width: "280px", show: true },
+                { text: "ACCIONES", value: "actions", class: "Header_Tabla ", align: 'center', sortable: false, width: "280px", show: true},
+                { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla elevacionTabla", align: 'center', width: "180px", filter: this.nameFilter, show: true },
+                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla", width: "180px", filter: this.numSocioFilter, show: true},
+                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla elevacionTabla", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
+                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
+                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
+                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
+                { text: "DNI", value: "DNI", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.dniFilter, show: true },
+                { text: "PD", value: "PD", class: "Header_Tabla elevacionTabla", align: 'center', width: "70px", filter: this.pdFilter, show: true },
+                { text: "FECHA DE NACIMIENTO", value: "FECHA_NACIMIENTO", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaNacimientoFilter, show: true },
+                { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaNacimientoHebreoFilter, show: true },
+                { text: "FECHA DE CASAMIENTO", value: "FECHA_CASAMIENTO", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaCasamientoFilter, show: true },
+                { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaCasamientoHebreoFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
+                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
+                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
+                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
+                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
+                { text: "PAIS", value: "PAIS", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.paisFilter, show: true },
+                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.movilFilter, show: true },
+                { text: "FIJO", value: "FIJO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
+                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.emailFilter, show: true },
+                { text: "EDAD", value: "EDAD", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.edadFilter, show: true },
+                { text: "SOLA", value: "SOLA", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.solaFilter, show: true },
+                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.mayorFilter, show: true },
+                { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.tefilaFilter, show: true },
+                { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla elevacionTabla", width: "400px", filter: this.observacionesFilter, show: true },
+                { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false, sortable: false },
+                { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false, sortable: false },
+                { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
+                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla elevacionTabla", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
+                { text: "JESED", value: "JESED", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.jessedFilter, show: false },
+                { text: "ID", value: "ID", class: "Header_Tabla elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
             ],
             //aqui van los valores pa los select
             user: {
@@ -196,9 +226,9 @@ export default {
             //variable para el filtro
             userFiltro: {
                 ID: '',
+                NOMBRE: '',
                 NUM_SOCIO: '',
                 SOCIO: '',
-                NOMBRE: '',
                 APELLIDO_1: '',
                 APELLIDO_2: '',
                 PARENTESCO: '',
@@ -273,6 +303,7 @@ export default {
         } else {
             this.$router.push('/')
         }
+
     },
     computed: {
         ...mapGetters([
@@ -290,7 +321,8 @@ export default {
 
             }
             if (!this.adminVerification) {
-                columnasMod.pop()
+                // columnasMod.pop()
+                columnasMod.shift()
             }
             return columnasMod
         }
@@ -410,8 +442,7 @@ export default {
                 this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
-                link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
-                console.log(new Blob([respuesta.data]));
+                link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'text/plain' }));
                 if (name.data) link.setAttribute('download', name.data)
                 else link.setAttribute('download', `datos.encrypted`)
                 document.body.appendChild(link)
@@ -426,7 +457,7 @@ export default {
                 this.mensaje = 'error al descargar el archivo'
             } else {
                 const link = document.createElement('a')
-                link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
+                link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
                 if (name.data) link.setAttribute('download', `${name.data.split('.')[0]}.xlsx`)
                 else link.setAttribute('download', `datos.xlsx`)
                 document.body.appendChild(link)
@@ -719,17 +750,36 @@ tbody tr:nth-of-type(odd) {
     margin-top: 10px;
   /*  border: 5px solid red;*/
 }
-
-/**/
-
+    /*vaina pal header pegado, ojo con esto*/
 
 
-tbody td {
-    padding: auto;
-    border: 0.2px solid black;
-    padding: 15px;
-    height: 80px !important;
-}
+
+    /* 1 */
+    table > tbody > tr > td:nth-child(1), 
+    table > thead > tr > th:nth-child(1) {
+      position: sticky !important; 
+      position: -webkit-sticky !important; 
+      left: 0; 
+      z-index: 10;
+          background-color: #ECEFF1;
+
+    }
+    table > thead > tr > th:nth-child(1) {
+      z-index: 90!important;
+    }
+        /* 2 */
+     table > tbody > tr > td:nth-child(2), 
+    table > thead > tr > th:nth-child(2) {
+      position: sticky !important; 
+      position: -webkit-sticky !important; 
+        left: var(--radius); 
+      z-index: 10;
+          background-color: #ECEFF1;
+
+    }
+    table > thead > tr > th:nth-child(2) {
+      z-index: 90!important;
+    }
 
 /** RESPONSIVE DESIGN  */
 
