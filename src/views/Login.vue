@@ -99,6 +99,12 @@ export default {
 };
 </script>
 <style scoped>
+
+    .Marco{
+        position: relative;
+        top: 10%;
+    }
+
     .Marco_Login {
        /* border: 5px solid red;*/
 

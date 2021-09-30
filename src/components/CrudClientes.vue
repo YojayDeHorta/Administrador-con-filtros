@@ -22,7 +22,7 @@
                                     <v-icon>mdi-file-excel</v-icon>&nbsp;Excel
                                 </v-btn>
                                 <!--descarga de excel filtrada, necesario para las descargas-->
-                                <v-btn class="Btn_Descarga" style="color:#424242" color="teal darken-1 white--text" v-if="countFilter!=0" @click="descargarFiltro()">
+                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
                                     <v-icon>mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
                                 </v-btn>
                                 <!--descarga filtrada-->
@@ -45,7 +45,7 @@
         <v-row class="d-flex justify-center p-0 ">
             <v-col>
                 <div class="mb-5">
-                    <div class="Div_Usuario d-flex justify-center">
+                    <div class="Div_Usuario">
                         <v-btn class="Btn_Usuario" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
                             <v-icon>mdi-account-plus</v-icon>&nbsp;Añadir Cliente
                         </v-btn>
@@ -443,7 +443,7 @@ export default {
                     this.snackbar = true
                     this.mensaje = 'usted no esta autorizado a subir archivos de excel'
                     this.file = null
-                    his.$refs.file.value=null;
+                    his.$refs.file.value = null;
                 } else {
                     let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
                     if (respuesta.data == true) {
@@ -451,14 +451,14 @@ export default {
                         this.snackbar = true
                         this.mensaje = 'archivo cargado exitosamente'
                         this.file = null
-                        this.$refs.file.value=null;
+                        this.$refs.file.value = null;
 
                     } else {
                         this.snackbar = true
                         this.mensaje = 'error al subir el archivo - formato no valido'
                     }
                 }
-                
+
             }
         },
         //descarga de filtros
@@ -688,6 +688,41 @@ tbody tr:nth-of-type(odd) {
     background-color: #ECEFF1;
 }
 
+/**/
+.Tabs_Descarga {
+    /* border: 5px solid red !important;*/
+}
+
+.Div_Tabs_Descarga {
+    /* border: 5px solid black;*/
+    width: 49% !important;
+}
+
+.Btn_Descarga {
+    width: 24% !important;
+    height: 37px !important;
+    margin-left: 5px;
+    color: white !important;
+    font-size: 0.7vw !important;
+}
+
+.Div_Usuario {
+   /* border: 5px solid red;*/
+    display: flex;
+    justify-content: start;
+
+}
+
+.Btn_Usuario {
+    color: white !important;
+    margin-left: 20px;
+    margin-top: 12px;
+}
+
+/**/
+
+
+
 tbody td {
     padding: auto;
     border: 0.2px solid black;
@@ -698,7 +733,7 @@ tbody td {
 /** RESPONSIVE DESIGN  */
 
 
-@media (min-width: 768px) and (max-width: 1209px) {
+@media (min-width: 768px) and (max-width: 1259px) {
     .Tabs_Descarga {
         /* border: 5px solid red !important;*/
     }
@@ -712,18 +747,23 @@ tbody td {
         width: 24% !important;
         height: 37px !important;
         margin-left: 5px;
-        color: white !important;
+        color: #424242 !important;
+        font-size: 14px !important;
     }
 
     .Div_Usuario {
-      /*border:5px solid red;*/
+       /* border: 5px solid black;*/
+        display: flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
     }
 
     .Btn_Usuario {
         color: white !important;
         margin-left: 20px;
-        margin-top:12px ;
+        margin-top: 12px;
     }
 
 
