@@ -1,10 +1,10 @@
 <template>
     <div class="Cols_Oculto">
         <v-col cols="auto" v-if="rol=='secretariaRol'">
-            <v-btn style="color:white" color="#757575"  v-if="rol=='secretariaRol' && token!='adminToken'" @click="dialog=true">
+            <v-btn style="color:white;width:100%;font-size:11.5px" color="#757575"  v-if="rol=='secretariaRol' && token!='adminToken'" @click="dialog=true">
             <v-icon>mdi-file-lock</v-icon>&nbsp;
             MOSTRAR DATOS OCULTOS</v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
-            <v-btn  color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria"><v-icon>mdi-key-remove</v-icon> quitar &nbsp;PERMISOS </v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
+            <v-btn style="width:100%;"  color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria"><v-icon>mdi-key-remove</v-icon> quitar &nbsp;PERMISOS </v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
             <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="500" >
                     <v-card style=";height:430px">
                         <v-form style="height:400px" @submit.prevent="FormPassword" lazy-validation ref="form">

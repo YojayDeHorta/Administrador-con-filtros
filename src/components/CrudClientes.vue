@@ -14,7 +14,7 @@
                                 </template>
                             </v-expansion-panel-header>
                             <v-expansion-panel-content class="text-center">
-                                <v-btn class="Btn_Descarga" style="color:#424242" color="#FFD54F" @click="descargar()" v-if="adminVerification">
+                                <v-btn class="Btn_Descarga" style="color:#424242" color="orange lighten-1" @click="descargar()" v-if="adminVerification">
                                     <v-icon>mdi-file-lock</v-icon>&nbsp;encriptado
                                 </v-btn>
                                 <!--descarga normal-->
@@ -44,7 +44,7 @@
         </v-row>
         <v-row class="d-flex justify-center p-0 ">
             <v-col>
-                <div class="mb-5">
+                <div class="mb-5 d-flex justify-center">
                     <div class="Div_Usuario">
                         <v-btn class="Btn_Usuario" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
                             <v-icon>mdi-account-plus</v-icon>&nbsp;Añadir Cliente
@@ -55,7 +55,7 @@
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
                             <v-icon>mdi-clipboard-remove</v-icon>&nbsp;borrar filtro
                         </v-btn>
-                        <Oculto style="display:inline-block"></Oculto>
+                        <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
                     </div>
                 </div>
                 <div class="Tabla_Principal">
@@ -716,7 +716,8 @@ tbody tr:nth-of-type(odd) {
 .Btn_Usuario {
     color: white !important;
     margin-left: 20px;
-    margin-top: 12px;
+    margin-top: 10px;
+  /*  border: 5px solid red;*/
 }
 
 /**/
@@ -752,11 +753,12 @@ tbody td {
     }
 
     .Div_Usuario {
-       /* border: 5px solid black;*/
-        display: flex;
-        display: flex;
+        border: 5px solid black;
+       
+        /*display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: center;*/
+        text-align: center;
 
     }
 
@@ -767,7 +769,10 @@ tbody td {
     }
 
 
-
+    .Btn_Oculto{
+   
+        width: 50% !important;
+    }
 
 
 
