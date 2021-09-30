@@ -91,10 +91,10 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.MOVIL" type="number" label="Movil" :rules="telefonoRules"></v-text-field>
+                                <v-text-field v-model="user.MOVIL"  label="Movil" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.FIJO" type="number" label="Fijo" :rules="telefonoRules"></v-text-field>
+                                <v-text-field v-model="user.FIJO"  label="Fijo" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field v-model="user.EMAIL" label="Email" :rules="emailRules"></v-text-field>
@@ -266,7 +266,8 @@ export default {
             ],
             cuotaRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
+                v => /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/.test(v) || 'escriba un valor valido',
+                // v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
                 v => (v && v.length <= 30) || 'el numero de caracteres maximos permitidos es 30'
             ],
 

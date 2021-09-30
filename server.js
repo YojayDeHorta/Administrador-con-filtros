@@ -96,6 +96,7 @@ app.post('/file', async(req, res) => {
 
             var hojita=excel.Sheets[nombreHoja[0]]
             hojita["AD8"].v=hojita["AD8"].w.replace(/\s/g, '')
+            hojita["AC8"].v=hojita["AC8"].w.replace(/\s/g, '')
             console.log(hojita["AD8"]);
             console.log(hojita["X2"]);
 
@@ -105,6 +106,7 @@ app.post('/file', async(req, res) => {
             arrayOfArrays.push(datos)            
             localStorage.setItem('fileName', `${nombre.split('.')[0]}.encrypted`)
             encrypt(JSON.stringify(arrayOfArrays))
+            console.log(JSON.stringify(arrayOfArrays));
             res.send(true)
         }else res.send(false)
     } catch (error) {
