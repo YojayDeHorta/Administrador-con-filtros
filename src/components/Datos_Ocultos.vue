@@ -3,23 +3,20 @@
         <v-col cols="auto" v-if="rol=='secretariaRol'">
             <v-btn style="font-size:0.65vw;color:white" color="#607D8B" v-if="rol=='secretariaRol' && token!='adminToken'" @click="dialog=true">Datos&nbsp;OCULTOS</v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
             <v-btn style="font-size:0.65vw" color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria">quitar &nbsp;PERMISOS </v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
-            <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="600">
-                    <v-card>
-                        <v-form @submit.prevent="FormPassword" lazy-validation ref="form">
-                            <v-toolbar style="width:100%;font-size:0.65vw" class="d-flex justify-center" color="primary" dark><h2><strong>DATOS OCULTOS</strong></h2></v-toolbar>
+            <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="500" >
+                    <v-card style=";height:430px">
+                        <v-form style="height:400px" @submit.prevent="FormPassword" lazy-validation ref="form">
+                            <v-toolbar style="width:100%;font-size:0.65vw;color:black" class="d-flex justify-center" color="#607D8B" dark><h2>MOSTRAR&nbsp;&nbsp;DATOS&nbsp;&nbsp;OCULTOS</h2></v-toolbar>
                             <v-card-text>
                                 <div class="text-h2 text-center pa-12">
-                                    <h6 class="text-center mb-10" style="font-size:15px">Ingrese la contraseña para mostrar los datos</h6>
+                                    <h6 class="text-center mb-10" style="font-size:15px">INGRESE&nbsp;&nbsp;LA&nbsp;&nbsp;CONTRASEÑA</h6>
                                     <v-text-field prepend-icon="mdi-lock-outline" v-model="password" type="password" :rules="Rules"></v-text-field>
-                                    <v-btn class="" type="submit">Mostrar</v-btn>
+                                    <v-btn class="mt-7" type="submit">Mostrar</v-btn>
                                 <!--
                                         <v-text-field type="password" prepend-icon="mdi-lock-outline" label="Contraseña">
                                 -->
                                 </div>
                             </v-card-text>
-                            <v-card-actions class="justify-end">
-                                <v-btn text @click="dialog.value = false">Cancelar</v-btn>
-                            </v-card-actions>
                         </v-form>
                     </v-card>
             </v-dialog>

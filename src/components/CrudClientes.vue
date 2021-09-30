@@ -99,15 +99,43 @@
         <!-- modal para borrar -->
         <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
-                <v-card-title class="text-h5 text-center">estas seguro de borrar el producto con id: {{idDelete}}?</v-card-title>
+                <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar el producto con id: {{idDelete}} ?</v-card-title>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="primary darken-1" text @click="dialogDelete=false;idDelete=null">cancelar</v-btn>
-                    <v-btn color="error darken-1" text @click="deleteUser(idDelete)">si</v-btn>
+                    <v-btn color="error darken-1" text @click="deleteUser(idDelete)">Eliminar</v-btn>
                     <v-spacer></v-spacer>
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!---->
+        <v-col cols="auto">
+            <v-dialog transition="dialog-bottom-transition" max-width="600">
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn color="primary" v-bind="attrs" v-on="on">From the bottom</v-btn>
+                </template>
+                <template v-slot:default="dialog">
+                    <v-card>
+                        <v-toolbar color="red" dark>ELIMINAR REGISTRO</v-toolbar>
+                        <v-card-text>
+                            <div class="pa-5 mt-5" style="text-transform:uppercase;font-size:15px">¿ estas seguro que deseas eliminar el elemento seleccionado ?</div>
+                        </v-card-text>
+                        <hr>
+                        <v-card-actions class="justify-end">
+                            <v-btn text @click="dialog.value = false">
+                                <v-btn depressed style="color:white;" color="green">
+                                    CANCELAR
+                                </v-btn>
+                                <v-btn depressed class="ml-5" color="error">
+                                    ELIMINAR REGISTRO
+                                </v-btn>
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </template>
+            </v-dialog>
+        </v-col>
+        <!---->
     </v-container>
 </template>
 <script>
