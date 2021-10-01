@@ -120,7 +120,7 @@
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.FORMA_PAGO }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.OBSERVACIONES2 }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.JESED }}</td>
-                                <td class="tablatd">{{ item.ID }}</td>
+                                <td class="tablatd ID">{{ item.ID }}</td>
                             </tr>
                         </template>
                     </v-data-table>
@@ -176,32 +176,32 @@ export default {
             loading: false,
             users: [],
             columnas: [ //EDITAR INFORMACION
-                { text: "ACCIONES", value: "actions", class: "Header_Tabla ", align: 'center', sortable: false, width: "280px", show: true},
-                { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla elevacionTabla", align: 'center', width: "180px", filter: this.nameFilter, show: true },
-                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla", width: "180px", filter: this.numSocioFilter, show: true},
-                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla elevacionTabla", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
-                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
-                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
-                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
-                { text: "DNI", value: "DNI", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.dniFilter, show: true },
-                { text: "PD", value: "PD", class: "Header_Tabla elevacionTabla", align: 'center', width: "70px", filter: this.pdFilter, show: true },
-                { text: "FECHA DE NACIMIENTO", value: "FECHA_NACIMIENTO", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaNacimientoFilter, show: true },
+                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "280px", show: true},
+                { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla elevacionTabla pl-10 ", align: 'center', width: "180px", filter: this.nameFilter, show: true },
+                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla pl-10", width: "280px", filter: this.numSocioFilter, show: true},
+                { text: "SOCIO", value: "SOCIO", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
+                { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
+                { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
+                { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
+                { text: "DNI", value: "DNI", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.dniFilter, show: true },
+                { text: "PD", value: "PD", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "70px", filter: this.pdFilter, show: true },
+                { text: "FECHA DE NACIMIENTO", value: "FECHA_NACIMIENTO", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "190px", filter: this.fechaNacimientoFilter, show: true },
                 { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaNacimientoHebreoFilter, show: true },
-                { text: "FECHA DE CASAMIENTO", value: "FECHA_CASAMIENTO", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaCasamientoFilter, show: true },
+                { text: "FECHA DE CASAMIENTO", value: "FECHA_CASAMIENTO", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "190px", filter: this.fechaCasamientoFilter, show: true },
                 { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaCasamientoHebreoFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
-                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
-                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
-                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
-                { text: "PAIS", value: "PAIS", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.paisFilter, show: true },
-                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.movilFilter, show: true },
-                { text: "FIJO", value: "FIJO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
-                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.emailFilter, show: true },
-                { text: "EDAD", value: "EDAD", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.edadFilter, show: true },
-                { text: "SOLA", value: "SOLA", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.solaFilter, show: true },
-                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.mayorFilter, show: true },
+                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
+                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
+                { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
+                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
+                { text: "PAIS", value: "PAIS", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.paisFilter, show: true },
+                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.movilFilter, show: true },
+                { text: "FIJO", value: "FIJO", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
+                { text: "EMAIL", value: "EMAIL", class: "Header_Tabla elevacionTabla pl-10", align: 'center', width: "250px", filter: this.emailFilter, show: true },
+                { text: "EDAD", value: "EDAD", class: "Header_Tabla elevacionTabla pl-8 pt-1", align: 'center', width: "100px", filter: this.edadFilter, show: true },
+                { text: "SOLA", value: "SOLA", class: "Header_Tabla elevacionTabla pl-8 pt-1", align: 'center', width: "100px", filter: this.solaFilter, show: true },
+                { text: "MAYOR", value: "MAYOR", class: "Header_Tabla elevacionTabla pl-5 pt-1", align: 'center', width: "100px", filter: this.mayorFilter, show: true },
                 { text: "TEFILÁ", value: "TEFILA", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.tefilaFilter, show: true },
                 { text: "OBSERVACIONES", value: "OBSERVACIONES", align: 'center', class: "Header_Tabla elevacionTabla", width: "400px", filter: this.observacionesFilter, show: true },
                 { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false, sortable: false },
@@ -209,7 +209,7 @@ export default {
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
                 { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla elevacionTabla", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
                 { text: "JESED", value: "JESED", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.jessedFilter, show: false },
-                { text: "ID", value: "ID", class: "Header_Tabla elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
+                { text: "ID", value: "ID", class: "Header_Tabla ID elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
             ],
             //aqui van los valores pa los select
             user: {
@@ -733,9 +733,13 @@ export default {
 }
 
 .Header_Tabla {
+    text-align: center;
     border: 1px solid black !important;
     background-color: #78909C !important;
     color: black !important;
+    margin: 0;
+    padding: 0;
+
 }
 
 .Header_Filter {
@@ -773,6 +777,11 @@ tbody tr:nth-of-type(odd) {
     justify-content: start;
 
 }
+
+table tbody tr{
+  text-align: center;
+}
+
 
 .Btn_Usuario {
     color: white !important;
@@ -816,6 +825,10 @@ tbody tr:nth-of-type(odd) {
     }
     table > thead > tr > th:nth-child(2) {
       z-index: 90!important;
+    }
+
+    .ID{
+        display: none;
     }
 
 /** RESPONSIVE DESIGN  */
