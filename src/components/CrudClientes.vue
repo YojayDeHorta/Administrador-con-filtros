@@ -65,7 +65,7 @@
                         'items-per-page-options': [10, 50, 100, 200, -1],
                         }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Tabla text--center ">
                         <!-- botones editar y borrar -->
-                        <template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
+                        <!--<template v-slot:[`item.actions`]="{ item }" v-if="adminVerification">
                             <v-btn color="green  white--text" @click="prepareEdit(item)">
                                 <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
                             </v-btn>
@@ -73,34 +73,58 @@
                                 <v-icon small> mdi-delete </v-icon> eliminar
                             </v-btn>
                         </template>
-                        <template slot="items" slot-scope="props">
-                            <tr>         
-                            <td class="text-xs-left headcol">{{ props.item.actions }}</td>
-                            <td class="text-xs-left">{{ props.item.calories }}</td>
-                            <td class="text-xs-left">{{ props.item.fat }}</td>
-                            <td class="text-xs-left">{{ props.item.carbs }}</td>
-                            <td class="text-xs-left">{{ props.item.protein }}</td>
-                            <td class="text-xs-left">{{ props.item.iron }}</td> <td class="text-xs-left">{{ props.item.iron1 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron2 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron3 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron4 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron5 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron6 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron7 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron8 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron9 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron1 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron2 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron3 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron4 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron5 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron6 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron7 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron8 }}</td>
-                            <td class="text-xs-left">{{ props.item.iron9 }}</td>
+                         <template v-slot:[`item.NOMBRE`]="{ item }" >
+                            <div class="ma-0" :style="adminVerification ? 'background: grey;' : 'background: red;'">{{item.NOMBRE}}</div>
+                        </template> -->
+                        <template v-slot:item="{ item }">
+                            <tr>  
+                                <!-- botones -->
+                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">
+                                    <v-btn color="green  white--text" @click="prepareEdit(item)">
+                                        <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
+                                    </v-btn>
+                                    <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;dialogDelete=true">
+                                        <v-icon small> mdi-delete </v-icon> eliminar
+                                    </v-btn>
+                                </td>     
+                                <!-- propiedades ordenadas -->
+                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NOMBRE }}</td>  <!-- que hp cambiar el color -->
+                                <td class="tablatd">{{ item.NUM_SOCIO }}</td>
+                                <td class="tablatd">{{ item.SOCIO }}</td>
+                                <td class="tablatd">{{ item.APELLIDO_1 }}</td>
+                                <td class="tablatd">{{ item.APELLIDO_2 }}</td>
+                                <td class="tablatd">{{ item.PARENTESCO }}</td>
+                                <td class="tablatd">{{ item.DNI }}</td>
+                                <td class="tablatd">{{ item.PD }}</td>
+                                <td class="tablatd">{{ item.FECHA_NACIMIENTO }}</td>
+                                <td class="tablatd">{{ item.FECHA_NACIMIENTO_HEBREO }}</td>
+                                <td class="tablatd">{{ item.FECHA_CASAMIENTO }}</td>
+                                <td class="tablatd">{{ item.FECHA_CASAMIENTO_HEBREO }}</td>
+                                <td class="tablatd">{{ item.FECHA_DEFUNCION }}</td>
+                                <td class="tablatd">{{ item.FECHA_DEFUNCION_HEBREO }}</td>
+                                <td class="tablatd">{{ item.DIRECCION }}</td>
+                                <td class="tablatd">{{ item.COD_POSTAL }}</td>
+                                <td class="tablatd">{{ item.LOCALIDAD }}</td>
+                                <td class="tablatd">{{ item.PROVINCIA }}</td>
+                                <td class="tablatd">{{ item.PAIS }}</td>
+                                <td class="tablatd">{{ item.MOVIL }}</td>
+                                <td class="tablatd">{{ item.FIJO }}</td>
+                                <td class="tablatd">{{ item.EMAIL }}</td>
+                                <td class="tablatd">{{ item.EDAD }}</td>
+                                <td class="tablatd">{{ item.SOLA }}</td>
+                                <td class="tablatd">{{ item.MAYOR }}</td>
+                                <td class="tablatd">{{ item.TEFILA }}</td>
+                                <td class="tablatd">{{ item.OBSERVACIONES}}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTAS }}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTA_LICEO }}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.FORMA_PAGO }}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.OBSERVACIONES2 }}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.JESED }}</td>
+                                <td class="tablatd">{{ item.ID }}</td>
                             </tr>
                         </template>
                     </v-data-table>
+                    
                 </div>
             </v-col>
         </v-row>
@@ -114,7 +138,7 @@
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
         <!-- modal para borrar -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialogDelete" max-width="500px" >
             <v-card>
                 <v-toolbar color="red" dark>ELIMINAR REGISTRO</v-toolbar>
                 <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar el producto con id: {{idDelete}} ?</v-card-title>
@@ -290,6 +314,7 @@ export default {
             mensaje: '',
             //date
             date: new Date().toISOString().substr(0, 10),
+            counter:0,
 
         }
     },
@@ -325,6 +350,9 @@ export default {
                 columnasMod.shift()
             }
             return columnasMod
+        },
+        computedTrue(){
+
         }
     },
     methods: {
@@ -667,7 +695,6 @@ export default {
             return value.toString().toLowerCase().includes(this.userFiltro.JESED.toString().toLowerCase());
         },
 
-
     }
 
 };
@@ -750,6 +777,15 @@ tbody tr:nth-of-type(odd) {
     margin-top: 10px;
   /*  border: 5px solid red;*/
 }
+/* pa que edites las tablas internas */
+.tablatd {
+    padding: auto;
+    border: 0.2px solid black;
+    padding: 15px;
+    height: 80px !important;
+}
+
+
     /*vaina pal header pegado, ojo con esto*/
 
 
@@ -761,7 +797,6 @@ tbody tr:nth-of-type(odd) {
       position: -webkit-sticky !important; 
       left: 0; 
       z-index: 10;
-          background-color: #ECEFF1;
 
     }
     table > thead > tr > th:nth-child(1) {
@@ -774,7 +809,6 @@ tbody tr:nth-of-type(odd) {
       position: -webkit-sticky !important; 
         left: var(--radius); 
       z-index: 10;
-          background-color: #ECEFF1;
 
     }
     table > thead > tr > th:nth-child(2) {
