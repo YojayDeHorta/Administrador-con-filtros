@@ -61,7 +61,7 @@ export default {
             mensaje: '',
             //reglas
             Rules:[
-                v=>!!v || 'Porfavor llena este campo',
+                v=>!!v || 'Por Favor,Llena Este Campo',
             ],
         }
     },computed:{
@@ -79,7 +79,7 @@ export default {
             if (this.$refs.form.validate()==true) {
                 let res = await axios.post('http://localhost:3000/login/users', this.login)
                 this.snackbar = true
-                if (!res.data)this.mensaje = 'error - usuario o contraseña incorrecta'
+                if (!res.data)this.mensaje = 'Error - Usuario O Contraseña Incorrecta'
                 else {
                     if (res.data.token=='admin') sessionStorage.setItem("token",res.data.token);
                     else if(res.data.token=='secretaria')sessionStorage.setItem("token",res.data.token);
@@ -88,7 +88,7 @@ export default {
                     this.login.user = ''
                     this.login.pass = ''
                     this.getLogin({username:res.data.user,token:res.data.token,rol:res.data.rol})
-                    this.mensaje = 'login realizado correctamente'
+                    this.mensaje = 'Inicio De Sesión Realizado Correctamente'
                     this.$router.push('/options')
                 }
                 this.login.pass = ''

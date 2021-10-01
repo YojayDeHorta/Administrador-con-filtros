@@ -140,10 +140,10 @@
                                         <h3>Cuotas</h3>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" label="Elegir moneda" outlined></v-select>
+                                        <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" label="Moneda" outlined></v-select>
                                     </v-col>
-                                    <v-col cols="6" >
-                                        <v-text-field v-model="cuotaSelect.value" :rules="cuotaRules" label="Digite una cuota">
+                                    <v-col cols="5" >
+                                        <v-text-field v-model="cuotaSelect.value" :rules="cuotaRules" label="Digite Una Cuota">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaSimbol}}</div>
                                             </template>
@@ -152,16 +152,17 @@
                                 </v-row>
                             </v-col>
                             <!-- cuota liceo -->
-                            <v-col cols="4">
+
+                            <v-col  cols="6">
                                 <v-row>
-                                    <v-col cols="2" class="mt-0 text-center">
-                                        <h4>Cuota liceo:</h4>
+                                    <v-col cols="2" class="mt-3 text-center">
+                                        <h3>Cuota Liceo</h3>
                                     </v-col>
                                     <v-col cols="4" >
-                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" label="Elegir moneda"  outlined></v-select>
+                                        <v-select :items="CuotaLiceo" v-model="cuotaLiceoSelect.simbolo" label="Elegir Moneda"  outlined></v-select>
                                     </v-col>
                                     <v-col cols="6" >
-                                        <v-text-field v-model="cuotaLiceoSelect.value" :rules="cuotaRules" label="Digite la Cuota liceo">
+                                        <v-text-field v-model="cuotaLiceoSelect.value" :rules="cuotaRules" label="Digite La Cuota Liceo">
                                             <template slot="append">
                                                 <div class="font-weight-black">{{computedCuotaLiceoSimbol}}</div>
                                             </template>
@@ -170,21 +171,17 @@
                                 </v-row>
                             </v-col>
                             <!-- forma de pago -->
-                            <v-col cols="2">
+                            <v-col  cols="2">
                                 <!--
                                 <div>Forma de pago:</div>
                             -->
-                                <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma de pago" :rules="selectRules" outlined></v-select>
+                                <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma De Pago" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <!-- jessed -->
-                            <v-col cols="2" >
-                                <!--
-                                <div>Jessed:</div>
-                            -->
-                                <v-select :items="Jessed" v-model="user.JESED" label=" Jessed" :rules="selectRules" outlined></v-select>
-                            </v-col>
+
                         </v-row>
                         <v-row v-if="token=='adminToken'||isEditing==false">
+
                             <v-col cols="12">
                                 <v-text-field v-model="user.OBSERVACIONES2" label="Observaciones 2" :rules="observacionesRules"></v-text-field>
                             </v-col>

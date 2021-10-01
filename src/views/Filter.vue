@@ -23,7 +23,7 @@ export default {
 </script>
 <style scoped>
 .Hoja-Cliente {
-    border: 5px solid red;
+    /*border: 5px solid red;*/
     width: 90%;
     margin-left:110px;
 }

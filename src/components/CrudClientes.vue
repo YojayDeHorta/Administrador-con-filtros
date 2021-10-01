@@ -381,7 +381,7 @@ export default {
                     this.countFilter++
                 }
                 this.snackbar = true
-                this.mensaje = 'filtros añadidos exitosamente'
+                this.mensaje = 'Filtros Añadidos Exitosamente'
             }
             this.userFiltro = e
             this.dialogFiltro = false
@@ -395,7 +395,7 @@ export default {
         },
         prepareEdit(item) {
             this.isEditing = true
-            this.formTitle = 'Edicion del cliente: ' + item.NOMBRE
+            this.formTitle = 'Edición Del Cliente : ' + item.NOMBRE
             this.user = JSON.parse(JSON.stringify(item))
             this.dialog = true;
         },
@@ -412,8 +412,8 @@ export default {
             this.isEditing = false
             let datos = await axios.post(url + this.idHoja, this.users)
             this.snackbar = true
-            if (datos.data == true) this.mensaje = 'actualizacion ejecutada exitosamente'
-            else this.mensaje = 'error del sistema'
+            if (datos.data == true) this.mensaje = 'Actualización Ejecutada Exitosamente'
+            else this.mensaje = 'Error Del Sistema'
             this.resetUser(this.user)
             this.getUsers(this.idHoja) //pa que cargue en la app
             this.loading = false;
@@ -425,8 +425,8 @@ export default {
             });
             let datos = await axios.post(url + this.idHoja, this.users)
             this.snackbar = true
-            if (datos.data == true) this.mensaje = 'Borrado ejecutado exitosamente'
-            else this.mensaje = 'error del sistema'
+            if (datos.data == true) this.mensaje = 'Borrado Ejecutado Exitosamente'
+            else this.mensaje = 'Error Del Sistema'
             this.dialogDelete = false
             this.loading = false;
         },
@@ -470,7 +470,7 @@ export default {
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje = 'error al descargar el archivo'
+                this.mensaje = 'Error Al Descargar El Archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'text/plain' }));
@@ -485,7 +485,7 @@ export default {
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje = 'error al descargar el archivo'
+                this.mensaje = 'Error Al Descargar El Archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
@@ -503,7 +503,7 @@ export default {
             if (this.file !== null) {
                 if (this.file.name.split('.').pop() == 'xlsx' && this.token != 'adminToken') {
                     this.snackbar = true
-                    this.mensaje = 'usted no esta autorizado a subir archivos de excel'
+                    this.mensaje = 'Usted No Está Autorizado Para Subir Archivos De Excel'
                     this.file = null
                     his.$refs.file.value = null;
                 } else {
@@ -511,13 +511,13 @@ export default {
                     if (respuesta.data == true) {
                         this.getUsers(this.idHoja) //pa que cargue en la app
                         this.snackbar = true
-                        this.mensaje = 'archivo cargado exitosamente'
+                        this.mensaje = 'Archivo Cargado Exitosamente'
                         this.file = null
                         this.$refs.file.value = null;
 
                     } else {
                         this.snackbar = true
-                        this.mensaje = 'error al subir el archivo - formato no valido'
+                        this.mensaje = 'Error Al Subir El Archivo - Formato No Válido'
                     }
                 }
 
@@ -531,7 +531,7 @@ export default {
             let respuesta = await axios.post('http://localhost:3000/filter', this.tablaFiltrada, { responseType: 'blob' })
             if (respuesta.data == false) {
                 this.snackbar = true
-                this.mensaje = 'error al descargar el archivo'
+                this.mensaje = 'Error Al Descargar El Archivo'
             } else {
                 const link = document.createElement('a')
                 link.href = window.URL.createObjectURL(new Blob([respuesta.data]));
@@ -786,7 +786,7 @@ table tbody tr{
 .Btn_Usuario {
     color: white !important;
     margin-left: 20px;
-    margin-top: 10px;
+    margin-top: 13px;
   /*  border: 5px solid red;*/
 }
 /* pa que edites las tablas internas */
@@ -834,13 +834,13 @@ table tbody tr{
 /** RESPONSIVE DESIGN  */
 
 
-@media (min-width: 768px) and (max-width: 1259px) {
+@media(max-width: 1290px) {
     .Tabs_Descarga {
         /* border: 5px solid red !important;*/
     }
 
     .Div_Tabs_Descarga {
-        /* border: 5px solid black;*/
+         /*border: 5px solid black !important;*/
         width: 100% !important;
     }
 
