@@ -79,7 +79,7 @@
                         <template v-slot:item="{ item }">
                             <tr>  
                                 <!-- botones -->
-                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">
+                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'" v-if="adminVerification">
                                     <v-btn color="green  white--text" @click="prepareEdit(item)">
                                         <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
                                     </v-btn>
@@ -89,7 +89,7 @@
                                 </td>     
                                 <!-- propiedades ordenadas -->
                                 <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NOMBRE }}</td>  <!-- que hp cambiar el color -->
-                                <td class="tablatd">{{ item.NUM_SOCIO }}</td>
+                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NUM_SOCIO }}</td>
                                 <td class="tablatd">{{ item.SOCIO }}</td>
                                 <td class="tablatd">{{ item.APELLIDO_1 }}</td>
                                 <td class="tablatd">{{ item.APELLIDO_2 }}</td>
@@ -141,7 +141,7 @@
         <v-dialog v-model="dialogDelete" max-width="500px" >
             <v-card>
                 <v-toolbar color="red" dark>ELIMINAR REGISTRO</v-toolbar>
-                <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar el producto con id: {{idDelete}} ?</v-card-title>
+                <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar a el registro con id: {{idDelete}} ?</v-card-title>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1 white--text" depressed @click="dialogDelete=false;idDelete=null">cancelar</v-btn>
@@ -213,10 +213,9 @@ export default {
             ],
             //aqui van los valores pa los select
             user: {
-                ID: '',
+                NOMBRE: '',
                 NUM_SOCIO: '',
                 SOCIO: '',
-                NOMBRE: '',
                 APELLIDO_1: '',
                 APELLIDO_2: '',
                 PARENTESCO: '',
@@ -246,10 +245,10 @@ export default {
                 FORMA_PAGO: '',
                 OBSERVACIONES2: '',
                 JESED: '',
+                ID: '',
             },
             //variable para el filtro
             userFiltro: {
-                ID: '',
                 NOMBRE: '',
                 NUM_SOCIO: '',
                 SOCIO: '',
@@ -282,6 +281,7 @@ export default {
                 FORMA_PAGO: '',
                 OBSERVACIONES2: '',
                 JESED: '',
+                ID: '',
             },
             SimbolosSelect: {
                 FECHA_NACIMIENTO: '',
@@ -369,6 +369,9 @@ export default {
         agregarFilterModal(e) {
             if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
                 this.countFilter = 0
+                if (this.adminVerification) this.countFilter = 1
+                    
+                
                 for (let key in e) {
                     if (e[key] != '') {
                         this.columnas[this.countFilter].class = 'Header_Filter'
@@ -786,10 +789,10 @@ tbody tr:nth-of-type(odd) {
 }
 
 
-    /*vaina pal header pegado, ojo con esto*/
+    
 
 
-
+/*vaina pal header pegado, ojo con esto*/
     /* 1 */
     table > tbody > tr > td:nth-child(1), 
     table > thead > tr > th:nth-child(1) {
