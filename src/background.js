@@ -16,10 +16,17 @@ let win=null
 const Menu=electron.Menu
 const MenuItem=electron.MenuItem
 
+//dialog
+const { dialog } = require('electron')
+const configDir =  (electron.app || electron.remote.app).getPath('userData');
+var LocalStorage = require('node-localstorage').LocalStorage,
+localStorage = new LocalStorage(`${configDir}/scratch`);
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: 'app', privileges: { secure: true, standard: true } }
 ])
+
+
 
 async function createWindow() {
   server.listen(3000, () => {
@@ -52,6 +59,42 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+
+  win.webContents.session.on('will-download', (event, downloadItem, webContents) => {
+    console.log(downloadItem.getFilename().split('.').pop());
+    if(downloadItem.getFilename().split('.').pop()=='encrypted'){
+      downloadItem.setSaveDialogOptions({
+      filters: [
+        // Set your allowed file extensions here
+        
+        {name: "archivo encryptado", extensions: ["encrypted"]},
+      ],
+      message: "Porfavor elije la ruta",
+      });
+    }
+    if(downloadItem.getFilename().split('.').pop()=='xlsx'){
+      downloadItem.setSaveDialogOptions({
+          filters: [
+            // Set your allowed file extensions here
+            
+            {name: "excel", extensions: ["xlsx"]},
+          ],
+          message: "Porfavor elije la ruta",
+      });
+    }
+    /*var fileName = dialog.showSaveDialog({
+      // defaultPath: `${configDir}/${localStorage.getItem('fileName')}`,
+      filters: [
+        { name: 'Excel', extensions: ['pdf'] }]
+    });
+    console.log(fileName);
+    if (typeof fileName == "undefined") {
+      downloadItem.cancel()
+    }
+    else {
+      downloadItem.setSavePath(fileName);
+    }*/
+  });
 }
 
 // Quit when all windows are closed.
@@ -110,6 +153,8 @@ if (!gotTheLock) {
     })
   })
 }
+
+
 
 
 // Exit cleanly on request from parent process in development mode.
