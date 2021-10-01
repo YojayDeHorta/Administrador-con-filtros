@@ -6,7 +6,7 @@
         <v-card class="Marco_Editar">
             <br><br>
             <v-form class="mt-10"  @submit.prevent="submitForm" v-model="valid" lazy-validation ref="form">
-                <v-app-bar fixed dark color="#607D8B" >
+                <v-app-bar fixed dark color="#37474F" >
                 <v-btn icon dark @click="$emit('dialogModal',false);resetValidation()"><v-icon>mdi-close</v-icon></v-btn>
                 <v-toolbar-title class="text-capitalize">{{ formTitle }}</v-toolbar-title>
                 <v-spacer></v-spacer>
@@ -18,11 +18,11 @@
                     <v-container>
                         <v-row>
                             <v-col cols="6">
-                                <v-text-field v-model="user.NUM_SOCIO" label="Numero de socio" :rules="numSocioRules"></v-text-field>
+                                <v-text-field v-model="user.NUM_SOCIO" label="Numero De Socio" :rules="numSocioRules"></v-text-field>
                             </v-col>
-                            <v-col cols="6" class="pt-0 mt-0">
-                                <div>SOCIO:</div><!-- item-text="text" item-value="value" -->
-                                <v-select :items="Socio"  v-model="user.SOCIO" label="elija si es o no socio" :rules="selectRules" outlined></v-select>
+                            <v-col cols="6" class="pt-0 mt-3">
+                                <!--<div>SOCIO:</div> item-text="text" item-value="value" -->
+                                <v-select :items="Socio"  v-model="user.SOCIO" label="¿Es Socio?" :rules="selectRules" outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -38,44 +38,48 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
+                                <!--
                                 <div>Parentesco:</div>
-                                <v-select :items="Parentesco" v-model="user.PARENTESCO" label="Elegir parentesco" :rules="selectRules" outlined>
+                            -->
+                                <v-select :items="Parentesco" v-model="user.PARENTESCO" label="¿Parentesco?" :rules="selectRules" outlined>
                                 </v-select>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field v-model="user.DNI" label="DNI" :rules="dniRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
+                                <!--
                                 <div>PD:</div>
-                                <v-select :items="Pd" v-model="user.PD" label="Elegir PD" :rules="selectRules" outlined></v-select>
+                            -->
+                                <v-select :items="Pd" v-model="user.PD" label="¿PD?" :rules="selectRules" outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="(obligatorio)Fecha de nacimiento:" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
+                            <v-col cols="4">
+                                <v-text-field type="date" label="(Obligatorio) Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de nacimiento(hebreo):" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
+                            <v-col cols="4">
+                                <v-text-field type="date" label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento:" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
+                            <v-col cols="4">
+                                <v-text-field type="date" label="Fecha De Casamiento" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de casamiento(hebreo):" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
+                            <v-col class="mt-5" cols="4">
+                                <v-text-field type="date" label="Fecha De Casamiento (Hebreo)" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción:" v-model="user.FECHA_DEFUNCION" ></v-text-field>
+                            <v-col class="mt-5" cols="4">
+                                <v-text-field type="date" label="Fecha De Defunción" v-model="user.FECHA_DEFUNCION" ></v-text-field>
                             </v-col>
-                            <v-col cols="2">
-                                <v-text-field type="date" label="Fecha de defunción(hebreo):" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
+                            <v-col class="mt-5" cols="4">
+                                <v-text-field type="date" label="Fecha De Defunción (Hebreo)" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="10">
-                                <v-text-field v-model="user.DIRECCION" label="Direccion" :rules="direccionRules"></v-text-field>
+                                <v-text-field v-model="user.DIRECCION" label="Dirección" :rules="direccionRules"></v-text-field>
                             </v-col>
                             <v-col cols="2">
-                                <v-text-field v-model="user.COD_POSTAL" label="Codigo postal" :rules="codPostalRules"></v-text-field>
+                                <v-text-field v-model="user.COD_POSTAL" label="Código Postal" :rules="codPostalRules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -91,7 +95,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field v-model="user.MOVIL"  label="Movil" :rules="telefonoRules"></v-text-field>
+                                <v-text-field v-model="user.MOVIL"  label="Móvil" :rules="telefonoRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field v-model="user.FIJO"  label="Fijo" :rules="fijoRules"></v-text-field>
@@ -102,16 +106,22 @@
                         </v-row>
                         <v-row>
                             <v-col cols="3">
+                                <!--
                                 <div>Edad:</div>
-                                <v-select :items="Edad" v-model="user.EDAD" label="Elegir Edad" :rules="selectRules" outlined></v-select>
+                            -->
+                                <v-select :items="Edad" v-model="user.EDAD" label="Edad" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <v-col cols="3">
+                                <!--
                                 <div>Sola:</div>
-                                <v-select :items="Sola" v-model="user.SOLA" label="Elegir Sola" :rules="selectRules" outlined></v-select>
+                            -->
+                                <v-select :items="Sola" v-model="user.SOLA" label="¿Sola?" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <v-col cols="3">
+                                <!--
                                 <div>Mayor:</div>
-                                <v-select :items="Mayor" v-model="user.MAYOR" label="Elegir Mayor" :rules="selectRules" outlined></v-select>
+                            -->
+                                <v-select :items="Mayor" v-model="user.MAYOR" label="¿Mayor?" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="tefilaRules"></v-text-field>
@@ -126,8 +136,8 @@
                             <!-- cuotas -->
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="2" class="text-center">
-                                        <h4>Cuotas:</h4>
+                                    <v-col cols="2" class=" mt-5 text-center">
+                                        <h3>Cuotas</h3>
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" label="Elegir moneda" outlined></v-select>
@@ -144,7 +154,7 @@
                             <!-- cuota liceo -->
                             <v-col cols="4">
                                 <v-row>
-                                    <v-col cols="2" class="text-center">
+                                    <v-col cols="2" class="mt-0 text-center">
                                         <h4>Cuota liceo:</h4>
                                     </v-col>
                                     <v-col cols="4" >
@@ -161,12 +171,16 @@
                             </v-col>
                             <!-- forma de pago -->
                             <v-col cols="2">
+                                <!--
                                 <div>Forma de pago:</div>
+                            -->
                                 <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma de pago" :rules="selectRules" outlined></v-select>
                             </v-col>
                             <!-- jessed -->
                             <v-col cols="2" >
+                                <!--
                                 <div>Jessed:</div>
+                            -->
                                 <v-select :items="Jessed" v-model="user.JESED" label=" Jessed" :rules="selectRules" outlined></v-select>
                             </v-col>
                         </v-row>
@@ -208,72 +222,72 @@ export default {
             Jessed:['SI','NO'],
             //reglas del form
             valid: true,
-            selectRules:[v=>!!v || 'Porfavor elija una opcion',],
+            selectRules:[v=>!!v || 'Por Favor, Elija Una Opción',],
             numSocioRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /^[A-Za-z0-9]+$/.test(v) || 'Solo se aceptan caracteres alfanumericos sin espacios',
-                v => (v && v.length <= 6) || 'numero de socio debe ser menor o igual a 6 caracteres'
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => /^[A-Za-z0-9]+$/.test(v) || 'Solo Se Aceptan Caracteres Alfanuméricos Sin Espacios',
+                v => (v && v.length <= 6) || 'Número De Socio Debe Ser Menor O Igual A 6 Caracteres'
             ],
             nameRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
                 // v => /^[A-Za-z ]+$/.test(v) || 'Solo se aceptan caracteres alfabeticos',
-                v => /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(v) || 'Solo se aceptan caracteres alfabeticos',
-                v => (v && v.length <= 45) || 'el numero de caracteres maximos permitidos es 45'
+                v => /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(v) || 'Solo Se Aceptan Caracteres Alfabéticos',
+                v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
             ],
             dniRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /^[0-9]{8,8}[A-Za-z]$/.test(v) || 'el campo debe ser de tipo dni(8 dígitos y una letra)',
-                v => (v && v.length <= 45) || 'el numero de caracteres maximos permitidos es 45'
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => /^[0-9]{8,8}[A-Za-z]$/.test(v) || 'El Campo Debe Ser De Tipo DNI (8 Dígitos Y Una Letra)',
+                v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
             ],
             FechaRules:[
-                v=>!!v || 'elija una Fecha valida (mes/dia/año)',
+                v=>!!v || 'Elija Una Fecha Válida (Mes/Día/Año)',
                 // v => (v && new Date(v).getTime() <= new Date(v).getTime('1950-01-01')) || 'la fecha que intentas añadir es muy antigua'
             ],
             direccionRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => (v && v.length <= 90) || 'el numero de caracteres maximos permitidos es 90'
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => (v && v.length <= 90) || 'El Número De Caracteres Máximos Permitidos Es 90'
             ],
             tefilaRules:[
-                v => ((v == null)||(v == '')||(v && v.length <= 50)) || 'el numero de caracteres maximos permitidos es 50'
+                v => ((v == null)||(v == '')||(v && v.length <= 50)) || 'El Número De Caracteres Máximos Permitidos Es 50'
             ],
             codPostalRules:[
-                v => ((v == null)||(v == '')||/\b\d{5,7}\b/.test(v)) || 'escriba un codigo postal valido(5-7 numeros)',
+                v => ((v == null)||(v == '')||/\b\d{5,7}\b/.test(v)) || 'Escriba Un Código Postal Válido (5-7 Números)',
             ],
             localidadRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             provinciaRules:[
-                v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'valor no valido',
-                v => ((v == null)||(v == '')||(v && v.length <= 35)) || 'el numero de caracteres maximos permitidos es 35'
+                v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'Valor No Válido',
+                v => ((v == null)||(v == '')||(v && v.length <= 35)) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             paisRules:[
                 v=>!!v || 'Este campo no puede estar vacio',
-                v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'valor no valido',
-                v => (v && v.length <= 35) || 'el numero de caracteres maximos permitidos es 35'
+                v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'Valor No Válido',
+                v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             telefonoRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
-                v => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || 'telefono no valido',
-                v => (v && v.length <= 20) || 'el numero de caracteres maximos permitidos es 20'
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || 'Teléfono No Válido',
+                v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
             fijoRules:[
-                v => ((v == null)||(v == '')||/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v)) || 'fijo no valido',
-                v => ((v == null)||(v == '')||(v && v.length <= 20)) || 'el numero de caracteres maximos permitidos es 20'
+                v => ((v == null)||(v == '')||/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v)) || 'Fijo No Válido',
+                v => ((v == null)||(v == '')||(v && v.length <= 20)) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
             emailRules:[
-                v => ((v == null)||(v == '')||/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v)) || 'digite un email valido (name@mail.com)',
-                v => ((v == null)||(v == '')||(v && v.length <= 80)) || 'el numero de caracteres maximos permitidos es 80'
+                v => ((v == null)||(v == '')||/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v)) || 'Digite Un Email Válido (Name@Mail.Com)',
+                v => ((v == null)||(v == '')||(v && v.length <= 80)) || 'El Número De Caracteres Máximos Permitidos Es 80'
             ],
             observacionesRules:[
-                v => ((v == null)||(v == '')||(v && v.length <= 280)) || 'el numero de caracteres maximos permitidos es 280'
+                v => ((v == null)||(v == '')||(v && v.length <= 280)) || 'El Número De Caracteres Máximos Permitidos Es 280'
             ],
             cuotaRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
+                v=>!!v || 'Este Campo No Puede Estar Vacío',
                 // v => /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/.test(v) || 'escriba un valor valido',
                 // v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
-                 v => /^[0-9.]*$/.test(v) || 'escriba un valor valido',
-                v => (v && v.length <= 20) || 'el numero de caracteres maximos permitidos es 20'
+                 v => /^[0-9.]*$/.test(v) || 'Escriba Un Valor Válido',
+                v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
 
         }
