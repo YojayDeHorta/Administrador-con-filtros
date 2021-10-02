@@ -11,7 +11,7 @@
             <v-btn exact text class="Btn_Navbar gray" v-if="token">
                 <span>
                     {{username}}
-                    <span v-if="token=='adminToken'&&rol=='secretariaRol'"> (permisos)</span>
+                    <span v-if="token=='adminToken'&&rol=='secretariaRol'"> (<v-icon v-if="token=='adminToken'">mdi-key-chain-variant</v-icon>)</span>
                 </span>
                 <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
                 <v-icon v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->

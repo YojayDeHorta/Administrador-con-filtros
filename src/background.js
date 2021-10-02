@@ -44,10 +44,12 @@ async function createWindow() {
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,
-      nativeWindowOpen: true
+      nativeWindowOpen: true,
+      
     }
   })
-  win.setMenu(null)
+
+  // win.setMenu(null)
   win.maximize();
   win.show();
   if (process.env.WEBPACK_DEV_SERVER_URL) {
@@ -95,10 +97,14 @@ async function createWindow() {
       downloadItem.setSavePath(fileName);
     }*/
   });
+  // Menu.setApplicationMenu(new Menu());
+  win.setMenu(null)
 }
 
 // Quit when all windows are closed.
-app.on('window-all-closed', () => {
+app.on('window-all-closed', (e) => {
+  e.preventDefault();
+  win.destroy();
   console.log(archivos);
   for (const file of archivos) {
     fs.unlink(path.join((electron.app || electron.remote.app).getPath('userData'), file), err => {
@@ -107,6 +113,7 @@ app.on('window-all-closed', () => {
   }/**/
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
+  
   if (process.platform !== 'darwin') {
     app.quit()
   }
