@@ -102,18 +102,22 @@ app.post('/file', async(req, res) => {
             var prueba=XLSX.utils.sheet_to_json(hojita)
             console.log(prueba.length);
             for (let i = 2; i < prueba.length+2; i++) {
-                hojita["AD"+i].v=hojita["AD"+i].w.replace(/\s/g, '').replace(/,/g, '')
-                hojita["AC"+i].v=hojita["AC"+i].w.replace(/\s/g, '').replace(/,/g, '')
-                // console.log(hojita["W"+i]);
-                if(/^-?\d+$/.test(hojita["W"+i].v)){   
+                
+                console.log(hojita["AA"+i]);
+                if(hojita["AD"+i] != null)hojita["AD"+i].v=hojita["AD"+i].w.replace(/\s/g, '').replace(/,/g, '')
+                if(hojita["AC"+i] != null)hojita["AC"+i].v=hojita["AC"+i].w.replace(/\s/g, '').replace(/,/g, '')
+                
+                if(hojita["W"+i]!=null&&/^-?\d+$/.test(hojita["W"+i].v)){   
                     // console.log(new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0])
                     hojita["W"+i].v=new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
                 }
-                if(/^-?\d+$/.test(hojita["X"+i].v)) hojita["X"+i].v=new Date((hojita["X"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(/^-?\d+$/.test(hojita["Y"+i].v)) hojita["Y"+i].v=new Date((hojita["Y"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(/^-?\d+$/.test(hojita["Z"+i].v)) hojita["Z"+i].v=new Date((hojita["Z"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(/^-?\d+$/.test(hojita["AA"+i].v)) hojita["AA"+i].v=new Date((hojita["AA"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(/^-?\d+$/.test(hojita["AB"+i].v)) hojita["AB"+i].v=new Date((hojita["AB"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(hojita["X"+i]!=null&&/^-?\d+$/.test(hojita["X"+i].v)) hojita["X"+i].v=new Date((hojita["X"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(hojita["Y"+i]!=null&&/^-?\d+$/.test(hojita["Y"+i].v)) hojita["Y"+i].v=new Date((hojita["Y"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(hojita["Z"+i]!=null&&/^-?\d+$/.test(hojita["Z"+i].v)) hojita["Z"+i].v=new Date((hojita["Z"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(hojita["AA"+i]!=null&&/^-?\d+$/.test(hojita["AA"+i].v)) hojita["AA"+i].v=new Date((hojita["AA"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                if(hojita["AB"+i]!=null&&/^-?\d+$/.test(hojita["AB"+i].v)) hojita["AB"+i].v=new Date((hojita["AB"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
+            
+
             }
 
             let arrayOfArrays=[]
