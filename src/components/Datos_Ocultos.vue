@@ -23,7 +23,7 @@
                     </v-card>
             </v-dialog>
             <!-- SNACKBAR PARA MOSTRAR MENSAJESs -->
-        <v-snackbar v-model="snackbar" timeout="2000">
+        <v-snackbar v-model="snackbar" timeout="2500">
             {{ mensaje }}
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
@@ -87,16 +87,33 @@ export default {
             }
         },
         async getSecretaria(){
+
+            
+            
+            
+            
             let res = await axios.post('http://localhost:3000/password/secretaria', {rol:this.rol})
             this.snackbar = true
             if (res.data){
-                this.$store.commit('setAdmin',res.data)
-                this.mensaje = 'Permisos Eliminados'
+                   this.mensaje = 'Se estan eliminando los permisos, espere un momento...'  
+                
+                // this.$router.push('/options', 2000)
+                setTimeout( () => {
+                    this.mensaje = 'Permisos eliminados, redirigiendo...'
+                    this.$store.commit('setAdmin',res.data)
+                    this.$router.push({ path: '/options'})
+                }, 2000);
+                
+               
             }else {
-                this.mensaje = 'Error - Usuario O Contraseña Incorrecta'
+                this.mensaje = 'error'
             }
             
+        },
+        redirigir(){
+
         }
+        
     }
 }
 </script>

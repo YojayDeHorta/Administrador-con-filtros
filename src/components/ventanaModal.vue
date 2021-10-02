@@ -56,7 +56,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field type="date" label="(Obligatorio) Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" label="Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <v-text-field type="date" label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
@@ -129,7 +129,7 @@
                         </v-row>
                         <v-row>
                             <v-col cols="12"><!-- Observaciones -->
-                                <v-text-field v-model="user.OBSERVACIONES" label="Observaciones" :rules="observacionesRules"></v-text-field>
+                                <v-textarea no-resize height="125" outlined v-model="user.OBSERVACIONES" label="Observaciones" :rules="observacionesRules"></v-textarea>
                             </v-col>
                         </v-row>
                         <v-row v-if="token=='adminToken'||isEditing==false">
@@ -181,9 +181,12 @@
 
                         </v-row>
                         <v-row v-if="token=='adminToken'||isEditing==false">
-
-                            <v-col cols="12">
-                                <v-text-field v-model="user.OBSERVACIONES2" label="Observaciones 2" :rules="observacionesRules"></v-text-field>
+                            
+                            <v-col cols="10">
+                                <v-textarea no-resize height="125" outlined v-model="user.OBSERVACIONES2" label="Observaciones 2" :rules="observacionesRules"></v-textarea>
+                            </v-col>
+                            <v-col cols="2">
+                                <v-select :items="Jessed" v-model="user.JESED" label="Elegir Jessed" :rules="selectRules" outlined></v-select>
                             </v-col>
                         </v-row>
                     </v-container>

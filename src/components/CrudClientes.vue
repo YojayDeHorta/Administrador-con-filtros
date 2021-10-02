@@ -3,7 +3,7 @@
         <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10">
             <v-col class="Tabs_Descarga d-flex justify-end">
                 <div class="Div_Tabs_Descarga">
-                    <v-expansion-panels v-if="adminVerification ||countFilter!=0">
+                    <v-expansion-panels v-if="adminVerification ||(countFilter!=0&&this.token=='adminToken')">
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
                                 <strong style="color:#424242" class="text-center">OPCIONES DE DESCARGA</strong>
@@ -55,7 +55,7 @@
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
                             <v-icon>mdi-clipboard-remove</v-icon>&nbsp;borrar filtro
                         </v-btn>
-                        <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
+                        <Oculto class="Btn_Oculto" style="display:inline-block" ></Oculto>
                     </div>
                 </div>
                 <div class="Tabla_Principal" :style="adminVerification ? '--radius: 280px;' : '--radius: 180px;'"><!-- IMPORTANTE; NO BORRAR-->
@@ -83,7 +83,7 @@
                                     <v-btn color="green  white--text" @click="prepareEdit(item)">
                                         <v-icon small class="mr-2"> mdi-pencil </v-icon> editar
                                     </v-btn>
-                                    <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;dialogDelete=true">
+                                    <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;nameDelete=item.NOMBRE;dialogDelete=true">
                                         <v-icon small> mdi-delete </v-icon> eliminar
                                     </v-btn>
                                 </td>     
@@ -141,7 +141,7 @@
         <v-dialog v-model="dialogDelete" max-width="500px" >
             <v-card>
                 <v-toolbar color="red" dark>ELIMINAR REGISTRO</v-toolbar>
-                <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar a el registro con id: {{idDelete}} ?</v-card-title>
+                <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar a {{nameDelete}} con id: {{idDelete}} ?</v-card-title>
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1 white--text" depressed @click="dialogDelete=false;idDelete=null">cancelar</v-btn>
@@ -298,6 +298,7 @@ export default {
             dialog: false,
             dialogFiltro: false,
             dialogDelete: false,
+            nameDelete:false,
             formTitle: '',
             //edicion
             isEditing: false,
@@ -505,7 +506,7 @@ export default {
                     this.snackbar = true
                     this.mensaje = 'Usted No Está Autorizado Para Subir Archivos De Excel'
                     this.file = null
-                    his.$refs.file.value = null;
+                    this.$refs.file.value = null;
                 } else {
                     let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
                     if (respuesta.data == true) {
