@@ -56,22 +56,22 @@
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field type="date" label="Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field type="date" label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field type="date" label="Fecha De Casamiento" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Casamiento" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" label="Fecha De Casamiento (Hebreo)" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Casamiento (Hebreo)" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" label="Fecha De Defunción" v-model="user.FECHA_DEFUNCION" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Defunción" v-model="user.FECHA_DEFUNCION" ></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" label="Fecha De Defunción (Hebreo)" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Defunción (Hebreo)" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -141,6 +141,7 @@
                                     </v-col>
                                     <v-col cols="4" >
                                         <v-select :items="Cuotas" v-model="cuotaSelect.simbolo" label="Moneda" outlined></v-select>
+                                        
                                     </v-col>
                                     <v-col cols="5" >
                                         <v-text-field v-model="cuotaSelect.value" :rules="cuotaRules" label="Digite Una Cuota">
@@ -319,7 +320,7 @@ export default {
                         this.cuotaLiceoSelect.simbolo=this.user.CUOTA_LICEO[0]
                         this.cuotaLiceoSelect.value=this.user.CUOTA_LICEO.slice(1)
                     }
-                     if (this.formTitle=='Agregar cliente' && this.dialog)  this.$nextTick(() => this.$refs.form.reset());
+                     if (this.formTitle=='Agregar cliente' && this.dialog)  this.$nextTick(() => this.$refs.form.resetValidation());
                       
                 }
                 

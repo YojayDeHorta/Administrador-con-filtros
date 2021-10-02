@@ -1,6 +1,7 @@
 <template>
-    <v-container class="CRUD-P pb-0" fluid fill-height>
-        <v-row class="Iconos_Descarga d-flex justify-space-between mt-10 mb-10">
+    <v-container class="CRUD-P p-0" fluid fill-height>
+        <!-- mt-10 mb-10 -->
+        <v-row class="Iconos_Descarga d-flex justify-space-between ">
             <v-col class="Tabs_Descarga d-flex justify-end">
                 <div class="Div_Tabs_Descarga">
                     <v-expansion-panels v-if="adminVerification ||(countFilter!=0&&this.token=='adminToken')">
@@ -60,7 +61,7 @@
                 </div>
                 <div class="Tabla_Principal" :style="adminVerification ? '--radius: 280px;' : '--radius: 180px;'"><!-- IMPORTANTE; NO BORRAR-->
                     <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
-                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="65vh" fixed-header  @current-items="getFiltered" :footer-props="{
+                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="60vh" fixed-header  @current-items="getFiltered" :footer-props="{
                         'items-per-page-text': 'usuarios por pagina',
                         'items-per-page-options': [10, 50, 100, 200, -1],
                         }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Tabla text--center ">
@@ -77,7 +78,7 @@
                             <div class="ma-0" :style="adminVerification ? 'background: grey;' : 'background: red;'">{{item.NOMBRE}}</div>
                         </template> -->
                         <template v-slot:item="{ item }">
-                            <tr>  
+                            <tr id="principal">  
                                 <!-- botones -->
                                 <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'" v-if="adminVerification">
                                     <v-btn color="green  white--text" @click="prepareEdit(item)">
@@ -97,28 +98,60 @@
                                 <td class="tablatd">{{ item.DNI }}</td>
                                 <td class="tablatd">{{ item.PD }}</td>
                                 <td class="tablatd">{{ item.FECHA_NACIMIENTO }}</td>
-                                <td class="tablatd">{{ item.FECHA_NACIMIENTO_HEBREO }}</td>
-                                <td class="tablatd">{{ item.FECHA_CASAMIENTO }}</td>
-                                <td class="tablatd">{{ item.FECHA_CASAMIENTO_HEBREO }}</td>
-                                <td class="tablatd">{{ item.FECHA_DEFUNCION }}</td>
-                                <td class="tablatd">{{ item.FECHA_DEFUNCION_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_NACIMIENTO_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_NACIMIENTO_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_CASAMIENTO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_CASAMIENTO_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_DEFUNCION==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_DEFUNCION }}</td>
+                                <td class="tablatd" v-if="item.FECHA_DEFUNCION_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_DEFUNCION_HEBREO }}</td>
                                 <td class="tablatd">{{ item.DIRECCION }}</td>
-                                <td class="tablatd">{{ item.COD_POSTAL }}</td>
+                                <td class="tablatd" v-if="item.COD_POSTAL==''">n/a</td><td v-else class="tablatd">{{ item.COD_POSTAL }}</td>
                                 <td class="tablatd">{{ item.LOCALIDAD }}</td>
-                                <td class="tablatd">{{ item.PROVINCIA }}</td>
+                                <td class="tablatd" v-if="item.PROVINCIA==''">n/a</td><td v-else class="tablatd">{{ item.PROVINCIA }}</td>
                                 <td class="tablatd">{{ item.PAIS }}</td>
                                 <td class="tablatd">{{ item.MOVIL }}</td>
-                                <td class="tablatd">{{ item.FIJO }}</td>
-                                <td class="tablatd">{{ item.EMAIL }}</td>
+                                <td class="tablatd" v-if="item.FIJO==''">n/a</td><td v-else class="tablatd">{{ item.FIJO }}</td>
+                                <td class="tablatd" v-if="item.EMAIL==''">n/a</td><td v-else class="tablatd">{{ item.EMAIL }}</td>
                                 <td class="tablatd">{{ item.EDAD }}</td>
                                 <td class="tablatd">{{ item.SOLA }}</td>
                                 <td class="tablatd">{{ item.MAYOR }}</td>
-                                <td class="tablatd">{{ item.TEFILA }}</td>
-                                <td class="tablatd">{{ item.OBSERVACIONES}}</td>
+                                <td class="tablatd" v-if="item.TEFILA==''">n/a</td><td v-else class="tablatd">{{ item.TEFILA }}</td>
+                                <td class="tablatd" v-if="item.OBSERVACIONES==''">n/a</td><td v-else class="tablatd probador">
+                                    <v-expansion-panels flat v-if="item.OBSERVACIONES!=''&&item.OBSERVACIONES.length>85">
+                                        <v-expansion-panel class="row-pointer " :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : ''">
+                                            <v-expansion-panel-header class="text-center">
+                                                <template v-slot:default="{ open }">
+                                                    
+                                                    <span v-if="!open" key="0" >{{item.OBSERVACIONES.slice(0,85)}}...</span>
+                                                    <span v-else key="1">Ocultar detalles</span>
+                                                </template>
+                                            </v-expansion-panel-header>
+                                            <v-expansion-panel-content>
+                                                {{item.OBSERVACIONES}}
+                                            </v-expansion-panel-content>
+                                        </v-expansion-panel>
+                                    </v-expansion-panels>
+                                    <span v-else>{{item.OBSERVACIONES}}</span>
+                                </td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTAS }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTA_LICEO }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.FORMA_PAGO }}</td>
-                                <td class="tablatd" v-if="token == 'adminToken'">{{ item.OBSERVACIONES2 }}</td>
+                                <td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2==''">n/a</td><td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2!=''">
+                                    <v-expansion-panels flat v-if="item.OBSERVACIONES2!=''&&item.OBSERVACIONES2.length>85">
+                                        <v-expansion-panel class="row-pointer " :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : ''">
+                                            <v-expansion-panel-header class="text-center">
+                                                <template v-slot:default="{ open }">
+                                                    
+                                                    <span v-if="!open" key="0" >{{item.OBSERVACIONES2.slice(0,85)}}...</span>
+                                                    <span v-else key="1">Ocultar detalles</span>
+                                                </template>
+                                            </v-expansion-panel-header>
+                                            <v-expansion-panel-content>
+                                                {{item.OBSERVACIONES2}}
+                                            </v-expansion-panel-content>
+                                        </v-expansion-panel>
+                                    </v-expansion-panels>
+                                    <span v-else>{{item.OBSERVACIONES2}}</span>
+                                </td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.JESED }}</td>
                                 <td class="tablatd ">{{ item.ID }}</td>
                             </tr>
@@ -207,7 +240,7 @@ export default {
                 { text: "CUOTAS", value: "CUOTAS", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.cuotasFilter, show: false, sortable: false },
                 { text: "CUOTA LICEO", value: "CUOTA_LICEO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.cuotaLiceoFilter, show: false, sortable: false },
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
-                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla elevacionTabla", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
+                { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla elevacionTabla", align: 'center', width: "400px", filter: this.observaciones2Filter, show: false },
                 { text: "JESED", value: "JESED", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.jessedFilter, show: false },
                 { text: "ID", value: "ID", class: "Header_Tabla  elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
             ],
@@ -352,14 +385,12 @@ export default {
             }
             return columnasMod
         },
-        computedTrue(){
-
-        }
+        
     },
     methods: {
         async getUsers(id) {
             this.loading = true
-            let datos = await axios.get('http://localhost:3000/api/hojas/gethoja')
+            let datos = await axios.post('http://localhost:3000/api/hojas/gethoja',{token:this.token})
             this.users = datos.data
             this.loading = false
         },
@@ -482,7 +513,7 @@ export default {
             }
         },
         async descargarExcel() {
-            let respuesta = await axios.get('http://localhost:3000/download/excel', { responseType: 'blob' })
+            let respuesta = await axios.post('http://localhost:3000/download/excel',{token:this.token}, { responseType: 'blob' })
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
@@ -742,6 +773,9 @@ export default {
     padding: 0;
 
 }
+.v-expansion-panel::before {
+  box-shadow: none;
+}
 
 .Header_Filter {
     /* esta es pa cuando se agarra un filtro */
@@ -771,7 +805,7 @@ tbody tr:nth-of-type(odd) {
 .Div_Usuario {
    /* border: 5px solid red;*/
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
 
 }
 
@@ -793,6 +827,13 @@ table tbody tr{
     padding: 15px;
     height: 80px !important;
 }
+
+
+#principal:hover  .row-pointer  {
+    background: #ECEFF1;;
+}
+
+
 
 
     
@@ -831,7 +872,7 @@ table tbody tr{
 /** RESPONSIVE DESIGN  */
 
 
-@media(max-width: 1290px) {
+@media(max-width: 1366px) {
 
     .Div_Tabs_Descarga {
          /*border: 5px solid black !important;*/

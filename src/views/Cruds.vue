@@ -1,5 +1,5 @@
 <template>
-    <v-container class="Marco mb-10" fluid >
+    <v-container class="Marco " fluid >
         
         <!-- Crud -->
         <!-- <Crud :adminVerification="true" :column="columnas[select.idHoja]" :idHoja="select.idHoja" ></Crud> -->

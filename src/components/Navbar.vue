@@ -9,7 +9,10 @@
             <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
             <!-- roles -->
             <v-btn exact text class="Btn_Navbar gray" v-if="token">
-                <span>{{username}}</span>
+                <span>
+                    {{username}}
+                    <span v-if="token=='adminToken'&&rol=='secretariaRol'"> (permisos)</span>
+                </span>
                 <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
                 <v-icon v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->
                 <v-icon v-if="token=='conserjeToken'">mdi-account-eye</v-icon><!-- conserje -->
@@ -116,7 +119,8 @@ export default {
     computed: {
         ...mapGetters([
             'token',
-            'username'
+            'username',
+            'rol'
         ]),
         hasHistory() {
             this.historial = window.history.length

@@ -23,7 +23,7 @@ let archivos=[]
 //encriptacion 
 const crypto= require('crypto')
 const algoritm='aes-256-ctr';
-let key=crypto.createHash('sha256').update(String('MySecretKey')).digest('base64').substring(0,32)
+let key=crypto.createHash('sha256').update(String('YojayYandersons')).digest('base64').substring(0,32)
 const configDir =  (electron.app || electron.remote.app).getPath('userData');
 //local storage y lectura de xlsx
 const XLSX=require('xlsx')
@@ -55,9 +55,9 @@ const decrypt= () =>{
 }
 
 
-app.get('/api/hojas/gethoja', async(req, res) => {
+app.post('/api/hojas/gethoja', async(req, res) => {
     try {
-        if (localStorage.getItem('fileName')!=null) {
+        if (localStorage.getItem('fileName')!=null&&(req.body.token=='adminToken'||req.body.token=='secretariaToken'||req.body.token=='conserjeToken')) {
             let servidor=JSON.parse(decrypt())
             res.send(servidor[0]) 
         }else{
@@ -99,14 +99,15 @@ app.post('/file', async(req, res) => {
             const excel=XLSX.readFile(req.body.file)
             var nombreHoja=excel.SheetNames;
             var hojita=excel.Sheets[nombreHoja[0]]
-            var prueba=XLSX.utils.sheet_to_json(hojita)
-            console.log(prueba.length);
+            // var prueba=XLSX.utils.sheet_to_json(hojita)
+            var prueba=XLSX.utils.sheet_to_json(hojita, {defval:""})
+            
             for (let i = 2; i < prueba.length+2; i++) {
                 
                 // console.log(hojita["AA"+i]);
                 if(hojita["AD"+i] != null)hojita["AD"+i].v=hojita["AD"+i].w.replace(/\s/g, '').replace(/,/g, '')
                 if(hojita["AC"+i] != null)hojita["AC"+i].v=hojita["AC"+i].w.replace(/\s/g, '').replace(/,/g, '')
-                
+
                 if(hojita["W"+i]!=null&&/^-?\d+$/.test(hojita["W"+i].v)){   
                     // console.log(new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0])
                     hojita["W"+i].v=new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
@@ -121,8 +122,8 @@ app.post('/file', async(req, res) => {
             }
 
             let arrayOfArrays=[]
-            let datos= XLSX.utils.sheet_to_json(hojita)
-            
+            let datos= XLSX.utils.sheet_to_json(hojita, {defval:""})
+            // console.log(datos);
             arrayOfArrays.push(datos)            
             localStorage.setItem('fileName', `${nombre.split('.')[0]}.encrypted`)
             encrypt(JSON.stringify(arrayOfArrays))
@@ -156,22 +157,26 @@ app.get('/download/name', (req,res)=>{
     }
 })
 //descarga del excel
-app.get('/download/excel', (req,res)=>{
+app.post('/download/excel', (req,res)=>{
     try {
-        let servidor=JSON.parse(decrypt())
-        const workBook=XLSX.utils.book_new()
-        for (let i = 0; i < servidor.length; i++) {
-            const workSheet=XLSX.utils.json_to_sheet(servidor[i])
-            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
-        }   
-        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
-        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
-        XLSX.writeFile(workBook,`${configDir}/datos.xlsx`)
-        if(archivos.indexOf(`datos.xlsx`) === -1){
-            archivos.push(`datos.xlsx`)
+        if ((req.body.token=='adminToken'||req.body.token=='secretariaToken'||req.body.token=='conserjeToken')) {
+            let servidor=JSON.parse(decrypt())
+            const workBook=XLSX.utils.book_new()
+            for (let i = 0; i < servidor.length; i++) {
+                const workSheet=XLSX.utils.json_to_sheet(servidor[i])
+                XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
+            }   
+            XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
+            XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
+            XLSX.writeFile(workBook,`${configDir}/datos.xlsx`)
+            if(archivos.indexOf(`datos.xlsx`) === -1){
+                archivos.push(`datos.xlsx`)
+            }
+            res.download(`${configDir}/datos.xlsx`);
+            // res.send(`datos.xlsx`)
+        }else{
+            res.send(false)
         }
-        res.download(`${configDir}/datos.xlsx`);
-        // res.send(`datos.xlsx`)
         
     } catch (error) {
         console.log(error);
