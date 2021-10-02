@@ -27,7 +27,7 @@
                                 </v-btn>
                                 <!--descarga filtrada-->
                                 <v-btn color="secondary" class="Btn_Descarga" outlined v-if="adminVerification" @click="chooseFiles()">
-                                    <span v-if="file==null">
+                                    <span >
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
                                     </span>
                                     <!-- <span v-else>

@@ -103,7 +103,7 @@ app.post('/file', async(req, res) => {
             console.log(prueba.length);
             for (let i = 2; i < prueba.length+2; i++) {
                 
-                console.log(hojita["AA"+i]);
+                // console.log(hojita["AA"+i]);
                 if(hojita["AD"+i] != null)hojita["AD"+i].v=hojita["AD"+i].w.replace(/\s/g, '').replace(/,/g, '')
                 if(hojita["AC"+i] != null)hojita["AC"+i].v=hojita["AC"+i].w.replace(/\s/g, '').replace(/,/g, '')
                 
