@@ -207,9 +207,9 @@ app.post('/filter', async(req, res) => {
 app.post('/login/users', (req,res)=>{
     try {
        
-        if (req.body.user=='admin'&&req.body.pass=='admin') res.send({user:req.body.user,token:'adminToken',rol:'adminRol'})
-        else if(req.body.user=='secretaria'&&req.body.pass=='secretaria') res.send({user:req.body.user,token:'secretariaToken',rol:'secretariaRol'}) 
-        else if(req.body.user=='conserje'&&req.body.pass=='conserje') res.send({user:req.body.user,token:'conserjeToken',rol:'conserjeRol'}) 
+        if (req.body.user.toLowerCase()=='presidente'&&req.body.pass.toLowerCase()=='presidencia123') res.send({user:req.body.user,token:'adminToken',rol:'adminRol'})
+        else if(req.body.user.toLowerCase()=='contable'&&req.body.pass.toLowerCase()=='contable123') res.send({user:req.body.user,token:'secretariaToken',rol:'secretariaRol'}) 
+        else if(req.body.user.toLowerCase()=='normal'&&req.body.pass.toLowerCase()=='normal123') res.send({user:req.body.user,token:'conserjeToken',rol:'conserjeRol'}) 
         else res.send(false)
         
     }catch (error) {
@@ -221,7 +221,7 @@ app.post('/login/users', (req,res)=>{
 app.post('/password/admin', (req,res)=>{
     try {
        
-        if(req.body.token=='secretariaToken'&&req.body.pass=='12345678')res.send('adminToken') 
+        if(req.body.token=='secretariaToken'&&req.body.pass.toLowerCase()=='descifrar')res.send('adminToken') 
 
         else res.send(false)
         
@@ -232,8 +232,8 @@ app.post('/password/admin', (req,res)=>{
 })
 app.post('/password/secretaria', (req,res)=>{
     try {
-       
-        if(req.body.rol=='secretariaRol')res.send('secretariaToken') 
+        if(req.body.rol=='secretariaRol')res.send('secretariaToken')
+        
 
         else res.send(false)
         
@@ -242,7 +242,27 @@ app.post('/password/secretaria', (req,res)=>{
         res.send(false)
     }
 })
-
+//ver si hay variable conocida
+app.post('/validate', (req,res)=>{
+    try {
+        if(localStorage.getItem('vuelidify')!=null)res.send(true) 
+        else res.send(false)
+    }catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
+app.post('/validatebee', (req,res)=>{
+    try {
+        if(req.body.pass.toLowerCase()=='descifrar'){
+            res.send(true) 
+        }
+        else res.send(false)
+    }catch (error) {
+        console.log(error);
+        res.send(false)
+    }
+})
 /*
 server.listen(3000, () => {
     console.log('listening on *:3000');

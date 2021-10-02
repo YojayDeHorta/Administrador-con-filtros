@@ -7,7 +7,11 @@
                     <v-expansion-panels v-if="adminVerification ||(countFilter!=0&&this.token=='adminToken')">
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
-                                <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong>
+                                <template v-slot:default="{ open }">
+                                        <strong style="color:#424242;font-size:15px" class="text-center" v-if="!open" key="0">CLIC AQUÍ PARA VER LAS OPCIONES DE DESCARGA</strong>
+                                        <strong style="color:#424242;font-size:15px" class="text-center" v-else key="1">OPCIONES DE DESCARGA</strong>
+                                </template>
+                                <!-- <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong> -->
                                 <template v-slot:actions>
                                     <v-icon color="teal">
                                         mdi-cloud-download
