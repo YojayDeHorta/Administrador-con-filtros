@@ -55,7 +55,7 @@ const decrypt= () =>{
 }
 
 
-app.get('/api/hojas/:idHoja', async(req, res) => {
+app.get('/api/hojas/gethoja', async(req, res) => {
     try {
         if (localStorage.getItem('fileName')!=null) {
             let servidor=JSON.parse(decrypt())
@@ -79,6 +79,11 @@ app.post('/api/hojas/:idHoja', (req,res)=>{
         res.send(false)
     }
 })
+
+function verificarUsuario(token){
+    if (user=='adminToken'||user=='secretariaToken'||user=='conserjeToken') return true
+    else return false
+}
 
 //subida del servidor
 app.post('/file', async(req, res) => {

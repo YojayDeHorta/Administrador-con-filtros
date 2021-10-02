@@ -358,7 +358,7 @@ export default {
     methods: {
         async getUsers(id) {
             this.loading = true
-            let datos = await axios.get(url + id)
+            let datos = await axios.get('http://localhost:3000/api/hojas/gethoja')
             this.users = datos.data
             this.loading = false
         },
@@ -754,10 +754,6 @@ tbody tr:nth-of-type(odd) {
 }
 
 /**/
-.Tabs_Descarga {
-    /* border: 5px solid red !important;*/
-}
-
 .Div_Tabs_Descarga {
     /* border: 5px solid black;*/
     width: 49% !important;
@@ -835,9 +831,6 @@ table tbody tr{
 
 
 @media(max-width: 1290px) {
-    .Tabs_Descarga {
-        /* border: 5px solid red !important;*/
-    }
 
     .Div_Tabs_Descarga {
          /*border: 5px solid black !important;*/

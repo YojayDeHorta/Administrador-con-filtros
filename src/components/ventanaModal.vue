@@ -194,6 +194,10 @@
             <!-- <v-form v-else @submit.prevent="agregarProducto"> -->
         </v-card>
         </v-dialog>
+        <v-snackbar v-model="snackbar" timeout="2000">
+            {{ mensaje }}
+            <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
+        </v-snackbar>
     </v-container>
 </template>
 
@@ -204,19 +208,21 @@ export default {
     name:'ventanaModal',
     data() {
         return {
-            Socio:['SI','NO'],
-            //Socio:[{text:'elegir', value:''},{text:'SI', value:'SI'},{text:'NO', value:'NO'}],
-            Parentesco:['Conyuje','Hijos','Padres','Otros'],
-            Pd:['SI','NO'],
-            Edad:['BEBE','3-18','19-30','31-50','51-70','+71'],
-            Sola:['SI','NO'],
-            Mayor:['SI','NO'],
+            //SNACKBAR para mensajes
+            snackbar: false,
+            mensaje: '',
+            Socio:['Si','No'],
+            Parentesco:['Cónyuge','Hijos','Padres','Otros'],
+            Pd:['Si','No'],
+            Edad:['Bebé','3-18','19-30','31-50','51-70','+71'],
+            Sola:['Si','No'],
+            Mayor:['Si','No'],
             Cuotas:[{text:'Euro', value:'€'},{text:'Dolar', value:'$'},{text:'Shekel', value:'₪'}],
             CuotaLiceo:[{text:'Euro', value:'€'},{text:'Dolar', value:'$'},{text:'Shekel', value:'₪'}],
             cuotaSelect:{simbolo:'$', value:''},
             cuotaLiceoSelect:{simbolo:'$', value:''},
-            FormaPago:['CAJA','BANCO','TARJETA','PAYPAL','OTROS'],
-            Jessed:['SI','NO'],
+            FormaPago:['Caja','Banco','Tarjeta','Paypal','Otros'],
+            Jessed:['Si','No'],
             //reglas del form
             valid: true,
             selectRules:[v=>!!v || 'Por Favor, Elija Una Opción',],
@@ -354,7 +360,8 @@ export default {
                 this.resetCuota(this.cuotaLiceoSelect)
                 this.$emit('agregarModal',this.user)
             }else{
-                
+                this.snackbar = true
+                this.mensaje = 'Por favor verifica los datos obligatorios'
             }
         },
         

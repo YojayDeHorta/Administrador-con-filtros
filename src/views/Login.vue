@@ -60,7 +60,7 @@ export default {
             mensaje: '',
             //reglas
             Rules: [
-                v => !!v || 'Por Favor,Llena Este Campo',
+                v => !!v || 'Por Favor, Llena Este Campo',
             ],
         }
     },

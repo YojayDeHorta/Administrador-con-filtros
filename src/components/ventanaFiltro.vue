@@ -22,7 +22,7 @@
                             </v-col>
                             <v-col cols="6" class="pt-0 mt-0">
                                 <!--
-                                <div> Socio:</div><!-- item-text="text" item-value="value" -->
+                                <div> Socio:</div> item-text="text" item-value="value" -->
                                 <v-select item-text="text" item-value="value" :items="Socio"  v-model="user.SOCIO" label="¿Es Socio?"  outlined></v-select>
                             </v-col>
                         </v-row>
