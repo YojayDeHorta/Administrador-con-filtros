@@ -30,7 +30,7 @@
                         </v-container>
                     </v-card-text>
                     <v-card-actions class="d-flex justify-center">
-                        <v-btn type="submit" exact text class="primary"><span>Iniciar</span></v-btn>
+                        <v-btn type="submit" exact text class="primary"><span>Iniciar Sesion</span></v-btn>
                         <!-- <v-btn :to="{ name: 'Options' }" exact text class="primary"><span>Iniciar</span></v-btn> -->
                     </v-card-actions>
                 </v-form>
