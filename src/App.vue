@@ -66,7 +66,7 @@ export default {
     snackbar: false,
     mensaje: '',
   }),
-  created(){
+  mounted(){
     this.veriifity()
   },
   methods: {
@@ -82,8 +82,7 @@ export default {
     },
     async veriifity(){
       let datos=await axios.post('http://localhost:3000/validate', { token: 'a' })
-       console.log(datos.data);
-       this.Montado=datos.data
+      this.Montado=datos.data
     },
     async submitA() {
         if (this.$refs.form.validate() == true) {

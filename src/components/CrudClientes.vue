@@ -370,7 +370,7 @@ export default {
     },
     mounted() {
         if (this.token) {
-            this.getUsers(this.idHoja)
+            this.getUsers()
         } else {
             this.$router.push('/')
         }
@@ -400,7 +400,7 @@ export default {
 
     },
     methods: {
-        async getUsers(id) {
+        async getUsers() {
             this.loading = true
             let datos = await axios.post('http://localhost:3000/api/hojas/gethoja', { token: this.token })
             this.users = datos.data
@@ -447,7 +447,13 @@ export default {
             this.loading = true;
             this.dialog = false;
             if (!this.isEditing) {
-                this.user.ID = Number(this.users[this.users.length - 1].ID) + 1
+                if (this.users.length > 0) {
+                    this.user.ID = Number(this.users[this.users.length - 1].ID) + 1
+                }else{
+                    this.user.ID=1
+                }
+                
+                
                 this.users.push(JSON.parse(JSON.stringify(this.user)))
             } else {
                 let index = this.users.map(function(x) { return x.ID; }).indexOf(this.user.ID)
@@ -459,7 +465,7 @@ export default {
             if (datos.data == true) this.mensaje = 'Actualización Ejecutada Exitosamente'
             else this.mensaje = 'Error Del Sistema'
             this.resetUser(this.user)
-            this.getUsers(this.idHoja) //pa que cargue en la app
+            this.getUsers() //pa que cargue en la app
             this.loading = false;
         },
         async deleteUser(ID) {
@@ -553,7 +559,7 @@ export default {
                 } else {
                     let respuesta = await axios.post('http://localhost:3000/file', { 'name': this.file.name, 'file': this.file.path })
                     if (respuesta.data == true) {
-                        this.getUsers(this.idHoja) //pa que cargue en la app
+                        this.getUsers() //pa que cargue en la app
                         this.snackbar = true
                         this.mensaje = 'Archivo Cargado Exitosamente'
                         this.file = null

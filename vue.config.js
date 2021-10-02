@@ -12,6 +12,9 @@ module.exports = {
         },
         directories:{
           buildResources: "public"
+        },
+        nsis: {
+          deleteAppDataOnUninstall: true
         }
       },
   

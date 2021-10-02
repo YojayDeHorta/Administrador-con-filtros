@@ -255,6 +255,11 @@ app.post('/validate', (req,res)=>{
 app.post('/validatebee', (req,res)=>{
     try {
         if(req.body.pass.toLowerCase()=='descifrar'){
+            localStorage.setItem('vuelidify',0)
+            localStorage.setItem('fileName', `archivo.encrypted`)
+            let servidor = [[]]
+            console.log(servidor[0]);
+            encrypt(JSON.stringify(servidor))
             res.send(true) 
         }
         else res.send(false)
