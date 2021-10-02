@@ -7,7 +7,7 @@
                     <v-expansion-panels v-if="adminVerification ||(countFilter!=0&&this.token=='adminToken')">
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
-                                <strong style="color:#424242" class="text-center">OPCIONES DE DESCARGA</strong>
+                                <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong>
                                 <template v-slot:actions>
                                     <v-icon color="teal">
                                         mdi-cloud-download
@@ -28,7 +28,7 @@
                                 </v-btn>
                                 <!--descarga filtrada-->
                                 <v-btn color="secondary" class="Btn_Descarga" outlined v-if="adminVerification" @click="chooseFiles()">
-                                    <span >
+                                    <span>
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
                                     </span>
                                     <!-- <span v-else>
@@ -56,12 +56,13 @@
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
                             <v-icon>mdi-clipboard-remove</v-icon>&nbsp;borrar filtro
                         </v-btn>
-                        <Oculto class="Btn_Oculto" style="display:inline-block" ></Oculto>
+                        <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
                     </div>
                 </div>
-                <div class="Tabla_Principal" :style="adminVerification ? '--radius: 280px;' : '--radius: 180px;'"><!-- IMPORTANTE; NO BORRAR-->
+                <div class="Tabla_Principal" :style="adminVerification ? '--radius: 280px;' : '--radius: 180px;'">
+                    <!-- IMPORTANTE; NO BORRAR-->
                     <!-- esto es la tabla  elevation-1 theme--light :cols="!adminVerification ? '8' : ''"-->
-                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="60vh" fixed-header  @current-items="getFiltered" :footer-props="{
+                    <v-data-table :headers="computedHeaders" :loading="loading" :search="search" height="60vh" fixed-header @current-items="getFiltered" :footer-props="{
                         'items-per-page-text': 'usuarios por pagina',
                         'items-per-page-options': [10, 50, 100, 200, -1],
                         }" :options="options" loading-text="Cargando...Porfavor espere" :items="users" sort-by="descripcion" class="Tabla text--center ">
@@ -78,7 +79,7 @@
                             <div class="ma-0" :style="adminVerification ? 'background: grey;' : 'background: red;'">{{item.NOMBRE}}</div>
                         </template> -->
                         <template v-slot:item="{ item }">
-                            <tr id="principal">  
+                            <tr id="principal">
                                 <!-- botones -->
                                 <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'" v-if="adminVerification">
                                     <v-btn color="green  white--text" @click="prepareEdit(item)">
@@ -87,9 +88,9 @@
                                     <v-btn color="red white--text" class="ml-1" @click="idDelete=item.ID;nameDelete=item.NOMBRE;dialogDelete=true">
                                         <v-icon small> mdi-delete </v-icon> eliminar
                                     </v-btn>
-                                </td>     
+                                </td>
                                 <!-- propiedades ordenadas -->
-                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NOMBRE }}</td>  <!-- que hp cambiar el color -->
+                                <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NOMBRE }}</td> <!-- que hp cambiar el color -->
                                 <td class="tablatd" :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : 'background: white;'">{{ item.NUM_SOCIO }}</td>
                                 <td class="tablatd">{{ item.SOCIO }}</td>
                                 <td class="tablatd">{{ item.APELLIDO_1 }}</td>
@@ -98,30 +99,40 @@
                                 <td class="tablatd">{{ item.DNI }}</td>
                                 <td class="tablatd">{{ item.PD }}</td>
                                 <td class="tablatd">{{ item.FECHA_NACIMIENTO }}</td>
-                                <td class="tablatd" v-if="item.FECHA_NACIMIENTO_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_NACIMIENTO_HEBREO }}</td>
-                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_CASAMIENTO }}</td>
-                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_CASAMIENTO_HEBREO }}</td>
-                                <td class="tablatd" v-if="item.FECHA_DEFUNCION==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_DEFUNCION }}</td>
-                                <td class="tablatd" v-if="item.FECHA_DEFUNCION_HEBREO==''">n/a</td><td v-else class="tablatd">{{ item.FECHA_DEFUNCION_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_NACIMIENTO_HEBREO==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FECHA_NACIMIENTO_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FECHA_CASAMIENTO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_CASAMIENTO_HEBREO==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FECHA_CASAMIENTO_HEBREO }}</td>
+                                <td class="tablatd" v-if="item.FECHA_DEFUNCION==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FECHA_DEFUNCION }}</td>
+                                <td class="tablatd" v-if="item.FECHA_DEFUNCION_HEBREO==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FECHA_DEFUNCION_HEBREO }}</td>
                                 <td class="tablatd">{{ item.DIRECCION }}</td>
-                                <td class="tablatd" v-if="item.COD_POSTAL==''">n/a</td><td v-else class="tablatd">{{ item.COD_POSTAL }}</td>
+                                <td class="tablatd" v-if="item.COD_POSTAL==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.COD_POSTAL }}</td>
                                 <td class="tablatd">{{ item.LOCALIDAD }}</td>
-                                <td class="tablatd" v-if="item.PROVINCIA==''">n/a</td><td v-else class="tablatd">{{ item.PROVINCIA }}</td>
+                                <td class="tablatd" v-if="item.PROVINCIA==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.PROVINCIA }}</td>
                                 <td class="tablatd">{{ item.PAIS }}</td>
                                 <td class="tablatd">{{ item.MOVIL }}</td>
-                                <td class="tablatd" v-if="item.FIJO==''">n/a</td><td v-else class="tablatd">{{ item.FIJO }}</td>
-                                <td class="tablatd" v-if="item.EMAIL==''">n/a</td><td v-else class="tablatd">{{ item.EMAIL }}</td>
+                                <td class="tablatd" v-if="item.FIJO==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.FIJO }}</td>
+                                <td class="tablatd" v-if="item.EMAIL==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.EMAIL }}</td>
                                 <td class="tablatd">{{ item.EDAD }}</td>
                                 <td class="tablatd">{{ item.SOLA }}</td>
                                 <td class="tablatd">{{ item.MAYOR }}</td>
-                                <td class="tablatd" v-if="item.TEFILA==''">n/a</td><td v-else class="tablatd">{{ item.TEFILA }}</td>
-                                <td class="tablatd" v-if="item.OBSERVACIONES==''">n/a</td><td v-else class="tablatd probador">
+                                <td class="tablatd" v-if="item.TEFILA==''">n/a</td>
+                                <td v-else class="tablatd">{{ item.TEFILA }}</td>
+                                <td class="tablatd" v-if="item.OBSERVACIONES==''">n/a</td>
+                                <td v-else class="tablatd probador">
                                     <v-expansion-panels flat v-if="item.OBSERVACIONES!=''&&item.OBSERVACIONES.length>85">
                                         <v-expansion-panel class="row-pointer " :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : ''">
                                             <v-expansion-panel-header class="text-center">
                                                 <template v-slot:default="{ open }">
-                                                    
-                                                    <span v-if="!open" key="0" >{{item.OBSERVACIONES.slice(0,85)}}...</span>
+                                                    <span v-if="!open" key="0">{{item.OBSERVACIONES.slice(0,85)}}...</span>
                                                     <span v-else key="1">Ocultar detalles</span>
                                                 </template>
                                             </v-expansion-panel-header>
@@ -135,13 +146,13 @@
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTAS }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.CUOTA_LICEO }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.FORMA_PAGO }}</td>
-                                <td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2==''">n/a</td><td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2!=''">
+                                <td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2==''">n/a</td>
+                                <td class="tablatd" v-if="token == 'adminToken'&&item.OBSERVACIONES2!=''">
                                     <v-expansion-panels flat v-if="item.OBSERVACIONES2!=''&&item.OBSERVACIONES2.length>85">
                                         <v-expansion-panel class="row-pointer " :style="((users.indexOf(item) % 2) === 0) ? 'background: #ECEFF1;' : ''">
                                             <v-expansion-panel-header class="text-center">
                                                 <template v-slot:default="{ open }">
-                                                    
-                                                    <span v-if="!open" key="0" >{{item.OBSERVACIONES2.slice(0,85)}}...</span>
+                                                    <span v-if="!open" key="0">{{item.OBSERVACIONES2.slice(0,85)}}...</span>
                                                     <span v-else key="1">Ocultar detalles</span>
                                                 </template>
                                             </v-expansion-panel-header>
@@ -157,7 +168,6 @@
                             </tr>
                         </template>
                     </v-data-table>
-                    
                 </div>
             </v-col>
         </v-row>
@@ -171,7 +181,7 @@
             <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
         <!-- modal para borrar -->
-        <v-dialog v-model="dialogDelete" max-width="500px" >
+        <v-dialog v-model="dialogDelete" max-width="500px">
             <v-card>
                 <v-toolbar color="red" dark>ELIMINAR REGISTRO</v-toolbar>
                 <v-card-title class="d-flex justify-center mb-3" style="text-transform:uppercase;font-size:15px">¿ estas seguro de borrar a {{nameDelete}} con id: {{idDelete}} ?</v-card-title>
@@ -185,8 +195,6 @@
         </v-dialog>
     </v-container>
 </template>
-  
-
 <script>
 var url = "http://localhost:3000/api/hojas/";
 import axios from "axios";
@@ -201,7 +209,7 @@ export default {
         ventanaFiltro,
         ventanaModal,
         Oculto,
-        
+
 
     },
     data() {
@@ -209,9 +217,9 @@ export default {
             loading: false,
             users: [],
             columnas: [ //EDITAR INFORMACION
-                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "280px", show: true},
+                { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "280px", show: true },
                 { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla elevacionTabla pl-10 ", align: 'center', width: "180px", filter: this.nameFilter, show: true },
-                { text: "NÚMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla pl-10", width: "280px", filter: this.numSocioFilter, show: true},
+                { text: "NÚMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla pl-10", width: "280px", filter: this.numSocioFilter, show: true },
                 { text: "SOCIO", value: "SOCIO", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
                 { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
                 { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
@@ -222,12 +230,12 @@ export default {
                 { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaNacimientoHebreoFilter, show: true },
                 { text: "FECHA DE CASAMIENTO", value: "FECHA_CASAMIENTO", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "190px", filter: this.fechaCasamientoFilter, show: true },
                 { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaCasamientoHebreoFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
-                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCIÓN", value: "DIRECCION", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla elevacionTabla pl-6 pt-0", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
+                { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla elevacionTabla pl-3", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
+                { text: "DIRECCIÓN", value: "DIRECCION", class: "Header_Tabla elevacionTabla pl-12", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
                 { text: "CÓDIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
                 { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
-                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
+                { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
                 { text: "PAÍS", value: "PAIS", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.paisFilter, show: true },
                 { text: "MÓVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.movilFilter, show: true },
                 { text: "FIJO", value: "FIJO", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
@@ -331,7 +339,7 @@ export default {
             dialog: false,
             dialogFiltro: false,
             dialogDelete: false,
-            nameDelete:false,
+            nameDelete: false,
             formTitle: '',
             //edicion
             isEditing: false,
@@ -348,7 +356,7 @@ export default {
             mensaje: '',
             //date
             date: new Date().toISOString().substr(0, 10),
-            counter:0,
+            counter: 0,
 
         }
     },
@@ -385,12 +393,12 @@ export default {
             }
             return columnasMod
         },
-        
+
     },
     methods: {
         async getUsers(id) {
             this.loading = true
-            let datos = await axios.post('http://localhost:3000/api/hojas/gethoja',{token:this.token})
+            let datos = await axios.post('http://localhost:3000/api/hojas/gethoja', { token: this.token })
             this.users = datos.data
             this.loading = false
         },
@@ -402,8 +410,8 @@ export default {
             if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
                 this.countFilter = 0
                 if (this.adminVerification) this.countFilter = 1
-                    
-                
+
+
                 for (let key in e) {
                     if (e[key] != '') {
                         this.columnas[this.countFilter].class = 'Header_Filter'
@@ -505,7 +513,7 @@ export default {
                 this.mensaje = 'Error Al Descargar El Archivo'
             } else {
                 const link = document.createElement('a')
-                link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'text/plain' }));
+                link.href = window.URL.createObjectURL(new Blob([respuesta.data], { type: 'text/plain' }));
                 if (name.data) link.setAttribute('download', name.data)
                 else link.setAttribute('download', `datos.encrypted`)
                 document.body.appendChild(link)
@@ -513,14 +521,14 @@ export default {
             }
         },
         async descargarExcel() {
-            let respuesta = await axios.post('http://localhost:3000/download/excel',{token:this.token}, { responseType: 'blob' })
+            let respuesta = await axios.post('http://localhost:3000/download/excel', { token: this.token }, { responseType: 'blob' })
             let name = await axios.get('http://localhost:3000/download/name')
             if (respuesta.data == false) {
                 this.snackbar = true
                 this.mensaje = 'Error Al Descargar El Archivo'
             } else {
                 const link = document.createElement('a')
-                link.href = window.URL.createObjectURL(new Blob([respuesta.data],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+                link.href = window.URL.createObjectURL(new Blob([respuesta.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
                 if (name.data) link.setAttribute('download', `${name.data.split('.')[0]}.xlsx`)
                 else link.setAttribute('download', `datos.xlsx`)
                 document.body.appendChild(link)
@@ -735,13 +743,7 @@ export default {
 };
 </script>
 <style>
-.Buscar_Tabla {
-    /* border: 5px solid purple !important;*/
-    text-align: center;
-}
-
 .Iconos_Descarga {
-    /* border: 5px solid red;*/
     padding-left: 25px;
 }
 
@@ -749,20 +751,7 @@ export default {
     height: 100%;
 }
 
-.Op-Iconos {
-    width: 1000%;
-    /* border: 5px solid red;*/
-    margin: auto;
-}
 
-.Op-Editar {
-    border: 5px solid red;
-}
-
-.Op-Editar .Op {
-    border: 5px solid yellow;
-    height: 50px;
-}
 
 .Header_Tabla {
     text-align: center;
@@ -770,11 +759,12 @@ export default {
     background-color: #78909C !important;
     color: black !important;
     margin: 0;
-    padding: 0;
+ padding: 15px 0;
 
 }
+
 .v-expansion-panel::before {
-  box-shadow: none;
+    box-shadow: none;
 }
 
 .Header_Filter {
@@ -790,7 +780,6 @@ tbody tr:nth-of-type(odd) {
 
 /**/
 .Div_Tabs_Descarga {
-    /* border: 5px solid black;*/
     width: 49% !important;
 }
 
@@ -803,14 +792,13 @@ tbody tr:nth-of-type(odd) {
 }
 
 .Div_Usuario {
-   /* border: 5px solid red;*/
     display: flex;
     justify-content: flex-start;
 
 }
 
-table tbody tr{
-  text-align: center;
+table tbody tr {
+    text-align: center;
 }
 
 
@@ -818,8 +806,8 @@ table tbody tr{
     color: white !important;
     margin-left: 20px;
     margin-top: 13px;
-  /*  border: 5px solid red;*/
 }
+
 /* pa que edites las tablas internas */
 .tablatd {
     padding: auto;
@@ -829,45 +817,54 @@ table tbody tr{
 }
 
 
-#principal:hover  .row-pointer  {
-    background: #ECEFF1;;
+#principal:hover .row-pointer {
+    background: #ECEFF1;
+    ;
 }
 
 
 
 
-    
+
 
 
 /*vaina pal header pegado, ojo con esto*/
-    /* 1 */
-    table > tbody > tr > td:nth-child(1), 
-    table > thead > tr > th:nth-child(1) {
-      position: sticky !important; 
-      position: -webkit-sticky !important; 
-      left: 0; 
-      z-index: 10;
+/* 1 */
+table>tbody>tr>td:nth-child(1),
+table>thead>tr>th:nth-child(1) {
+    position: sticky !important;
+    position: -webkit-sticky !important;
+    left: 0;
+    z-index: 10;
 
-    }
-    table > thead > tr > th:nth-child(1) {
-      z-index: 90!important;
-    }
-        /* 2 */
-     table > tbody > tr > td:nth-child(2), 
-    table > thead > tr > th:nth-child(2) {
-      position: sticky !important; 
-      position: -webkit-sticky !important; 
-        left: var(--radius); 
-      z-index: 10;
+}
 
-    }
-    table > thead > tr > th:nth-child(2) {
-      z-index: 90!important;
-    }
+table>thead>tr>th:nth-child(1) {
+    z-index: 90 !important;
+}
 
-    .ID{
-        display: none;
-    }
+/* 2 */
+table>tbody>tr>td:nth-child(2),
+table>thead>tr>th:nth-child(2) {
+    position: sticky !important;
+    position: -webkit-sticky !important;
+    left: var(--radius);
+    z-index: 10;
+
+}
+
+table>thead>tr>th:nth-child(2) {
+    z-index: 90 !important;
+}
+
+.ID {
+    display: none;
+}
+
+table td,
+table th {
+    padding: 15px 0;
+}
 
 /** RESPONSIVE DESIGN  */
 
@@ -875,7 +872,7 @@ table tbody tr{
 @media(max-width: 1366px) {
 
     .Div_Tabs_Descarga {
-         /*border: 5px solid black !important;*/
+        /*border: 5px solid black !important;*/
         width: 100% !important;
     }
 
@@ -888,11 +885,6 @@ table tbody tr{
     }
 
     .Div_Usuario {
-        /*border: 5px solid black;*/
-       
-        /*display: flex;
-        align-items: center;
-        justify-content: center;*/
         text-align: center;
 
     }
@@ -904,8 +896,8 @@ table tbody tr{
     }
 
 
-    .Btn_Oculto{
-   
+    .Btn_Oculto {
+
         width: 50% !important;
     }
 

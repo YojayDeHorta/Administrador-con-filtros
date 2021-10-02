@@ -371,7 +371,6 @@ export default {
 <style >
     
     .Marco_Editar{
-        border:5px solid red;
     }
 
     .override-class  {

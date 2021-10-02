@@ -95,11 +95,11 @@ export default {
             let res = await axios.post('http://localhost:3000/password/secretaria', {rol:this.rol})
             this.snackbar = true
             if (res.data){
-                   this.mensaje = 'Se estan eliminando los permisos, espere un momento...'  
+                   this.mensaje = 'Se Están Eliminando Los Permisos, Espere Un Momento...'  
                 
                 // this.$router.push('/options', 2000)
                 setTimeout( () => {
-                    this.mensaje = 'Permisos eliminados, redirigiendo...'
+                    this.mensaje = 'Permisos Eliminados, Redirigiendo...'
                     this.$store.commit('setAdmin',res.data)
                     this.$router.push({ path: '/options'})
                 }, 2000);
