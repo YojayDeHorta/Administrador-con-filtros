@@ -120,7 +120,7 @@
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.FORMA_PAGO }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.OBSERVACIONES2 }}</td>
                                 <td class="tablatd" v-if="token == 'adminToken'">{{ item.JESED }}</td>
-                                <td class="tablatd ID">{{ item.ID }}</td>
+                                <td class="tablatd ">{{ item.ID }}</td>
                             </tr>
                         </template>
                     </v-data-table>
@@ -178,7 +178,7 @@ export default {
             columnas: [ //EDITAR INFORMACION
                 { text: "ACCIONES", value: "actions", class: "Header_Tabla", align: 'center', sortable: false, width: "280px", show: true},
                 { text: "NOMBRE", value: "NOMBRE", class: "Header_Tabla elevacionTabla pl-10 ", align: 'center', width: "180px", filter: this.nameFilter, show: true },
-                { text: "NUMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla pl-10", width: "280px", filter: this.numSocioFilter, show: true},
+                { text: "NÚMERO DE SOCIO", value: "NUM_SOCIO", align: 'center', class: "Header_Tabla pl-10", width: "280px", filter: this.numSocioFilter, show: true},
                 { text: "SOCIO", value: "SOCIO", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "90px", style: 'text-center', filter: this.socioFilter, show: true },
                 { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
                 { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
@@ -191,12 +191,12 @@ export default {
                 { text: "FECHA DE CASAMIENTO(HEBREO)", value: "FECHA_CASAMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaCasamientoHebreoFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN", value: "FECHA_DEFUNCION", class: "Header_Tabla elevacionTabla", align: 'center', width: "190px", filter: this.fechaDefuncionFilter, show: true },
                 { text: "FECHA DE DEFUNCIÓN(HEBREO)", value: "FECHA_DEFUNCION_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaDefuncionHebreoFilter, show: true },
-                { text: "DIRECCION", value: "DIRECCION", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
-                { text: "CODIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
+                { text: "DIRECCIÓN", value: "DIRECCION", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.direccionFilter, show: true },
+                { text: "CÓDIGO POSTAL", value: "COD_POSTAL", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "150px", filter: this.codigoPostalFilter, show: true },
                 { text: "LOCALIDAD", value: "LOCALIDAD", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.localidadFilter, show: true },
                 { text: "PROVINCIA", value: "PROVINCIA", class: "Header_Tabla elevacionTabla pl-6", align: 'center', width: "250px", filter: this.provinciaFilter, show: true },
-                { text: "PAIS", value: "PAIS", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.paisFilter, show: true },
-                { text: "MOVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.movilFilter, show: true },
+                { text: "PAÍS", value: "PAIS", class: "Header_Tabla elevacionTabla pl-5", align: 'center', width: "250px", filter: this.paisFilter, show: true },
+                { text: "MÓVIL", value: "MOVIL", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.movilFilter, show: true },
                 { text: "FIJO", value: "FIJO", class: "Header_Tabla elevacionTabla pl-7", align: 'center', width: "250px", filter: this.fijoFilter, show: true },
                 { text: "EMAIL", value: "EMAIL", class: "Header_Tabla elevacionTabla pl-10", align: 'center', width: "250px", filter: this.emailFilter, show: true },
                 { text: "EDAD", value: "EDAD", class: "Header_Tabla elevacionTabla pl-8 pt-1", align: 'center', width: "100px", filter: this.edadFilter, show: true },
@@ -209,7 +209,7 @@ export default {
                 { text: "FORMA DE PAGO", value: "FORMA_PAGO", class: "Header_Tabla elevacionTabla", align: 'center', width: "150px", filter: this.formaPagoFilter, show: false },
                 { text: "OBSERVACIONES 2", value: "OBSERVACIONES2", class: "Header_Tabla elevacionTabla", align: 'center', width: "350px", filter: this.observaciones2Filter, show: false },
                 { text: "JESED", value: "JESED", class: "Header_Tabla elevacionTabla", align: 'center', width: "100px", filter: this.jessedFilter, show: false },
-                { text: "ID", value: "ID", class: "Header_Tabla ID elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
+                { text: "ID", value: "ID", class: "Header_Tabla  elevacionTabla", align: 'center', width: "70px", style: 'text-center', show: true },
             ],
             //aqui van los valores pa los select
             user: {
@@ -848,7 +848,7 @@ table tbody tr{
         width: 24% !important;
         height: 37px !important;
         margin-left: 5px;
-        color: #424242 !important;
+        color: white !important;
         font-size: 14px !important;
     }
 

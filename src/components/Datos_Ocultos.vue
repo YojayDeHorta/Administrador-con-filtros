@@ -58,7 +58,7 @@ export default {
             password:'',
             dialog:false,
             Rules:[
-                v=>!!v || 'Porfavor llena este campo',
+                v=>!!v || 'Por Favor, Llena Este Campo',
             ],
             snackbar:'',
             mensaje:'',
@@ -78,11 +78,11 @@ export default {
                 this.snackbar = true
                 if (res.data){
                     this.$store.commit('setAdmin',res.data)
-                    this.mensaje = 'contraseña exitosa, ya puedes ver los datos ocultos!'
+                    this.mensaje = '¡Contraseña Exitosa, Ya Puedes Ver Los Datos Ocultos!'
                     this.password=''
                     this.dialog=false
                 }else {
-                    this.mensaje = 'error - usuario o contraseña incorrecta'
+                    this.mensaje = 'Error - Usuario O Contraseña Incorrecta'
                 }
             }
         },
@@ -91,9 +91,9 @@ export default {
             this.snackbar = true
             if (res.data){
                 this.$store.commit('setAdmin',res.data)
-                this.mensaje = 'permisos quitados exitosamente'
+                this.mensaje = 'Permisos Eliminados'
             }else {
-                this.mensaje = 'error - usuario o contraseña incorrecta'
+                this.mensaje = 'Error - Usuario O Contraseña Incorrecta'
             }
             
         }

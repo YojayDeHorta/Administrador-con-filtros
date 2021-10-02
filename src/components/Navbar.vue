@@ -98,17 +98,17 @@ export default {
                 this.admin.pass = ''
                 this.dialogAdmin = false
                 this.snackbar = true
-                this.mensaje = 'login realizado correctamente'
+                this.mensaje = 'Inicio De Sesión Realizado Correctamente'
             } else {
                 this.snackbar = true,
-                    this.mensaje = 'error - usuario o contraseña incorrecta'
+                    this.mensaje = 'Error - Usuario O Contraseña Incorrecta'
             }
         },
         logout() {
             this.$store.commit('resetLogin')
             this.$router.push('/')
             this.snackbar = true
-            this.mensaje = 'cerrado de sesion realizado correctamente'
+            this.mensaje = 'Cerrado De Sesión Realizado Correctamente'
         },
         //para el volver
 
