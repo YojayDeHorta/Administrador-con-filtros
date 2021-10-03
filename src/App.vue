@@ -9,13 +9,13 @@
 
 
             <v-dialog v-model="dialog" max-width="500" persistent>
-                <v-card color="#FFFF8D"  >
+                <v-card color="white"  >
                     <v-form class="login text-center" @submit.prevent="submitA" ref="form" lazy-validation>
                         <v-card-title class="title d-flex justify-center " align="center">
                             <h2 style="width: 200px;font-size:29px" class="Titulo text-center text-uppercase mt-5">
                                 Verificación
                                 <br>
-                                <v-icon class="Filtrar mt-9" style="font-size:100px;color:orange">mdi-lock</v-icon>
+                                <v-icon class="Filtrar mt-9" style="font-size:100px;color:black">mdi-lock</v-icon>
                             </h2>
                         </v-card-title>
                         <v-card-text class="mt-5">
