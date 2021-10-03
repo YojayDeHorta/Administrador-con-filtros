@@ -12,12 +12,11 @@ module.exports = {
         },
         directories:{
           buildResources: "public"
-        },
-        nsis: {
-          deleteAppDataOnUninstall: true
         }
       },
-  
+      nsis: {
+        deleteAppDataOnUninstall: true
+      },
       nodeIntegration: true,
       contextIsolation: false,
       enableRemoteModule: true,

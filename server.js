@@ -162,10 +162,14 @@ app.post('/download/excel', (req,res)=>{
         if ((req.body.token=='adminToken'||req.body.token=='secretariaToken'||req.body.token=='conserjeToken')) {
             let servidor=JSON.parse(decrypt())
             const workBook=XLSX.utils.book_new()
-            for (let i = 0; i < servidor.length; i++) {
-                const workSheet=XLSX.utils.json_to_sheet(servidor[i])
-                XLSX.utils.book_append_sheet(workBook,workSheet,hojas[i])
-            }   
+            let aux=servidor[0]
+            if (req.body.token=='secretariaToken'||req.body.token=='conserjeToken') {
+                aux = servidor[0].map(({CUOTAS, CUOTA_LICEO,FORMA_PAGO,JESED,OBSERVACIONES2, ...item}) => item)
+            }
+            
+            
+            const workSheet=XLSX.utils.json_to_sheet(aux)
+            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[0])
             XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
             XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
             XLSX.writeFile(workBook,`${configDir}/datos.xlsx`)
@@ -186,16 +190,26 @@ app.post('/download/excel', (req,res)=>{
 //descarga filtrada
 app.post('/filter', async(req, res) => {
     try {
-        const workBook=XLSX.utils.book_new()
-        const workSheet=XLSX.utils.json_to_sheet(req.body)
-        XLSX.utils.book_append_sheet(workBook,workSheet,hojas[0])
-        XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
-        XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
-        XLSX.writeFile(workBook,`${configDir}/filtrado.xlsx`)
-        if(archivos.indexOf(`filtrado.xlsx`) === -1){
-            archivos.push(`filtrado.xlsx`)
+        console.log(req.body);
+        console.log(req.body[0]);
+        if ((req.body[0].token=='adminToken'||req.body[0].token=='secretariaToken'||req.body[0].token=='conserjeToken')) {
+            let aux=req.body[1]
+            if (req.body[0].token=='secretariaToken'||req.body[0].token=='conserjeToken') {
+                aux = req.body[1].map(({CUOTAS, CUOTA_LICEO,FORMA_PAGO,JESED,OBSERVACIONES2, ...item}) => item)
+            }
+            const workBook=XLSX.utils.book_new()
+            const workSheet=XLSX.utils.json_to_sheet(aux)
+            XLSX.utils.book_append_sheet(workBook,workSheet,hojas[0])
+            XLSX.write(workBook,{bookType:'xlsx',type:"buffer"})
+            XLSX.write(workBook,{bookType:'xlsx',type:"binary"})
+            XLSX.writeFile(workBook,`${configDir}/filtrado.xlsx`)
+            if(archivos.indexOf(`filtrado.xlsx`) === -1){
+                archivos.push(`filtrado.xlsx`)
+            }
+            res.download(`${configDir}/filtrado.xlsx`);
+        }else{
+            res.send(false)
         }
-        res.download(`${configDir}/filtrado.xlsx`);
     } catch (error) {
         console.log(error);
         res.send(false)

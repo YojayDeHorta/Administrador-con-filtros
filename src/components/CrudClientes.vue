@@ -4,12 +4,12 @@
         <v-row class="Iconos_Descarga d-flex justify-space-between ">
             <v-col class="Tabs_Descarga d-flex justify-end">
                 <div class="Div_Tabs_Descarga">
-                    <v-expansion-panels v-if="adminVerification ||(countFilter!=0&&this.token=='adminToken')">
+                    <v-expansion-panels >
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
                                 <template v-slot:default="{ open }">
-                                        <strong style="color:#424242;font-size:15px" class="text-center" v-if="!open" key="0">CLIC AQUÍ PARA VER LAS OPCIONES DE DESCARGA</strong>
-                                        <strong style="color:#424242;font-size:15px" class="text-center" v-else key="1">OPCIONES DE DESCARGA</strong>
+                                        <strong style="color:#424242;font-size:15px" class="text-center" v-if="!open" key="0">CLIC AQUÍ PARA VER LAS OPCIONES </strong>
+                                        <strong style="color:#424242;font-size:15px" class="text-center" v-else key="1">OPCIONES DE DESCARGA Y SUBIDA</strong>
                                 </template>
                                 <!-- <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong> -->
                                 <template v-slot:actions>
@@ -23,11 +23,11 @@
                                     <v-icon>mdi-file-lock</v-icon>&nbsp;encriptado
                                 </v-btn>
                                 <!--descarga normal-->
-                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" @click="descargarExcel()" v-if="this.token=='adminToken' &&adminVerification">
+                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" @click="descargarExcel()" >
                                     <v-icon>mdi-file-excel</v-icon>&nbsp;Excel
                                 </v-btn>
                                 <!--descarga de excel filtrada, necesario para las descargas-->
-                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="this.token=='adminToken'&&countFilter!=0" @click="descargarFiltro()">
+                                <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
                                     <v-icon>mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
                                 </v-btn>
                                 <!--descarga filtrada-->
@@ -289,8 +289,8 @@ export default {
                 CUOTAS: '',
                 CUOTA_LICEO: '',
                 FORMA_PAGO: '',
-                JESED: '',
                 OBSERVACIONES2: '',
+                JESED: '',
             },
             //variable para el filtro
             userFiltro: {
@@ -412,8 +412,8 @@ export default {
         },
         agregarFilterModal(e) {
             if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
-                this.countFilter = 0
-                if (this.adminVerification) this.countFilter = 1
+                this.countFilter = 1
+                if (this.token=='adminToken') this.countFilter = 0
 
 
                 for (let key in e) {
@@ -578,7 +578,8 @@ export default {
             this.tablaFiltrada = e
         },
         async descargarFiltro() {
-            let respuesta = await axios.post('http://localhost:3000/filter', this.tablaFiltrada, { responseType: 'blob' })
+            let array=[{ token: this.token },this.tablaFiltrada]
+            let respuesta = await axios.post('http://localhost:3000/filter',array, { responseType: 'blob' })
             if (respuesta.data == false) {
                 this.snackbar = true
                 this.mensaje = 'Error Al Descargar El Archivo'
