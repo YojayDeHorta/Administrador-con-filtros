@@ -414,6 +414,7 @@ export default {
             if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
                 this.countFilter = 1
                 if (this.token=='adminToken') this.countFilter = 0
+                if (this.token=='adminToken'&&this.adminVerification) this.countFilter = 1
 
 
                 for (let key in e) {
