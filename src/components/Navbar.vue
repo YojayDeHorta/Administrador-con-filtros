@@ -2,7 +2,7 @@
     <v-container>
         <!-- navbar para la app -->
         <v-app-bar style="background-color:#37474F !important" app>
-            <v-toolbar-title style="color:white !important" class="text-uppercase grey--text">
+            <v-toolbar-title style="color:white !important;font-size:1.1vw" class="text-uppercase grey--text">
                 <span class="">ADMINISTRACIÓN</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
@@ -11,25 +11,25 @@
             <v-btn exact text class="Btn_Navbar gray" v-if="token">
                 <span>
                     {{username}}
-                    <span v-if="token=='adminToken'&&rol=='secretariaRol'"> (<v-icon v-if="token=='adminToken'">mdi-key-chain-variant</v-icon>)</span>
+                    <span v-if="token=='adminToken'&&rol=='secretariaRol'"> (<v-icon style="font-size:1.5vw" v-if="token=='adminToken'">mdi-key-chain-variant</v-icon>)</span>
                 </span>
-                <v-icon v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
-                <v-icon v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->
-                <v-icon v-if="token=='conserjeToken'">mdi-account-eye</v-icon><!-- conserje -->
+                <v-icon style="font-size:1.5vw" v-if="token=='adminToken'">mdi-account-tie</v-icon><!-- admin -->
+                <v-icon style="font-size:1.5vw" v-if="token=='secretariaToken'">mdi-account-edit</v-icon><!-- secretaria -->
+                <v-icon style="font-size:1.5vw" v-if="token=='conserjeToken'">mdi-account-eye</v-icon><!-- conserje -->
             </v-btn>
             <!-- menu -->
             <v-btn  :to="{name: 'Options'}" v-if="token" exact text class="Btn_Navbar gray">
                 <span>Opciones</span>
-                <v-icon>mdi-equal-box</v-icon>
+                <v-icon style="font-size:1.5vw">mdi-equal-box</v-icon>
             </v-btn>
             <!-- login -->
             <v-btn  text @click="logout()" v-if="token" class="Btn_Navbar gray">
                 <span class="mr-1">Cerrar Sesión</span>
-                <v-icon>mdi-home-export-outline </v-icon>
+                <v-icon style="font-size:1.5vw">mdi-home-export-outline </v-icon>
             </v-btn>
             <v-btn  text :to="{name: 'Login'}" v-else class="Btn_Navbar gray" exact>
                 <span class="mr-1">Iniciar Sesión</span>
-                <v-icon>mdi-login-variant </v-icon>
+                <v-icon style="font-size:1.5vw">mdi-login-variant </v-icon>
             </v-btn>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" temporary>
@@ -48,7 +48,7 @@
                 <v-list-item-group active-class="deep-purple--text text--accent-4">
                     <v-list-item :to="{name: 'Cruds'}">
                         <v-list-item-icon>
-                            <v-icon>mdi-file-table</v-icon>
+                            <v-icon style="font-size:1.5vw">mdi-file-table</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title>Crud</v-list-item-title>
                     </v-list-item>
@@ -59,7 +59,7 @@
         <!-- SNACKBAR PARA LOS MENSAJES -->
         <v-snackbar v-model="snackbar">
             {{ mensaje }}
-            <v-btn color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
+            <v-btn  color="error" class="ml-5" @click="snackbar = false">cerrar</v-btn>
         </v-snackbar>
     </v-container>
 </template>
@@ -142,6 +142,7 @@ export default {
 .Btn_Navbar{
     color:White !important;
     margin-left:8px;
+   /* font-size:0px;*/
 }
 
 

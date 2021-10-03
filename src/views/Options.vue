@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <h1 class="Titulo text-center">Opciones</h1>
+        <h2 class="Titulo text-center">Opciones</h2>
         <h2 class="barra"></h2>
         <br> <br> <br>
         <section class="Opciones text-center d-flex justify-center" v-if="$store.getters.token">
@@ -38,7 +38,7 @@ export default {
     color:#424242 !important;
     overflow: hidden;
     text-transform: uppercase;
-    font-size: calc(1rem + 4vw);
+    font-size: calc(1rem + 3vw);
 
 }
 /*
