@@ -2,7 +2,10 @@
 const express = require('express');
 const electron = require('electron');
 const app = express();
-app.use(express.json())
+// app.use(express.json())
+app.use(express.json({limit: '200mb'}));
+app.use(express.urlencoded({limit: '200mb', extended: true, parameterLimit: 200000}));
+
 //cors
 var cors=require('cors')
 app.use(cors())
@@ -112,11 +115,11 @@ app.post('/file', async(req, res) => {
                     // console.log(new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0])
                     hojita["W"+i].v=new Date((hojita["W"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
                 }
-                if(hojita["X"+i]!=null&&/^-?\d+$/.test(hojita["X"+i].v)) hojita["X"+i].v=new Date((hojita["X"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                // if(hojita["X"+i]!=null&&/^-?\d+$/.test(hojita["X"+i].v)) hojita["X"+i].v=new Date((hojita["X"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
                 if(hojita["Y"+i]!=null&&/^-?\d+$/.test(hojita["Y"+i].v)) hojita["Y"+i].v=new Date((hojita["Y"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(hojita["Z"+i]!=null&&/^-?\d+$/.test(hojita["Z"+i].v)) hojita["Z"+i].v=new Date((hojita["Z"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
+                // if(hojita["Z"+i]!=null&&/^-?\d+$/.test(hojita["Z"+i].v)) hojita["Z"+i].v=new Date((hojita["Z"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
                 if(hojita["AA"+i]!=null&&/^-?\d+$/.test(hojita["AA"+i].v)) hojita["AA"+i].v=new Date((hojita["AA"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]   
-                if(hojita["AB"+i]!=null&&/^-?\d+$/.test(hojita["AB"+i].v)) hojita["AB"+i].v=new Date((hojita["AB"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
+                // if(hojita["AB"+i]!=null&&/^-?\d+$/.test(hojita["AB"+i].v)) hojita["AB"+i].v=new Date((hojita["AB"+i].v-(25567 + 2))* 86400 * 1000 ).toISOString().split('T')[0]
             
 
             }
@@ -190,8 +193,7 @@ app.post('/download/excel', (req,res)=>{
 //descarga filtrada
 app.post('/filter', async(req, res) => {
     try {
-        console.log(req.body);
-        console.log(req.body[0]);
+        
         if ((req.body[0].token=='adminToken'||req.body[0].token=='secretariaToken'||req.body[0].token=='conserjeToken')) {
             let aux=req.body[1]
             if (req.body[0].token=='secretariaToken'||req.body[0].token=='conserjeToken') {

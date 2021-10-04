@@ -100,7 +100,7 @@
                                 <td class="tablatd">{{ item.APELLIDO_1 }}</td>
                                 <td class="tablatd">{{ item.APELLIDO_2 }}</td>
                                 <td class="tablatd">{{ item.PARENTESCO }}</td>
-                                <td class="tablatd">{{ item.DNI }}</td>
+                                <td class="tablatd">{{ item.DNI_O_PASAPORTE }}</td>
                                 <td class="tablatd">{{ item.PD }}</td>
                                 <td class="tablatd">{{ item.FECHA_NACIMIENTO }}</td>
                                 <td class="tablatd" v-if="item.FECHA_NACIMIENTO_HEBREO==''">n/a</td>
@@ -228,7 +228,7 @@ export default {
                 { text: "APELLIDO 1", value: "APELLIDO_1", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido1Filter, show: true },
                 { text: "APELLIDO 2", value: "APELLIDO_2", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.apellido2Filter, show: true },
                 { text: "PARENTESCO", value: "PARENTESCO", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.parentescoFilter, show: true },
-                { text: "DNI", value: "DNI", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "150px", filter: this.dniFilter, show: true },
+                { text: "DNI/PASAPORTE", value: "DNI_O_PASAPORTE", class: "Header_Tabla elevacionTabla pl-8", align: 'center', width: "180px", filter: this.DNI_O_PASAPORTEFilter, show: true },
                 { text: "PD", value: "PD", class: "Header_Tabla elevacionTabla pl-5 pt-5", align: 'center', width: "70px", filter: this.pdFilter, show: true },
                 { text: "FECHA DE NACIMIENTO", value: "FECHA_NACIMIENTO", class: "Header_Tabla elevacionTabla pl-6 pt-5", align: 'center', width: "190px", filter: this.fechaNacimientoFilter, show: true },
                 { text: "FECHA DE NACIMIENTO(HEBREO)", value: "FECHA_NACIMIENTO_HEBREO", class: "Header_Tabla elevacionTabla", align: 'center', width: "250px", filter: this.fechaNacimientoHebreoFilter, show: true },
@@ -265,7 +265,7 @@ export default {
                 APELLIDO_1: '',
                 APELLIDO_2: '',
                 PARENTESCO: '',
-                DNI: '',
+                DNI_O_PASAPORTE: '',
                 PD: '',
                 DIRECCION: '',
                 COD_POSTAL: '',
@@ -300,7 +300,7 @@ export default {
                 APELLIDO_1: '',
                 APELLIDO_2: '',
                 PARENTESCO: '',
-                DNI: '',
+                DNI_O_PASAPORTE: '',
                 PD: '',
                 FECHA_NACIMIENTO: '',
                 FECHA_NACIMIENTO_HEBREO: '',
@@ -351,7 +351,7 @@ export default {
             file: null,
             //opciones de la data table
             options: {
-                itemsPerPage: 100
+                itemsPerPage: 50
             },
             //variable para el filtro
             tablaFiltrada: [],
@@ -489,7 +489,7 @@ export default {
             usuario.APELLIDO_1 = ''
             usuario.APELLIDO_2 = ''
             usuario.PARENTESCO = ''
-            usuario.DNI = ''
+            usuario.DNI_O_PASAPORTE = ''
             usuario.PD = ''
             usuario.FECHA_NACIMIENTO = ''
             usuario.FECHA_NACIMIENTO_HEBREO = ''
@@ -617,9 +617,9 @@ export default {
             if (!this.userFiltro.PARENTESCO) return true;
             return value.toString().toLowerCase().includes(this.userFiltro.PARENTESCO.toString().toLowerCase());
         },
-        dniFilter(value) { //DNI
-            if (!this.userFiltro.DNI) return true;
-            return value.toString().toLowerCase().includes(this.userFiltro.DNI.toString().toLowerCase());
+        DNI_O_PASAPORTEFilter(value) { //DNI_O_PASAPORTE
+            if (!this.userFiltro.DNI_O_PASAPORTE) return true;
+            return value.toString().toLowerCase().includes(this.userFiltro.DNI_O_PASAPORTE.toString().toLowerCase());
         },
         pdFilter(value) { //PD
             if (!this.userFiltro.PD) return true;
@@ -634,10 +634,7 @@ export default {
         },
         fechaNacimientoHebreoFilter(value) { //FECHA_NACIMIENTO_HEBREO
             if (!this.userFiltro.FECHA_NACIMIENTO_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '') return true;
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_NACIMIENTO_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_NACIMIENTO_HEBREO)
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_NACIMIENTO_HEBREO.toString().toLowerCase());
         },
         fechaCasamientoFilter(value) { //FECHA_CASAMIENTO
             if (!this.userFiltro.FECHA_CASAMIENTO) return true;
@@ -648,10 +645,7 @@ export default {
         },
         fechaCasamientoHebreoFilter(value) { //FECHA_CASAMIENTO_HEBREO
             if (!this.userFiltro.FECHA_CASAMIENTO_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '') return true;
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
-            if (this.SimbolosSelect.FECHA_CASAMIENTO_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_CASAMIENTO_HEBREO)
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_CASAMIENTO_HEBREO.toString().toLowerCase());
         },
         fechaDefuncionFilter(value) { //FECHA_DEFUNCION
             if (!this.userFiltro.FECHA_DEFUNCION) return true;
@@ -662,10 +656,7 @@ export default {
         },
         fechaDefuncionHebreoFilter(value) { //FECHA_DEFUNCION_HEBREO
             if (!this.userFiltro.FECHA_DEFUNCION_HEBREO) return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '') return true;
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '>') return Date.parse(value) > Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '<') return Date.parse(value) < Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
-            if (this.SimbolosSelect.FECHA_DEFUNCION_HEBREO == '=') return Date.parse(value) == Date.parse(this.userFiltro.FECHA_DEFUNCION_HEBREO)
+            return value.toString().toLowerCase().includes(this.userFiltro.FECHA_DEFUNCION_HEBREO.toString().toLowerCase());
         },
         direccionFilter(value) { //DIRECCION
             if (!this.userFiltro.DIRECCION) return true;
@@ -825,7 +816,7 @@ table tbody tr {
     padding: auto;
     border: 0.2px solid black;
     padding: 15px;
-    height: 80px !important;
+    height: 60px !important;
 }
 
 

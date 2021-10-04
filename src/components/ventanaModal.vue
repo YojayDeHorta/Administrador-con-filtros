@@ -33,7 +33,7 @@
                                 <v-text-field v-model="user.APELLIDO_1" label="Apellido 1" :rules="nameRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.APELLIDO_2" label="Apellido 2" :rules="nameRules"></v-text-field>
+                                <v-text-field v-model="user.APELLIDO_2" label="Apellido 2" :rules="apellido2Rules"></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -41,37 +41,37 @@
                                 <!--
                                 <div>Parentesco:</div>
                             -->
-                                <v-select :items="Parentesco" v-model="user.PARENTESCO" label="¿Parentesco?" :rules="selectRules" outlined>
+                                <v-select :items="Parentesco" v-model="user.PARENTESCO" label="¿Parentesco?"  outlined>
                                 </v-select>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field v-model="user.DNI" label="DNI" :rules="dniRules"></v-text-field>
+                                <v-text-field v-model="user.DNI_O_PASAPORTE" label="DNI/Pasaporte" :rules="DNI_O_PASAPORTERules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
                                 <!--
                                 <div>PD:</div>
                             -->
-                                <v-select :items="Pd" v-model="user.PD" label="¿PD?" :rules="selectRules" outlined></v-select>
+                                <v-select :items="Pd" v-model="user.PD" label="¿PD?"  outlined></v-select>
                             </v-col>
                         </v-row>
                         <v-row>
                             <v-col cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO" min="1950-01-01" :rules="FechaRules"></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Nacimiento" v-model="user.FECHA_NACIMIENTO"  :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
+                                <v-text-field clearable label="Fecha De Nacimiento (Hebreo)" v-model="user.FECHA_NACIMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Casamiento" v-model="user.FECHA_CASAMIENTO" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Casamiento" v-model="user.FECHA_CASAMIENTO" :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Casamiento (Hebreo)" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
+                                <v-text-field clearable label="Fecha De Casamiento (Hebreo)" v-model="user.FECHA_CASAMIENTO_HEBREO" ></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Defunción" v-model="user.FECHA_DEFUNCION" ></v-text-field>
+                                <v-text-field type="date" clearable label="Fecha De Defunción" v-model="user.FECHA_DEFUNCION" :rules="FechaRules"></v-text-field>
                             </v-col>
                             <v-col class="mt-5" cols="4">
-                                <v-text-field type="date" clearable label="Fecha De Defunción (Hebreo)" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
+                                <v-text-field clearable label="Fecha De Defunción (Hebreo)" v-model="user.FECHA_DEFUNCION_HEBREO" ></v-text-field>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -109,19 +109,19 @@
                                 <!--
                                 <div>Edad:</div>
                             -->
-                                <v-select :items="Edad" v-model="user.EDAD" label="Edad" :rules="selectRules" outlined></v-select>
+                                <v-select :items="Edad" v-model="user.EDAD" label="Edad"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <!--
                                 <div>Sola:</div>
                             -->
-                                <v-select :items="Sola" v-model="user.SOLA" label="¿Sola?" :rules="selectRules" outlined></v-select>
+                                <v-select :items="Sola" v-model="user.SOLA" label="¿Sola?"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <!--
                                 <div>Mayor:</div>
                             -->
-                                <v-select :items="Mayor" v-model="user.MAYOR" label="¿Mayor?" :rules="selectRules" outlined></v-select>
+                                <v-select :items="Mayor" v-model="user.MAYOR" label="¿Mayor?"  outlined></v-select>
                             </v-col>
                             <v-col cols="3">
                                 <v-text-field v-model="user.TEFILA" label="Tefilá" :rules="tefilaRules"></v-text-field>
@@ -176,7 +176,7 @@
                                 <!--
                                 <div>Forma de pago:</div>
                             -->
-                                <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma De Pago" :rules="selectRules" outlined></v-select>
+                                <v-select :items="FormaPago" v-model="user.FORMA_PAGO" label="Elegir Forma De Pago"  outlined></v-select>
                             </v-col>
                             <!-- jessed -->
 
@@ -187,7 +187,7 @@
                                 <v-textarea no-resize height="125" outlined v-model="user.OBSERVACIONES2" label="Observaciones 2" :rules="observacionesRules"></v-textarea>
                             </v-col>
                             <v-col cols="2">
-                                <v-select :items="Jessed" v-model="user.JESED" label="Elegir Jessed" :rules="selectRules" outlined></v-select>
+                                <v-select :items="Jessed" v-model="user.JESED" label="Elegir Jessed"  outlined></v-select>
                             </v-col>
                         </v-row>
                     </v-container>
@@ -216,7 +216,7 @@ export default {
             snackbar: false,
             mensaje: '',
             Socio:['Si','No'],
-            Parentesco:['Cónyuge','Hijos','Padres','Otros'],
+            Parentesco:['Cónyuge','Hijos','Padres','Socio','Otros'],
             Pd:['Si','No'],
             Edad:['Bebé','3-18','19-30','31-50','51-70','+71'],
             Sola:['Si','No'],
@@ -231,70 +231,78 @@ export default {
             valid: true,
             selectRules:[v=>!!v || 'Por Favor, Elija Una Opción',],
             numSocioRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
-                v => /^[A-Za-z0-9]+$/.test(v) || 'Solo Se Aceptan Caracteres Alfanuméricos Sin Espacios',
-                v => (v && v.length <= 6) || 'Número De Socio Debe Ser Menor O Igual A 6 Caracteres'
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                // v => /^[A-Za-z0-9]+$/.test(v) || 'Solo Se Aceptan Caracteres Alfanuméricos Sin Espacios',
+                v => /^\S*$/.test(v) || 'Solo Se Aceptan Caracteres Sin Espacios',
+                 v => ((v == null)||(v == '')||v && v.length <= 7) || 'Número De Socio Debe Ser Menor O Igual A 7 Caracteres'
             ],
             nameRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
                 // v => /^[A-Za-z ]+$/.test(v) || 'Solo se aceptan caracteres alfabeticos',
                 v => /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(v) || 'Solo Se Aceptan Caracteres Alfabéticos',
-                v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
+                // v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
             ],
-            dniRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
-                v => /^[0-9]{8,8}[A-Za-z]$/.test(v) || 'El Campo Debe Ser De Tipo DNI (8 Dígitos Y Una Letra)',
-                v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
+            apellido2Rules:[
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                // v => /^[A-Za-z ]+$/.test(v) || 'Solo se aceptan caracteres alfabeticos',
+                v => ((v == null)||(v == '')||/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/.test(v)) || 'Solo Se Aceptan Caracteres Alfabéticos',
+                // v => (v && v.length <= 45) || 'El Número De Caracteres Máximos Permitidos Es 45'
+            ],
+            DNI_O_PASAPORTERules:[
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                // v => /^[0-9]{8,8}[A-Za-z]$/.test(v) || 'El Campo Debe Ser De Tipo DNI_O_PASAPORTE (8 Dígitos Y Una Letra)',
+                v => /^[a-zA-Z0-9]*$/.test(v) || 'DNI o Pasaporte No Valido',
+                  v => (((v == null)||(v == ''))||v && v.length <= 10) || 'El Número De Caracteres Máximos Permitidos Es 10'
             ],
             FechaRules:[
-                v=>!!v || 'Elija Una Fecha Válida (Mes/Día/Año)',
+                v=>((v == null)||(v == '')||!!v) || 'Elija Una Fecha Válida (Mes/Día/Año)',
                 // v => (v && new Date(v).getTime() <= new Date(v).getTime('1950-01-01')) || 'la fecha que intentas añadir es muy antigua'
             ],
             direccionRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
-                v => (v && v.length <= 90) || 'El Número De Caracteres Máximos Permitidos Es 90'
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                // v => (v && v.length <= 60) || 'El Número De Caracteres Máximos Permitidos Es 60'
             ],
             tefilaRules:[
-                v => ((v == null)||(v == '')||(v && v.length <= 50)) || 'El Número De Caracteres Máximos Permitidos Es 50'
+                // v => ((v == null)||(v == '')||(v && v.length <= 50)) || 'El Número De Caracteres Máximos Permitidos Es 50'
             ],
             codPostalRules:[
-                v => ((v == null)||(v == '')||/\b\d{5,7}\b/.test(v)) || 'Escriba Un Código Postal Válido (5-7 Números)',
+                v => ((v == null)||(v == '')||/^[0-9]*$/.test(v)) || 'Escriba Un Código Postal Válido',
             ],
             localidadRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
-                v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                // v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             provinciaRules:[
                 v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'Valor No Válido',
-                v => ((v == null)||(v == '')||(v && v.length <= 35)) || 'El Número De Caracteres Máximos Permitidos Es 35'
+                // v => ((v == null)||(v == '')||(v && v.length <= 35)) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             paisRules:[
-                v=>!!v || 'Este campo no puede estar vacio',
+                // v=>!!v || 'Este campo no puede estar vacio',
                 v => /^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/.test(v) || 'Valor No Válido',
-                v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
+                // v => (v && v.length <= 35) || 'El Número De Caracteres Máximos Permitidos Es 35'
             ],
             telefonoRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
-                v => /^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v) || 'Teléfono No Válido',
-                v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
+                v => ((v == null)||(v == '')||/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v)) || 'Teléfono No Válido',
+                // v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
             fijoRules:[
                 v => ((v == null)||(v == '')||/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(v)) || 'Fijo No Válido',
-                v => ((v == null)||(v == '')||(v && v.length <= 20)) || 'El Número De Caracteres Máximos Permitidos Es 20'
+                // v => ((v == null)||(v == '')||(v && v.length <= 20)) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
             emailRules:[
                 v => ((v == null)||(v == '')||/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v)) || 'Digite Un Email Válido (Name@Mail.Com)',
-                v => ((v == null)||(v == '')||(v && v.length <= 80)) || 'El Número De Caracteres Máximos Permitidos Es 80'
+                // v => ((v == null)||(v == '')||(v && v.length <= 80)) || 'El Número De Caracteres Máximos Permitidos Es 80'
             ],
             observacionesRules:[
-                v => ((v == null)||(v == '')||(v && v.length <= 280)) || 'El Número De Caracteres Máximos Permitidos Es 280'
+                // v => ((v == null)||(v == '')||(v && v.length <= 280)) || 'El Número De Caracteres Máximos Permitidos Es 280'
             ],
             cuotaRules:[
-                v=>!!v || 'Este Campo No Puede Estar Vacío',
+                //v=>!!v || 'Este Campo No Puede Estar Vacío',
                 // v => /\d{1,3}(?:[.,]\d{3})*(?:[.,]\d{2})?/.test(v) || 'escriba un valor valido',
                 // v => /^[0-9]*$/.test(v) || 'escriba un valor valido',
                  v => /^[0-9.]*$/.test(v) || 'Escriba Un Valor Válido',
-                v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
+                // v => (v && v.length <= 20) || 'El Número De Caracteres Máximos Permitidos Es 20'
             ],
 
         }
