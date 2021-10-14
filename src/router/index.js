@@ -29,7 +29,28 @@ const routes = [
     path: '/cruds',
     name: 'Cruds',
     component: () => import(/* webpackChunkName: "about" */ '../views/Cruds.vue')
+  },
+    {
+    path: '/agregar_tabla',
+    name: 'Agregar_Tabla',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Agregar_Tabla.vue')
+  },
+   {
+    path: '/editar_tabla',
+    name: 'Editar_Tabla',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Editar_Tabla.vue')
+  },
+    {
+    path: '/filtrar_tabla',
+    name: 'Filtrar_Tabla',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Filtrar_Tabla.vue')
+  },
+   {
+    path: '/descargar_tabla',
+    name: 'Descargar_Tabla',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Descargar_Tabla.vue')
   }
+
 ]
 
 const router = new VueRouter({

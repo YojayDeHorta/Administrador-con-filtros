@@ -1,9 +1,9 @@
 <template>
     <v-container>
         <!-- navbar para la app -->
-        <v-app-bar style="background-color:#37474F !important" app>
+        <v-app-bar class="Navbar" app>
             <v-toolbar-title style="color:white !important;font-size:1.1vw" class="text-uppercase grey--text">
-                <span class="">ADMINISTRACIÓN</span>
+                <span class="text-h6">ADMINISTRACIÓN</span>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <!-- <v-btn text class="success mr-5">ingreso</v-btn> -->
@@ -20,16 +20,16 @@
             <!-- menu -->
             <v-btn  :to="{name: 'Options'}" v-if="token" exact text class="Btn_Navbar gray">
                 <span>Opciones</span>
-                <v-icon style="font-size:1.5vw">mdi-equal-box</v-icon>
+                <v-icon>mdi-equal-box</v-icon>
             </v-btn>
             <!-- login -->
             <v-btn  text @click="logout()" v-if="token" class="Btn_Navbar gray">
-                <span class="mr-1">Cerrar Sesión</span>
-                <v-icon style="font-size:1.5vw">mdi-home-export-outline </v-icon>
+                <span  class="mr-1">Cerrar Sesión</span>
+                <v-icon style="font-size:1vw">mdi-home-export-outline </v-icon>
             </v-btn>
             <v-btn  text :to="{name: 'Login'}" v-else class="Btn_Navbar gray" exact>
                 <span class="mr-1">Iniciar Sesión</span>
-                <v-icon style="font-size:1.5vw">mdi-login-variant </v-icon>
+                <v-icon style="font-size:1vw">mdi-login-variant </v-icon>
             </v-btn>
         </v-app-bar>
         <v-navigation-drawer app v-model="drawer" temporary>
@@ -48,7 +48,7 @@
                 <v-list-item-group active-class="deep-purple--text text--accent-4">
                     <v-list-item :to="{name: 'Cruds'}">
                         <v-list-item-icon>
-                            <v-icon style="font-size:1.5vw">mdi-file-table</v-icon>
+                            <v-icon style="font-size:1vw">mdi-file-table</v-icon>
                         </v-list-item-icon>
                         <v-list-item-title>Crud</v-list-item-title>
                     </v-list-item>
@@ -140,11 +140,22 @@ export default {
 <style scoped>
 
 .Btn_Navbar{
+    position:relative;
     color:White !important;
     margin-left:8px;
-   /* font-size:0px;*/
+    font-size:1vw !important;
+    top:-5%;
+    
 }
 
+.Navbar{
+    background-color:#37474F !important;
+    height:60px !important;
+}
+
+span{
+    font-size:12px !important;
+}
 
 
 
