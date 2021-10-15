@@ -1,16 +1,10 @@
 <template>
     <div class="Principal text-center">
         <tabs class="tabla"></tabs> 
-        <section class="Icon">
-            <v-icon class="icon_mas mb-5">mdi-file-plus
-            </v-icon>
-            <br>
-        </section>
     </div>
 </template>
 <style scoped>
 .Principal {
-    border: 5px solid red;
     width: 100%;
     height: 600px;
     margin: auto;
@@ -21,8 +15,8 @@
 }
 
 .tabla{
-    border: 5px solid black;
-    width: 40%;
+  /*  border: 5px solid black;*/
+    width: 70%;
 }
 
 .icon_mas {
