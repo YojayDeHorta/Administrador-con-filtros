@@ -2,13 +2,14 @@
     <div class="Cols_Oculto">
         <v-col cols="auto" v-if="rol=='secretariaRol'">
             <v-btn style="color:white;width:100%;font-size:11.5px" color="#757575"  v-if="rol=='secretariaRol' && token!='adminToken'" @click="dialog=true">
+
             <v-icon>mdi-file-lock</v-icon>&nbsp;
-            MOSTRAR DATOS OCULTOS</v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
-            <v-btn style="width:100%;"  color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria"><v-icon>mdi-key-remove</v-icon> quitar &nbsp;PERMISOS </v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
+            <!--MOSTRAR DATOS OCULTOS--></v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
+            <v-btn style="width:100%;"  color="red white--text" v-if="rol=='secretariaRol' && token=='adminToken'" @click="getSecretaria"><v-icon>mdi-key-remove</v-icon><!-- quitar &nbsp;PERMISOS --></v-btn> <!-- puse el boton aca pa poder trabajar abajo -->
             <v-dialog transition="dialog-bottom-transition" v-model="dialog" max-width="500" >
                     <v-card style=";height:430px">
                         <v-form style="height:400px" @submit.prevent="FormPassword" lazy-validation ref="form">
-                            <v-toolbar class="d-flex justify-center" color="#607D8B" dark><h2>MOSTRAR&nbsp;&nbsp;DATOS&nbsp;&nbsp;OCULTOS</h2></v-toolbar>
+                            <v-toolbar class="d-flex justify-center" color="#607D8B" dark><h2><!--MOSTRAR&nbsp;&nbsp;DATOS&nbsp;&nbsp;OCULTOS--></h2></v-toolbar>
                             <v-card-text>
                                 <div class="text-h2 text-center pa-12">
                                     <h6 class="text-center mb-10" style="font-size:15px">INGRESE&nbsp;&nbsp;LA&nbsp;&nbsp;CONTRASEÑA</h6>

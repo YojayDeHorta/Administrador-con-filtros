@@ -4,6 +4,7 @@
         <v-row class="Iconos_Descarga d-flex justify-space-between ">
             <v-col class="Tabs_Descarga d-flex justify-end">
                 <div class="Div_Tabs_Descarga">
+                    <!--
                     <v-expansion-panels >
                         <v-expansion-panel>
                             <v-expansion-panel-header disable-icon-rotate>
@@ -11,7 +12,7 @@
                                         <strong style="color:#424242;font-size:15px" class="text-center" v-if="!open" key="0">CLIC AQUÍ PARA VER LAS OPCIONES </strong>
                                         <strong style="color:#424242;font-size:15px" class="text-center" v-else key="1">OPCIONES DE DESCARGA Y SUBIDA</strong>
                                 </template>
-                                <!-- <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong> -->
+                                <!-- <strong style="color:#424242;font-size:15px" class="text-center">OPCIONES DE DESCARGA || HAGA CLIC AQUÍ PARA DESCARGAR</strong> 
                                 <template v-slot:actions>
                                     <v-icon color="teal">
                                         mdi-cloud-download
@@ -19,18 +20,19 @@
                                 </template>
                             </v-expansion-panel-header>
                             <v-expansion-panel-content class="text-center">
+<!--
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="orange lighten-1" @click="descargar()" v-if="adminVerification">
                                     <v-icon>mdi-file-lock</v-icon>&nbsp;encriptado
                                 </v-btn>
-                                <!--descarga normal-->
+                                <!--descarga normal
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" @click="descargarExcel()" >
                                     <v-icon>mdi-file-excel</v-icon>&nbsp;Excel
                                 </v-btn>
-                                <!--descarga de excel filtrada, necesario para las descargas-->
+                                <!--descarga de excel filtrada, necesario para las descargas
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
                                     <v-icon>mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
                                 </v-btn>
-                                <!--descarga filtrada-->
+                                <!--descarga filtrada
                                 <v-btn color="secondary" class="Btn_Descarga" outlined v-if="adminVerification" @click="chooseFiles()">
                                     <span>
                                         <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
@@ -38,12 +40,13 @@
                                     <!-- <span v-else>
                                         <v-icon class="mr-1">mdi-upload</v-icon>agregado
                                          <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}} 
-                                    </span> -->
+                                    </span> -
                                 </v-btn>
                                 <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
-                            </v-expansion-panel-content>
+                                                       </v-expansion-panel-content>
                         </v-expansion-panel>
                     </v-expansion-panels>
+                     -->
                 </div>
             </v-col>
         </v-row>
@@ -52,14 +55,42 @@
                 <div class="mb-5 d-flex justify-center">
                     <div class="Div_Usuario">
                         <v-btn class="Btn_Usuario" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                            <v-icon>mdi-account-plus</v-icon>&nbsp;Añadir Cliente
+                            <v-icon>mdi-account-plus</v-icon>&nbsp;
+                            <!--Añadir Cliente-->
                         </v-btn>
                         <v-btn class="Btn_Usuario" color="#795548" @click="dialogFiltro=true">
-                            <v-icon>mdi-clipboard-text-search</v-icon>&nbsp;añadir filtro
+                            <v-icon>mdi-clipboard-text-search</v-icon>&nbsp;
+                            <!--añadir filtro-->
                         </v-btn>
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
-                            <v-icon>mdi-clipboard-remove</v-icon>&nbsp;borrar filtro
+                            <v-icon>mdi-clipboard-remove</v-icon>&nbsp;
+                            <!--borrar filtro-->
                         </v-btn>
+                        <v-btn class="Btn_Descarga" style="color:#424242" color="orange lighten-1" @click="descargar()" v-if="adminVerification">
+                            <v-icon>mdi-file-lock</v-icon>&nbsp;encriptado
+                        </v-btn>
+                        <!--descarga normal-->
+                        <v-btn class="Btn_Descarga excel_icon ml-5 mr-5" style="color:#424242" color="#26A69A" @click="descargarExcel()">
+                            <v-icon>mdi-file-excel</v-icon>&nbsp;
+                            <!--Excel-->
+                        </v-btn>
+                        <!--descarga de excel filtrada, necesario para las descargas-->
+                        <v-btn class="Btn_Descarga filter_icon" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
+                            <v-icon>mdi-filter</v-icon>&nbsp;&nbsp;
+                            <!--Datos Filtrados -->
+                        </v-btn>
+                        <!--descarga filtrada-->
+                        <v-btn color="secondary" class="Btn_Descarga" outlined v-if="adminVerification" @click="chooseFiles()">
+                            <span>
+                                <v-icon class="mr-1">mdi-upload</v-icon>&nbsp;
+                                <!--subir archivo-->
+                            </span>
+                            <!-- <span v-else>
+                                        <v-icon class="mr-1">mdi-upload</v-icon>agregado
+                                         <v-icon class="mr-1">mdi-file-excel</v-icon> {{this.file.name}} 
+                                    </span> -->
+                        </v-btn>
+                        <input id="fileUpload" type="file" ref="file" @change="submitFile()" hidden>
                         <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
                     </div>
                 </div>
@@ -413,8 +444,8 @@ export default {
         agregarFilterModal(e) {
             if (JSON.stringify(this.userFiltro) !== JSON.stringify(e)) {
                 this.countFilter = 1
-                if (this.token=='adminToken') this.countFilter = 0
-                if (this.token=='adminToken'&&this.adminVerification) this.countFilter = 1
+                if (this.token == 'adminToken') this.countFilter = 0
+                if (this.token == 'adminToken' && this.adminVerification) this.countFilter = 1
 
 
                 for (let key in e) {
@@ -450,11 +481,11 @@ export default {
             if (!this.isEditing) {
                 if (this.users.length > 0) {
                     this.user.ID = Number(this.users[this.users.length - 1].ID) + 1
-                }else{
-                    this.user.ID=1
+                } else {
+                    this.user.ID = 1
                 }
-                
-                
+
+
                 this.users.push(JSON.parse(JSON.stringify(this.user)))
             } else {
                 let index = this.users.map(function(x) { return x.ID; }).indexOf(this.user.ID)
@@ -579,8 +610,8 @@ export default {
             this.tablaFiltrada = e
         },
         async descargarFiltro() {
-            let array=[{ token: this.token },this.tablaFiltrada]
-            let respuesta = await axios.post('http://localhost:3000/filter',array, { responseType: 'blob' })
+            let array = [{ token: this.token }, this.tablaFiltrada]
+            let respuesta = await axios.post('http://localhost:3000/filter', array, { responseType: 'blob' })
             if (respuesta.data == false) {
                 this.snackbar = true
                 this.mensaje = 'Error Al Descargar El Archivo'
@@ -762,7 +793,7 @@ export default {
     background-color: #78909C !important;
     color: black !important;
     margin: 0;
- padding: 15px 0;
+    padding: 15px 0;
 
 }
 
@@ -787,8 +818,8 @@ tbody tr:nth-of-type(odd) {
 }
 
 .Btn_Descarga {
-    width: 24% !important;
-    height: 37px !important;
+    /* width: 24% !important;
+    height: 37px !important;*/
     margin-left: 5px;
     color: white !important;
     font-size: 0.7vw !important;
@@ -797,6 +828,7 @@ tbody tr:nth-of-type(odd) {
 .Div_Usuario {
     display: flex;
     justify-content: flex-start;
+    border: 5px solid red;
 
 }
 
@@ -867,6 +899,14 @@ table>thead>tr>th:nth-child(2) {
 table td,
 table th {
     padding: 15px 0;
+}
+
+
+
+.excel_icon,.filter_icon{
+    position: relative;
+    /*border: 5px solid black !important;*/
+    top: 23%;
 }
 
 /** RESPONSIVE DESIGN  */

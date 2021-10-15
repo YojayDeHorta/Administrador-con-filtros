@@ -19,7 +19,7 @@
             </v-row>
             <v-row>
                 <v-col class="Opcion_3" cols="6">
-                    <router-link  style="text-decoration: none; color: inherit;" class="opciones" id="editar" to="/Cruds" v-if="$store.getters.token!='conserjeToken'">
+                    <router-link  style="text-decoration: none; color: inherit;" class="opciones" id="editar" to="editar_tabla" v-if="$store.getters.token!='conserjeToken'">
                         <p class="Letra text-center">Editar Tabla</p>
                         <v-icon class="ico-editar">mdi-clipboard-edit</v-icon>
                     </router-link>
