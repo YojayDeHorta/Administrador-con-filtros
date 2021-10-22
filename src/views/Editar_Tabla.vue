@@ -1,7 +1,6 @@
 <template>
     <div class="Principal_Editar">
-        <div class="Margen_Editar">
-            <v-card class="mx-auto" max-width="500">
+            <v-card class="mx-auto" >
                 <v-card-title class="text-h6 font-weight-regular justify-space-between">
                     <span>{{ currentTitle }}</span>
                     <v-avatar color="primary lighten-2" class="subheading white--text" size="24" v-text="step"></v-avatar>
@@ -19,7 +18,9 @@
                     <v-window-item :value="2">
                         <v-card-text>
                             <div class="CRUD_FILTRO">
+                                
                                 <CrudClientes :adminVerification="false" :idHoja="0"></CrudClientes>
+                                
                             </div>
                         </v-card-text>
                     </v-window-item>
@@ -44,7 +45,6 @@
                     </v-btn>
                 </v-card-actions>
             </v-card>
-        </div>
     </div>
 </template>
 <style scoped>
@@ -52,6 +52,10 @@
     border: 5px solid yellow;
     width: 100%;
     height: 100%;
+}
+.CRUD_FILTRO{
+    border: 5px solid red;
+    width: 100% !important;
 }
 </style>
 <script>

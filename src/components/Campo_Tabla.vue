@@ -1,7 +1,6 @@
 <template>
     <div>
-        <h1>SI DESEAS CREAR UNA TABLA NUEVA , INGRESA EL NOMBRE Y EL NOMBRE DE LAS FILAS</h1>
-        <v-text-field v-model="firstname" :rules="nameRules" :counter="10" label="First name" required></v-text-field>
+    	
         <v-container fluid>
             <v-combobox v-model="model" :filter="filter" :hide-no-data="!search" :items="items" :search-input.sync="search" hide-selected label="Search for an option" multiple small-chips solo>
                 <template v-slot:no-data>
@@ -36,16 +35,18 @@
                 </template>
             </v-combobox>
         </v-container>
+    
     </div>
 </template>
 <style scoped>
 </style>
 <script>
 export default {
+	name:'campo_tabla',
     data: () => ({
         activator: null,
         attach: null,
-        colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
+       /* colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],*/
         editing: null,
         editingIndex: -1,
         items: [
@@ -72,68 +73,68 @@ export default {
                 text: 'PARENTESCO',
             },
             {
-                text: 'DNI',
+            	 text: 'DNI',
             },
             {
-                text: 'PD',
+            	 text: 'PD',
             },
             {
-                text: 'DIRECCION',
+            	 text: 'DIRECCION',
             },
             {
-                text: 'COD POSTAL',
+            	 text: 'COD POSTAL',
             },
             {
-                text: 'LOCALIDAD',
+            	 text: 'LOCALIDAD',
             },
             {
-                text: 'PROVINCIA',
+            	 text: 'PROVINCIA',
             },
             {
-                text: 'PAIS',
+ 				text: 'PAIS',
             },
             {
-                text: 'MOVIL',
+            	text: 'MOVIL',
             },
             {
-                text: 'FIJO',
+            	text: 'FIJO',
             },
             {
-                text: 'EMAIL',
+            	text: 'EMAIL',
             },
             {
-                text: 'EDAD',
+            	text: 'EDAD',
             },
             {
-                text: 'SOLA',
+            	text: 'SOLA',
             },
             {
-                text: 'MAYOR',
+            	text: 'MAYOR',
             },
             {
-                text: 'TEFILÁ',
+            	text: 'TEFILÁ',
             },
             {
-                text: 'OBSERVACIONES',
+            	text: 'OBSERVACIONES',
             },
             {
-                text: 'OBSERVACIONES',
+            	text: 'OBSERVACIONES',
             },
             {
-                text: 'CERRADO - CUOTAS',
+            	text: 'CERRADO - CUOTAS',
             },
             {
-                text: 'CERRADO - CUOTAS',
+            	text: 'CERRADO - CUOTAS',
             },
             {
-                text: 'CERRADO - FORMA PAGO',
+            	text: 'CERRADO - FORMA PAGO',
             },
             {
-                text: 'CERRADO - OBSERVACIONES 2',
+            	text: 'CERRADO - OBSERVACIONES 2',
             },
             {
-                text: 'CERRADO - JESED',
-            },
+            	text: 'CERRADO - JESED',
+            }
         ],
         nonce: 1,
         menu: false,

@@ -63,7 +63,7 @@
                             <!--añadir filtro-->
                         </v-btn>
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
-                            <v-icon>mdi-clipboard-remove</v-icon>&nbsp;
+                            <v-icon>mdi-filter-remove</v-icon>&nbsp;
                             <!--borrar filtro-->
                         </v-btn>
                         <v-btn class="Btn_Descarga" style="color:#424242" color="orange lighten-1" @click="descargar()" v-if="adminVerification">
@@ -71,7 +71,7 @@
                         </v-btn>
                         <!--descarga normal-->
                         <v-btn class="Btn_Descarga excel_icon ml-5 mr-5" style="color:#424242" color="#26A69A" @click="descargarExcel()">
-                            <v-icon>mdi-file-excel</v-icon>&nbsp;
+                            <v-icon>mdi-download-outline</v-icon>&nbsp;
                             <!--Excel-->
                         </v-btn>
                         <!--descarga de excel filtrada, necesario para las descargas-->

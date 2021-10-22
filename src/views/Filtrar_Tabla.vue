@@ -13,7 +13,9 @@
                                 <div>
                                 	<br>
                                     <v-select :items="items" label="Escoge Una Tabla" dense outlined></v-select> <br>
+                                    <!--
                                     <v-text-field prepend-icon="mdi-file-table-outline" label="Nombre Tabla"></v-text-field>
+                                -->
                                 </div>
                             </v-container>
                         </v-card>
@@ -69,6 +71,7 @@
 
 .CRUD_FILTRO{
 	border: 5px solid purple;
+    width: 100%;
 	/*width: 100% !important;
 	height: 100px !important;*/
 }

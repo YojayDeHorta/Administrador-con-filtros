@@ -1,5 +1,7 @@
 <template>
     <div>
+         <elegir_tabla class="tabla mt-5"></elegir_tabla>
+         <!--
         <v-card color="basil">
             <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
                 <v-tab v-for="item in items" :key="item">
@@ -8,9 +10,10 @@
             </v-tabs>
             <v-tabs-items v-model="tab">
                 <v-tab-item class="tabs" v-for="item in 1" :key="item">
-                    <elegir_tabla class="tabla mt-5"></elegir_tabla>
+                   
                 </v-tab-item>
                 <v-tab-item class="tabs" v-for="item in 2" :key="item">
+                
                     <v-card class="mx-auto" max-width="344" outlined>
                         <v-list-item three-line>
                             <v-list-item-content>
@@ -27,9 +30,11 @@
                           <v-btn depressed class="mt-5 mb-5" color="primary">
                         Guardar Tabla
                     </v-btn>
+                
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
+    -->
     </div>
 </template>
 <style scoped>

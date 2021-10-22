@@ -25,7 +25,7 @@
                     </router-link>
                 </v-col>
                 <v-col class="Opcion_4"  cols="6">
-                    <router-link  style="text-decoration: none; color: inherit;" class="opciones" id="descargar" to="/Filter">
+                    <router-link  style="text-decoration: none; color: inherit;" class="opciones" id="descargar" to="/descargar_tabla">
                         <p class="Letra text-center">Descargar Tabla</p>
                         <v-icon class="ico-buscar">mdi-clipboard-flow</v-icon>
                     </router-link>
