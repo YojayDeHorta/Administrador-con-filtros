@@ -1,5 +1,5 @@
 <template>
-    <div class="Filtrar mt-7 ">
+    <div class="Filtrar">
         <div class="Margen_Filtrar">
             <v-card class="mx-auto mb-7">
                 <v-card-title class="text-h6 font-weight-regular justify-space-between">
@@ -8,10 +8,10 @@
                 </v-card-title>
                 <v-window v-model="step">
                     <v-window-item :value="1">
-                        <v-card class="mx-auto" width="700" height="200" outlined>
+                        <v-card class="mx-auto" width="700" height="100" outlined>
                             <v-container class="Principal" fluid>
                                 <div>
-                                	<br>
+                                
                                     <v-select :items="items" label="Escoge Una Tabla" dense outlined></v-select> <br>
                                     <!--
                                     <v-text-field prepend-icon="mdi-file-table-outline" label="Nombre Tabla"></v-text-field>
@@ -29,11 +29,14 @@
                     </v-window-item>
                     <v-window-item :value="3">
                         <div class="pa-4 text-center">
+                            <h1>HAS USADO LA OPCION DE FILTRADO</h1>
+                            <!--
                             <v-img class="mb-4" contain height="128" src="https://cdn.vuetifyjs.com/images/logos/v.svg"></v-img>
                             <h3 class="text-h6 font-weight-light mb-2">
                                 Welcome to Vuetify
                             </h3>
                             <span class="text-caption grey--text">Thanks for signing up!</span>
+                        -->
                         </div>
                     </v-window-item>
                 </v-window>
@@ -58,20 +61,21 @@
 .Filtrar {
     border: 5px solid red;
     width: 100%;
-    height: 100%;
+   /* height: 100%;*/
     display: flex;
-    justify-content: center;
-    align-items: center;
+   /* justify-content: center;
+    align-items: center;*/
 }
 
 .Margen_Filtrar{
-    border: 5px solid black;
+    /*border: 5px solid black;*/
     width: 100%;
 }
 
 .CRUD_FILTRO{
-	border: 5px solid purple;
+	/*border: 5px solid purple;*/
     width: 100%;
+   /* height: 500px;
 	/*width: 100% !important;
 	height: 100px !important;*/
 }

@@ -25,13 +25,7 @@
                         </v-card-text>
                     </v-window-item>
                     <v-window-item :value="3">
-                        <div class="pa-4 text-center">
-                            <v-img class="mb-4" contain height="128" src="https://cdn.vuetifyjs.com/images/logos/v.svg"></v-img>
-                            <h3 class="text-h6 font-weight-light mb-2">
-                                Welcome to Vuetify
-                            </h3>
-                            <span class="text-caption grey--text">Thanks for signing up!</span>
-                        </div>
+                    <h1 class="text-center mt-3 mb-3">HAS USADO LA OPCION DE EDITAR</h1>
                     </v-window-item>
                 </v-window>
                 <v-divider></v-divider>
@@ -49,12 +43,12 @@
 </template>
 <style scoped>
 .Principal_Editar {
-    border: 5px solid yellow;
+  /*  border: 5px solid yellow;*/
     width: 100%;
     height: 100%;
 }
 .CRUD_FILTRO{
-    border: 5px solid red;
+  /*  border: 5px solid red;*/
     width: 100% !important;
 }
 </style>

@@ -828,7 +828,7 @@ tbody tr:nth-of-type(odd) {
 .Div_Usuario {
     display: flex;
     justify-content: flex-start;
-    border: 5px solid red;
+ /*   border: 5px solid red;*/
 
 }
 
