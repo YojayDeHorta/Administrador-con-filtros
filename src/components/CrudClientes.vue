@@ -20,20 +20,20 @@
                             </v-expansion-panel-header>
                             <v-expansion-panel-content class="text-center">
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="orange lighten-1" @click="descargar()" v-if="adminVerification">
-                                    <v-icon>mdi-file-lock</v-icon>&nbsp;encriptado
+                                    <v-icon>mdi-file-lock</v-icon>&nbsp;
                                 </v-btn>
                                 <!--descarga normal-->
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" @click="descargarExcel()" >
-                                    <v-icon>mdi-file-excel</v-icon>&nbsp;Excel
+                                    <v-icon>mdi-file-excel</v-icon>&nbsp;
                                 </v-btn>
                                 <!--descarga de excel filtrada, necesario para las descargas-->
                                 <v-btn class="Btn_Descarga" style="color:#424242" color="#26A69A" v-if="countFilter!=0" @click="descargarFiltro()">
-                                    <v-icon>mdi-download</v-icon>&nbsp;&nbsp;Datos Filtrados
+                                    <v-icon>mdi-download</v-icon>&nbsp;&nbsp;
                                 </v-btn>
                                 <!--descarga filtrada-->
                                 <v-btn color="secondary" class="Btn_Descarga" outlined v-if="adminVerification" @click="chooseFiles()">
                                     <span>
-                                        <v-icon class="mr-1">mdi-upload</v-icon>subir archivo
+                                        <v-icon class="mr-1">mdi-upload</v-icon>
                                     </span>
                                     <!-- <span v-else>
                                         <v-icon class="mr-1">mdi-upload</v-icon>agregado
@@ -52,13 +52,13 @@
                 <div class="mb-5 d-flex justify-center">
                     <div class="Div_Usuario">
                         <v-btn class="Btn_Usuario" v-if="adminVerification" color="primary" @click="dialog=true;formTitle='Agregar cliente';resetUser(user)">
-                            <v-icon>mdi-account-plus</v-icon>&nbsp;Añadir Cliente
+                            <v-icon>mdi-account-plus</v-icon>&nbsp;
                         </v-btn>
                         <v-btn class="Btn_Usuario" color="#795548" @click="dialogFiltro=true">
-                            <v-icon>mdi-clipboard-text-search</v-icon>&nbsp;añadir filtro
+                            <v-icon>mdi-clipboard-text-search</v-icon>&nbsp;
                         </v-btn>
                         <v-btn class="Btn_Usuario" v-if="countFilter!=0" color="red white--text" @click="borrarFilter()">
-                            <v-icon>mdi-clipboard-remove</v-icon>&nbsp;borrar filtro
+                            <v-icon>mdi-clipboard-remove</v-icon>&nbsp;
                         </v-btn>
                         <Oculto class="Btn_Oculto" style="display:inline-block"></Oculto>
                     </div>
